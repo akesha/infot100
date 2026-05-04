@@ -16,7 +16,6 @@ function BuiltModulesArtboard() {
       ],
       href: 'modules/spawn-point.html',
       extras: [
-        { label: 'Facilitator guide', href: 'modules/spawn-point-facilitator-guide.html' },
         { label: 'Slide deck', href: 'modules/spawn-point-slides.html' },
         { label: 'TILT rubric', href: 'modules/spawn-point-tilt-rubric.html' },
         { label: 'Pacing guide', href: 'modules/spawn-point-pacing-guide.html' },
@@ -37,7 +36,6 @@ function BuiltModulesArtboard() {
       ],
       href: 'modules/compute-time.html',
       extras: [
-        { label: 'Facilitator guide', href: 'modules/compute-time-facilitator-guide.html' },
         { label: 'Slide deck', href: 'modules/compute-time-slides.html' },
         { label: 'TILT rubric', href: 'modules/compute-time-tilt-rubric.html' },
       ],
@@ -56,7 +54,6 @@ function BuiltModulesArtboard() {
       ],
       href: 'modules/ai-copilot-camp.html',
       extras: [
-        { label: 'Facilitator guide', href: 'modules/ai-copilot-camp-facilitator-guide.html' },
         { label: 'Slide deck', href: 'modules/ai-copilot-camp-slides.html' },
         { label: 'TILT rubric', href: 'modules/ai-copilot-camp-tilt-rubric.html' },
       ],
@@ -75,7 +72,6 @@ function BuiltModulesArtboard() {
       ],
       href: 'modules/honest-start.html',
       extras: [
-        { label: 'Facilitator guide', href: 'modules/honest-start-facilitator-guide.html' },
         { label: 'Slide deck', href: 'modules/honest-start-slides.html' },
         { label: 'TILT rubric', href: 'modules/honest-start-tilt-rubric.html' },
       ],
