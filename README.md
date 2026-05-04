@@ -1,6 +1,6 @@
-# CSCI-Y100 · Course Redesign
+# INFO-T 100 · Course Redesign
 
-Static site containing all course-redesign artifacts for CSCI-Y100 (Luddy Study Skills): lesson modules, slide decks, facilitator guides, TILT rubrics, and meta-design documents (Big Ideas, Personas, Pacing Guide, Learner Roles map).
+Static site containing all course-redesign artifacts for INFO-T 100 (Luddy Study Skills): lesson modules, slide decks, facilitator guides, TILT rubrics, and meta-design documents (Big Ideas, Personas, Pacing Guide, Learner Roles map).
 
 ## What's in here
 
@@ -55,7 +55,7 @@ Linked from the Course Arc strip (📋 button in the upper-right of every lesson
    ```bash
    git init
    git add .
-   git commit -m "Initial commit — CSCI-Y100 redesign"
+   git commit -m "Initial commit — INFO-T 100 redesign"
    git branch -M main
    git remote add origin https://github.com/YOUR-USERNAME/REPO-NAME.git
    git push -u origin main

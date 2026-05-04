@@ -25,7 +25,7 @@ function ProcSectionAutopsy() {
   const [copyState, setCopyState] = React.useState('idle');
   const onCopy = async () => {
     const text = [
-      'CSCI-Y100 · Procrastination Autopsy',
+      'INFO-T 100 · Procrastination Autopsy',
       '',
       `01 THE TASK: ${a.task || '(blank)'}`,
       `02 WHEN, EXACTLY: ${a.when || '(blank)'}`,

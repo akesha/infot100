@@ -120,7 +120,7 @@ function CTSectionAudit() {
   const buildExportText = React.useCallback(() => {
     // Plain-text summary the student can paste into a doc, email, or LMS.
     const lines = [
-      'CSCI-Y100 · 168-hour audit · Compute Time',
+      'INFO-T 100 · 168-hour audit · Compute Time',
       '',
       'WHERE YOUR WEEK GOES',
     ];

@@ -73,7 +73,7 @@ function SQSectionRound3() {
               <span style={r3.checkBox}>{checks.vault ? '✓' : ''}</span>
             </button>
             <div>
-              <strong>Create a vault.</strong> "Create new vault" → name it <code style={r3.code}>csci-y100</code>.
+              <strong>Create a vault.</strong> "Create new vault" → name it <code style={r3.code}>info-t-100</code>.
             </div>
           </li>
         </ol>
@@ -125,7 +125,7 @@ function SQSectionRound3() {
           id="sq-vault-path"
           type="text"
           style={r3.vaultInput}
-          placeholder="~/Documents/csci-y100  or  C:\Users\you\Documents\csci-y100"
+          placeholder="~/Documents/info-t-100  or  C:\Users\you\Documents\info-t-100"
           value={vaultPath}
           onChange={onVault}
         />

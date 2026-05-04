@@ -100,7 +100,7 @@ function QuestMapArtboard() {
       {/* Header */}
       <header style={qm.header}>
         <div>
-          <div style={qm.kicker}>CSCI-Y100 · v2.0 · spring rev.</div>
+          <div style={qm.kicker}>INFO-T 100 · v2.0 · spring rev.</div>
           <h1 style={qm.h1}>The 8-Week Quest.</h1>
           <p style={qm.lede}>
             Your existing course, retold as a path. Same bookends — Makerspace at start

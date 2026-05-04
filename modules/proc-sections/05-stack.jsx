@@ -49,7 +49,7 @@ function ProcSectionStack() {
   const [copyState, setCopyState] = React.useState('idle');
   const onCopy = async () => {
     const lines = [
-      'CSCI-Y100 · Motivation Stack',
+      'INFO-T 100 · Motivation Stack',
       '',
       'AUTONOMY levers:',
       ...s.autonomy.map((l, i) => `  ${i+1}. ${l || '(blank)'}`),

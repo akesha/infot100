@@ -30,7 +30,7 @@
       <aside className="course-arc" aria-label="8-week course arc">
         <div className="course-arc-head">
           <span className="course-arc-badge" aria-hidden="true">8-WEEK ARC</span>
-          <span className="course-arc-title">CSCI-Y100 · Luddy Study Skills</span>
+          <span className="course-arc-title">INFO-T 100 · Luddy Study Skills</span>
           <a href="homework.html" className="course-arc-homework">📋 Homework + calendar</a>
           {currentLabel && <span className="course-arc-here">{currentLabel}</span>}
         </div>

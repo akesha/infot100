@@ -25,8 +25,8 @@ function LandingArtboard() {
       <section style={landing.hero} aria-labelledby="hero-heading">
         <div style={landing.heroLeft}>
           <div style={landing.courseCode}>
-            <span style={{ color: 'var(--signal-green)' }}>$</span> CSCI-Y 100
-            <span style={landing.creditChip}>1 credit · 8 weeks</span>
+            <span style={{ color: 'var(--signal-green)' }}>$</span> INFO-T 100
+            <span style={landing.creditChip}>2 credits · 8 weeks</span>
           </div>
           <h1 id="hero-heading" style={landing.h1}>
             How to <em style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic', color: 'var(--crimson)' }}>actually</em>
@@ -48,19 +48,6 @@ function LandingArtboard() {
           <div style={landing.ctaRow}>
             <button type="button" style={landing.ctaPrimary}>Enroll for Fall <span aria-hidden="true">→</span></button>
             <button type="button" style={landing.ctaSecondary}>Skim the syllabus</button>
-          </div>
-
-          <div style={landing.trustRow}>
-            <div style={landing.avatarStack} role="img" aria-label="Past students">
-              <div style={{ ...landing.avatar, background: '#E58FB5' }} aria-hidden="true">K</div>
-              <div style={{ ...landing.avatar, background: '#5DBB7E' }} aria-hidden="true">D</div>
-              <div style={{ ...landing.avatar, background: '#4D7CC7' }} aria-hidden="true">R</div>
-              <div style={{ ...landing.avatar, background: 'var(--paper-200)', color: 'var(--ink-700)' }} aria-hidden="true">+</div>
-            </div>
-            <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--ink-500)', lineHeight: 1.4 }}>
-              <strong style={{ color: 'var(--ink-900)' }}>312 students</strong> took it last year.<br />
-              94% said they'd recommend it to a friend.
-            </div>
           </div>
         </div>
 
@@ -221,7 +208,7 @@ function LandingArtboard() {
             Show up week 1. Bring a laptop and an open mind. We'll handle the rest.
           </p>
           <div style={{ ...landing.ctaRow, marginTop: 28 }}>
-            <button type="button" style={landing.ctaPrimary}>Add CSCI-Y 100 <span aria-hidden="true">→</span></button>
+            <button type="button" style={landing.ctaPrimary}>Add INFO-T 100 <span aria-hidden="true">→</span></button>
             <button type="button" style={landing.ctaSecondary}>Email Prof. Horton</button>
           </div>
         </div>
@@ -233,7 +220,7 @@ function LandingArtboard() {
           INDIANA UNIVERSITY · LUDDY SCHOOL · BLOOMINGTON
         </span>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--ink-300)', letterSpacing: '0.15em' }}>
-          CSCI-Y100 · v2.0 · 2026
+          INFO-T 100 · v2.0 · 2026
         </span>
       </footer>
     </div>

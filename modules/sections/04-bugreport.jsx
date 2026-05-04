@@ -40,7 +40,7 @@ function SectionBugReport() {
   const [copyState, setCopyState] = React.useState('idle');
   const onCopy = async () => {
     const text = [
-      'CSCI-Y100 · Bug Report (study-habit issue)',
+      'INFO-T 100 · Bug Report (study-habit issue)',
       '',
       '# Symptom', report.symptom || '(blank)',
       '',

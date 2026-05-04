@@ -62,7 +62,7 @@ function AISectionHome() {
 
 | When | Class · Ask | Loop (F/P/V/O) | Owner (ME/SHARED/AI) | One-line surprise |
 |------|-------------|----------------|----------------------|-------------------|
-| Mon AM | CSCI-Y100 · "explain recursion" | F P _ _ | shared | gave up too early on PROBE |
+| Mon AM | INFO-T 100 · "explain recursion" | F P _ _ | shared | gave up too early on PROBE |
 | Mon PM | ENG-W131 · "fix my thesis" | F P V O | ME | the V step caught a misquote |
 |        |             |                |                      |                   |
 

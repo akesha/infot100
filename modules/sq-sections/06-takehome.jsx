@@ -26,7 +26,7 @@ function SQSectionTakeHome() {
             <span style={th.itemTitle}>Obsidian vault path</span>
           </div>
           <div style={th.itemBody}>
-            From Round 3. Path on disk, like <code style={th.code}>~/Documents/csci-y100</code>.
+            From Round 3. Path on disk, like <code style={th.code}>~/Documents/info-t-100</code>.
             That's where every other lesson's Capture Template will land.
           </div>
         </li>

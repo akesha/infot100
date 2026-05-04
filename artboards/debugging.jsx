@@ -31,7 +31,7 @@ function DebuggingArtboard() {
       {/* Module header — looks like a Canvas page header but better */}
       <div style={dbg.modBar}>
         <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-          <span style={dbg.crumb}>CSCI-Y100 / WEEK 06 /</span>
+          <span style={dbg.crumb}>INFO-T 100 / WEEK 06 /</span>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-900)', fontWeight: 700, letterSpacing: '0.05em' }}>
             THE DEBUGGING MINDSET
           </span>

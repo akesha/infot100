@@ -68,7 +68,7 @@ function CTSectionTakeHome() {
       </div>
 
       <div style={th.policy}>
-        <strong>Revise-and-resubmit:</strong> as with every CSCI-Y100 deliverable, you can resubmit
+        <strong>Revise-and-resubmit:</strong> as with every INFO-T 100 deliverable, you can resubmit
         once for full credit through Friday of week 5. Late ≠ failed; it's data.
       </div>
 

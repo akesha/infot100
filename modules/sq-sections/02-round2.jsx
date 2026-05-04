@@ -87,7 +87,7 @@ function SQSectionRound2() {
           id="sq-repo-url"
           type="url"
           style={r2.repoInput}
-          placeholder="https://github.com/your-username/csci-y100"
+          placeholder="https://github.com/your-username/info-t-100"
           value={repoUrl}
           onChange={onRepo}
         />

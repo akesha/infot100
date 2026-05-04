@@ -46,7 +46,7 @@ function AISectionLab() {
   const [copyState, setCopyState] = React.useState('idle');
   const onCopy = async () => {
     const lines = [
-      'CSCI-Y100 · Prompt Lab',
+      'INFO-T 100 · Prompt Lab',
       '',
       `Course: ${data.course || '(blank)'}`,
       `Task:   ${data.task || '(blank)'}`,

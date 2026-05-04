@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CSCI-Y100 · Homework + Calendar · all 8 weeks</title>
-  <meta name="description" content="A single-page task list of every CSCI-Y100 deliverable across the 8-week course, with due dates, checkbox tracking, print-friendly layout, and a downloadable .ics calendar that gives native reminders." />
+  <title>INFO-T 100 · Homework + Calendar · all 8 weeks</title>
+  <meta name="description" content="A single-page task list of every INFO-T 100 deliverable across the 8-week course, with due dates, checkbox tracking, print-friendly layout, and a downloadable .ics calendar that gives native reminders." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -150,7 +150,7 @@
   <div class="toolbar no-print" role="toolbar" aria-label="Document actions">
     <div class="toolbar-left">
       <span class="label">HOMEWORK</span>
-      <span class="crumb">·&nbsp; CSCI-Y100 · all 8 weeks</span>
+      <span class="crumb">·&nbsp; INFO-T 100 · all 8 weeks</span>
     </div>
     <div class="toolbar-right">
       <button type="button" class="tbtn" id="btn-print">Print task list</button>
@@ -164,7 +164,7 @@
     <section class="hero">
       <div class="hero-head">
         <div class="hero-crest" aria-hidden="true">IU</div>
-        <div class="hero-meta">CSCI-Y100 · LUDDY STUDY SKILLS · v2.0</div>
+        <div class="hero-meta">INFO-T 100 · LUDDY STUDY SKILLS · v2.0</div>
       </div>
       <h1>Every <em>deliverable</em>, in one place.</h1>
       <p class="lede">All 24 deliverables across the 8-week course. Set your course start date and the due dates compute automatically. Click to mark items done — your progress saves to this browser. Print the whole thing or download a calendar file (.ics) that drops every deadline into your phone or laptop calendar with native reminders.</p>
@@ -461,10 +461,10 @@
       const lines = [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
-        'PRODID:-//IU Luddy//CSCI-Y100//EN',
+        'PRODID:-//IU Luddy//INFO-T 100//EN',
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
-        'X-WR-CALNAME:CSCI-Y100 Homework',
+        'X-WR-CALNAME:INFO-T 100 Homework',
         'X-WR-CALDESC:Auto-generated deadlines from your homework page.',
       ];
 
@@ -481,7 +481,7 @@
       WEEKS.forEach(w => {
         const dueDate = addDays(start, w.dueOffset);
         w.deliverables.forEach((d, i) => {
-          const uid = 'w' + w.num + 'd' + i + '@csci-y100';
+          const uid = 'w' + w.num + 'd' + i + '@info-t-100';
           const dtstart = fmtICS(dueDate, '23:30'); // 30 min before deadline
           const dtend = fmtICS(dueDate, '23:59');
           const summary = `[Y100 W${w.num}] ${d.name}`;
@@ -510,7 +510,7 @@
 
         // Class event
         const classDate = addDays(start, w.classOffset);
-        const classUid = 'w' + w.num + 'class@csci-y100';
+        const classUid = 'w' + w.num + 'class@info-t-100';
         lines.push(
           'BEGIN:VEVENT',
           'UID:' + classUid,
@@ -528,7 +528,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'csci-y100-homework.ics';
+      a.download = 'info-t-100-homework.ics';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

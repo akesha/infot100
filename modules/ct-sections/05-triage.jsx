@@ -93,7 +93,7 @@ function CTSectionTriage() {
 
   const [copyState, setCopyState] = React.useState('idle');
   const onCopy = async () => {
-    const lines = ['CSCI-Y100 · Triage matrix'];
+    const lines = ['INFO-T 100 · Triage matrix'];
     boxes.forEach(b => {
       const items = placedIn(b.id);
       lines.push('');
