@@ -1,0 +1,1304 @@
+/* Luddy Survival Mode — design tokens
+ * A CS-coded but warm aesthetic: terminal greens + paper warm + bold accents.
+ * Built for: students who need to pass, want it to feel a little fun, but
+ * still respect their time.
+ */
+
+:root {
+  /* Paper palette — warm, tactile, not corporate */
+  --paper-50:  #FBF7F0;   /* page background */
+  --paper-100: #F4ECDD;   /* card / panel */
+  --paper-200: #E8DCC4;   /* edges, dividers */
+  --paper-300: #C9B998;   /* muted ink */
+
+  /* Ink — for body type. ink-300 darkened to pass WCAG AA on paper-50/100. */
+  --ink-900: #16140F;
+  --ink-700: #2E2A20;
+  --ink-500: #5A523F;
+  --ink-300: #6E624A;   /* was #8A7E63 — bumped for contrast (≥4.5:1 on paper-50) */
+
+  /* CS / signal palette */
+  --terminal-900: #0E1410;   /* deep terminal */
+  --terminal-700: #1A2B22;
+  --terminal-500: #2E5945;
+  --signal-green: #5DBB7E;   /* "go", "complete" */
+  --signal-amber: #E8A93B;   /* "warn", "in progress" */
+  --signal-red:   #D8553C;   /* "stuck", "alert" */
+  --signal-blue:  #4D7CC7;   /* link, info */
+  --signal-pink:  #E58FB5;   /* highlight / hot */
+  --signal-purple: #7156A8;
+
+  /* Brand accents */
+  --crimson: #990000;        /* IU crimson, used sparingly */
+  --crimson-soft: #B83A3A;
+
+  /* Typography */
+  --font-display: "Fraunces", "Georgia", serif;
+  --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-hand: "Caveat", "Comic Sans MS", cursive;
+
+  /* Radii */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+
+  /* Shadows */
+  --shadow-paper: 0 1px 0 rgba(22, 20, 15, 0.04), 0 12px 28px -16px rgba(22, 20, 15, 0.18);
+  --shadow-card:  0 2px 0 var(--paper-200), 0 1px 0 rgba(0,0,0,0.05);
+}
+
+/* Decorative ASCII — used as section dividers */
+.ascii-divider {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-300);
+  letter-spacing: 0.1em;
+  white-space: pre;
+  line-height: 1.2;
+}
+
+/* Reusable: tape strip on a card corner */
+.tape {
+  position: absolute;
+  width: 70px;
+  height: 18px;
+  background: rgba(232, 169, 59, 0.5);
+  border-left: 1px dashed rgba(0,0,0,0.08);
+  border-right: 1px dashed rgba(0,0,0,0.08);
+  transform: rotate(-3deg);
+  top: -8px;
+  left: 16px;
+}
+
+/* Reusable: dot grid background (paper feel) */
+.dotgrid {
+  background-color: var(--paper-50);
+  background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1px, transparent 0);
+  background-size: 16px 16px;
+}
+
+/* Reusable: pixel border (small, retro) */
+.pixel-border {
+  box-shadow:
+    0 -2px 0 var(--ink-900),
+    0 2px 0 var(--ink-900),
+    -2px 0 0 var(--ink-900),
+    2px 0 0 var(--ink-900);
+}
+
+/* Marker / highlight */
+.marker {
+  background: linear-gradient(180deg, transparent 50%, rgba(232, 169, 59, 0.55) 50%);
+  padding: 0 2px;
+}
+.marker-pink {
+  background: linear-gradient(180deg, transparent 50%, rgba(229, 143, 181, 0.55) 50%);
+  padding: 0 2px;
+}
+
+/* Type fixes */
+* { box-sizing: border-box; }
+
+/* ───── A11y utilities ───── */
+
+/* Visually-hidden, available to screen readers */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link — appears on first Tab */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 8px;
+  background: var(--ink-900);
+  color: var(--paper-50);
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  z-index: 10000;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: top 120ms ease;
+}
+.skip-link:focus { top: 8px; outline: 3px solid var(--signal-amber); }
+
+/* Visible focus ring across all interactive elements.
+   Only suppress mouse-click focus rings (:focus that is NOT :focus-visible).
+   Keyboard users still get the amber ring everywhere. */
+:focus:not(:focus-visible) { outline: none; }
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+details:focus-visible,
+[tabindex]:focus-visible,
+[role="button"]:focus-visible,
+[role="tab"]:focus-visible,
+[role="gridcell"]:focus-visible,
+[role="link"]:focus-visible {
+  outline: 3px solid var(--signal-amber);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+/* Inputs/textareas need a non-transparent focus indication that doesn't
+   collide with the page chrome. */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  box-shadow: 0 0 0 1px var(--signal-amber) inset;
+}
+
+/* Reduced motion: kill animations & transitions globally */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ───── Responsive helpers ─────
+   Module pages render a fixed-width left rail (220px, position:fixed) and
+   shift the main content with margin-left:280. On narrow viewports (< 900px)
+   this leaves no usable content area on a phone. Stacking the rail above the
+   content keeps the page at least navigable on small screens. The selectors
+   target the nav landmark labelled "Module sections" and the main#main-content
+   element used by every interactive module page. */
+@media (max-width: 900px) {
+  nav[aria-label="Module sections"] {
+    position: static !important;
+    width: auto !important;
+    margin: 12px;
+    top: auto !important;
+    left: auto !important;
+    box-shadow: none;
+  }
+  main#main-content {
+    margin-left: 12px !important;
+    padding: 0 12px !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Reusable: async/catch-up callout. Use:
+     <aside class="async-catchup" role="note">
+       <strong>Missed class?</strong> …
+     </aside>
+   Pages can drop this in without further styling. */
+.async-catchup {
+  background: var(--paper-100);
+  border: 1px solid var(--paper-200);
+  border-left: 4px solid var(--signal-blue);
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-700);
+  margin: 14px 0;
+}
+.async-catchup strong { color: var(--ink-900); }
+
+/* Stamp — used to mark "approved" / "tested" */
+.stamp {
+  display: inline-block;
+  border: 2px solid currentColor;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  transform: rotate(-6deg);
+  border-radius: 2px;
+  opacity: 0.85;
+}
+
+/* ───── Async Track ─────
+   Collapsible panel that sits at the top of every interactive lesson page and
+   mirrors the in-class flow for students working asynchronously (job conflicts,
+   illness, accommodations, missed sessions). Authored once per lesson; rendered
+   by modules/async-track.jsx. Companion to the .async-catchup callout above. */
+.async-track {
+  margin: 18px 0 28px;
+  background: var(--paper-100);
+  border: 1px solid var(--paper-200);
+  border-left: 4px solid var(--signal-blue);
+  border-radius: var(--r-md);
+  font-family: var(--font-body);
+  color: var(--ink-700);
+  overflow: hidden;
+}
+.async-track-toggle {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink-900);
+  text-align: left;
+}
+.async-track-toggle:hover { background: var(--paper-50); }
+.async-track-toggle[aria-expanded="true"] {
+  border-bottom: 1px solid var(--paper-200);
+}
+.async-track-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  background: var(--signal-blue);
+  color: #fff;
+  padding: 4px 9px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.async-track-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--ink-900);
+}
+.async-track-subtitle {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-style: normal;
+  font-weight: 400;
+  color: var(--ink-500);
+  margin-top: 2px;
+}
+.async-track-caret {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-500);
+  transition: transform 200ms ease;
+}
+.async-track-toggle[aria-expanded="true"] .async-track-caret {
+  transform: rotate(90deg);
+}
+.async-track-panel { padding: 14px 18px 22px; }
+.async-track-intro {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-700);
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  background: var(--paper-50);
+  border-radius: var(--r-sm);
+  border: 1px dashed var(--paper-300);
+}
+.async-track-intro strong { color: var(--ink-900); }
+.async-track-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.async-track-step {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 14px;
+  padding: 12px 14px;
+  background: var(--paper-50);
+  border: 1px solid var(--paper-200);
+  border-radius: var(--r-sm);
+}
+.async-track-step-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--signal-blue);
+  letter-spacing: 0.1em;
+  align-self: start;
+  padding-top: 2px;
+}
+.async-track-step-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.async-track-step-label {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-900);
+}
+.async-track-step-time {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  color: var(--ink-500);
+}
+.async-track-step-time::before { content: "⏱ "; }
+.async-track-step-body {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-700);
+}
+.async-track-step-meta {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 6px 12px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.async-track-step-meta dt {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  padding-top: 2px;
+}
+.async-track-step-meta dd { margin: 0; color: var(--ink-700); }
+.async-track-foot {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--paper-300);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink-500);
+}
+.async-track-foot strong { color: var(--ink-900); }
+@media (max-width: 700px) {
+  .async-track-step { grid-template-columns: 1fr; }
+  .async-track-step-meta { grid-template-columns: 1fr; gap: 4px; }
+  .async-track-step-meta dt { padding-top: 8px; }
+}
+@media print {
+  .async-track-toggle { cursor: default; }
+  .async-track-caret { display: none; }
+  .async-track-panel[hidden] { display: block !important; }
+  .async-track { page-break-inside: avoid; }
+}
+
+/* ───── Engagement ─────
+   Inline retrieval-style self-checks (one per in-class section) and a single
+   per-lesson reflection journal. Components in modules/engagement.jsx. */
+
+/* Self-check — small card after each section's content. */
+.self-check {
+  margin: 28px 0 0;
+  padding: 16px 18px 14px;
+  background: var(--paper-100);
+  border: 1px solid var(--paper-200);
+  border-left: 4px solid var(--signal-amber);
+  border-radius: var(--r-md);
+  font-family: var(--font-body);
+  color: var(--ink-700);
+}
+.self-check[data-answered="true"] {
+  border-left-color: var(--signal-green);
+  background: linear-gradient(0deg, rgba(93, 187, 126, 0.06), rgba(93, 187, 126, 0.06)), var(--paper-100);
+}
+.self-check-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.self-check-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  background: var(--signal-amber);
+  color: var(--ink-900);
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.self-check[data-answered="true"] .self-check-badge {
+  background: var(--signal-green);
+  color: #fff;
+}
+.self-check-prompt-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+}
+.self-check-question {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--ink-900);
+  line-height: 1.4;
+  margin: 0 0 12px;
+}
+.self-check-hint {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink-500);
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  background: var(--paper-50);
+  border-radius: var(--r-sm);
+  border: 1px dashed var(--paper-300);
+}
+.self-check-hint strong { color: var(--ink-900); }
+.self-check-input {
+  width: 100%;
+  min-height: 72px;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-900);
+  background: var(--paper-50);
+  border: 1px solid var(--paper-300);
+  border-radius: var(--r-sm);
+  resize: vertical;
+}
+.self-check-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.self-check-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 7px 12px;
+  border: 1px solid var(--ink-900);
+  border-radius: var(--r-sm);
+  background: var(--ink-900);
+  color: var(--paper-50);
+  cursor: pointer;
+}
+.self-check-btn--ghost {
+  background: transparent;
+  color: var(--ink-700);
+  border-color: var(--paper-300);
+}
+.self-check-btn--ghost:hover { background: var(--paper-50); }
+.self-check-answer {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--paper-50);
+  border-left: 3px solid var(--signal-green);
+  border-radius: var(--r-sm);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-700);
+}
+.self-check-answer strong { color: var(--ink-900); }
+
+/* Reflection Journal — once per lesson, before the footer. */
+.reflection-journal {
+  margin: 56px 0 24px;
+  padding: 22px 24px 24px;
+  background: var(--paper-100);
+  border: 1px solid var(--paper-200);
+  border-top: 4px solid var(--signal-purple);
+  border-radius: var(--r-md);
+  font-family: var(--font-body);
+}
+.reflection-journal-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.reflection-journal-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  background: var(--signal-purple);
+  color: #fff;
+  padding: 4px 9px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.reflection-journal-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--ink-900);
+}
+.reflection-journal-saveinfo {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  color: var(--ink-500);
+  margin-left: auto;
+}
+.reflection-journal-intro {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-700);
+  margin: 0 0 18px;
+}
+.reflection-journal-prompt {
+  margin: 0 0 18px;
+}
+.reflection-journal-prompt-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-900);
+  margin-bottom: 8px;
+}
+.reflection-journal-input {
+  width: 100%;
+  min-height: 96px;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-900);
+  background: var(--paper-50);
+  border: 1px solid var(--paper-300);
+  border-radius: var(--r-sm);
+  resize: vertical;
+}
+.reflection-journal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.reflection-journal-actions .self-check-btn { font-size: 11px; }
+.reflection-journal-status {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--signal-green);
+  margin-left: 6px;
+  align-self: center;
+}
+@media print {
+  .self-check-actions { display: none; }
+  .reflection-journal-actions { display: none; }
+}
+
+/* ───── Modality ─────
+   Media slot (embedded video + collapsible transcript), header print button,
+   and reflection-journal export-as-txt. Components in modules/media-slot.jsx. */
+
+/* Media slot — embeddable at the top of any section that has a recording. */
+.media-slot {
+  margin: 0 0 24px;
+  background: var(--paper-100);
+  border: 1px solid var(--paper-200);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+.media-slot--placeholder {
+  border-left: 4px solid var(--signal-pink);
+}
+.media-slot--video {
+  border-left: 4px solid var(--signal-blue);
+}
+.media-slot-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--paper-50);
+  border-bottom: 1px solid var(--paper-200);
+}
+.media-slot-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 4px 9px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  background: var(--signal-pink);
+  color: var(--ink-900);
+}
+.media-slot--video .media-slot-badge {
+  background: var(--signal-blue);
+  color: #fff;
+}
+.media-slot-caption {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-500);
+}
+.media-slot-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--terminal-900);
+}
+.media-slot-frame iframe,
+.media-slot-frame video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.media-slot-placeholder {
+  display: grid;
+  place-items: center;
+  padding: 36px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--paper-100) 0%, var(--paper-50) 100%);
+  color: var(--ink-700);
+  font-family: var(--font-body);
+}
+.media-slot-placeholder-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--ink-900);
+  margin: 0 0 6px;
+}
+.media-slot-placeholder-sub {
+  font-size: 13px;
+  color: var(--ink-500);
+  max-width: 420px;
+  line-height: 1.55;
+  margin: 0;
+}
+.media-slot-transcript-toggle {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--paper-200);
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-700);
+  cursor: pointer;
+  text-align: left;
+}
+.media-slot-transcript-toggle:hover { background: var(--paper-50); }
+.media-slot-transcript-caret {
+  transition: transform 200ms ease;
+  font-size: 12px;
+}
+.media-slot-transcript-toggle[aria-expanded="true"] .media-slot-transcript-caret {
+  transform: rotate(90deg);
+}
+.media-slot-transcript {
+  padding: 16px 20px 22px;
+  background: var(--paper-50);
+  border-top: 1px solid var(--paper-200);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-700);
+  white-space: pre-line;
+}
+.media-slot-transcript p { margin: 0 0 12px; }
+.media-slot-transcript p:last-child { margin-bottom: 0; }
+.media-slot-transcript[hidden] { display: none; }
+
+/* Header "Print worksheet" button — sits in the existing topBar.right chip area.
+   We intentionally inherit the existing chip look so it doesn't visually crowd
+   the duration / deliverable counts. */
+.lesson-print-btn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--paper-300);
+  background: transparent;
+  color: var(--paper-100);
+  padding: 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.lesson-print-btn:hover {
+  background: var(--paper-300);
+  color: var(--ink-900);
+}
+
+/* Print stylesheet keeps the media slot visible (sometimes useful for handouts)
+   and forces the transcript open if it was collapsed. */
+@media print {
+  .media-slot-transcript-toggle { display: none; }
+  .media-slot-transcript[hidden] { display: block !important; }
+  .media-slot-frame { display: none; }
+  .media-slot-placeholder { display: none; }
+  .media-slot { page-break-inside: avoid; }
+  .lesson-print-btn { display: none; }
+}
+
+/* ───── Course Arc ─────
+   The connective-tissue strip on every lesson — shows the 8-week sweep, marks
+   current week, links to siblings (built or skeleton). Component in
+   modules/course-arc.jsx. */
+.course-arc {
+  margin: 0 0 24px;
+  background: var(--paper-100);
+  border: 1px solid var(--paper-200);
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+}
+.course-arc-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.course-arc-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  background: var(--ink-900);
+  color: var(--paper-50);
+  padding: 4px 9px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.course-arc-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--ink-900);
+}
+.course-arc-here {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  color: var(--ink-500);
+}
+.course-arc-homework {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  color: var(--ink-900);
+  background: var(--paper-50);
+  border: 1px solid var(--ink-900);
+  padding: 4px 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  transition: background 120ms ease;
+}
+.course-arc-homework:hover {
+  background: var(--ink-900);
+  color: var(--paper-50);
+}
+.course-arc-strip {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+}
+.course-arc-week {
+  display: block;
+  padding: 8px 10px;
+  background: var(--paper-50);
+  border: 1px solid var(--paper-200);
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  color: var(--ink-700);
+  font-family: var(--font-body);
+  text-align: left;
+  transition: background 120ms ease, transform 120ms ease;
+  position: relative;
+  min-height: 64px;
+}
+.course-arc-week:hover { background: var(--paper-100); }
+.course-arc-week--current {
+  background: var(--ink-900);
+  color: var(--paper-50);
+  border-color: var(--ink-900);
+}
+.course-arc-week--current:hover { background: var(--ink-700); }
+.course-arc-week-num {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  opacity: 0.75;
+  display: block;
+  margin-bottom: 2px;
+}
+.course-arc-week-title {
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 600;
+  display: block;
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+.course-arc-week-sub {
+  font-size: 10.5px;
+  line-height: 1.3;
+  opacity: 0.85;
+  display: block;
+}
+.course-arc-week--skeleton {
+  border-style: dashed;
+  background: transparent;
+}
+.course-arc-week--skeleton::after {
+  content: 'skeleton';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: var(--signal-amber-text);
+  text-transform: uppercase;
+}
+@media (max-width: 900px) {
+  .course-arc-strip { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 560px) {
+  .course-arc-strip { grid-template-columns: repeat(2, 1fr); }
+  .course-arc-here { margin-left: 0; }
+}
+@media print {
+  .course-arc { page-break-inside: avoid; }
+  .course-arc-week--current { background: #000 !important; color: #fff !important; }
+}
+
+/* ───── Lesson Skeleton ─────
+   Used for unbuilt lessons — same shell as built lessons but content slots
+   announce themselves as planned-but-not-built. Component in modules/skeleton.jsx. */
+
+.skeleton-banner {
+  margin: 0 0 24px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(232, 169, 59, 0.18) 0%, rgba(232, 169, 59, 0.06) 100%);
+  border: 1px solid rgba(232, 169, 59, 0.5);
+  border-left: 4px solid var(--signal-amber);
+  border-radius: var(--r-md);
+  font-family: var(--font-body);
+  color: var(--ink-700);
+}
+.skeleton-banner-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.skeleton-banner-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  background: var(--signal-amber);
+  color: var(--ink-900);
+  padding: 4px 9px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.skeleton-banner-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--ink-900);
+}
+.skeleton-banner-body {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+.skeleton-banner-body strong { color: var(--ink-900); }
+
+.skeleton-anchor {
+  margin: 0 0 32px;
+  padding: 18px 22px;
+  background: var(--paper-100);
+  border: 1px solid var(--paper-200);
+  border-radius: var(--r-md);
+  font-family: var(--font-body);
+}
+.skeleton-anchor-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  margin: 0 0 8px;
+}
+.skeleton-anchor-question {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--ink-900);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.skeleton-section {
+  margin: 0 0 32px;
+}
+.skeleton-section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--paper-200);
+}
+.skeleton-section-num {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--signal-amber-text);
+  text-transform: uppercase;
+}
+.skeleton-section-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--ink-900);
+}
+
+.skeleton-bigidea {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--paper-50);
+  border: 1px solid var(--paper-200);
+  border-left: 4px solid var(--signal-purple);
+  border-radius: var(--r-sm);
+  margin-bottom: 12px;
+}
+.skeleton-bigidea-num {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--signal-purple-text);
+  line-height: 1;
+  text-align: center;
+  align-self: center;
+}
+.skeleton-bigidea-statement {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--ink-900);
+  margin: 0 0 6px;
+  line-height: 1.35;
+}
+.skeleton-bigidea-how {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-700);
+  margin: 0;
+}
+
+.skeleton-bridge {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.skeleton-bridge-col {
+  padding: 16px 18px;
+  background: var(--paper-50);
+  border: 1px solid var(--paper-200);
+  border-radius: var(--r-sm);
+}
+.skeleton-bridge-col--up { border-left: 4px solid var(--signal-blue); }
+.skeleton-bridge-col--down { border-left: 4px solid var(--signal-green); }
+.skeleton-bridge-head {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  margin: 0 0 12px;
+}
+.skeleton-bridge-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.skeleton-bridge-item {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-700);
+}
+.skeleton-bridge-week {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: var(--ink-900);
+  color: var(--paper-50);
+  padding: 2px 7px;
+  border-radius: 2px;
+  margin-right: 8px;
+  text-transform: uppercase;
+}
+.skeleton-bridge-what {
+  font-weight: 600;
+  color: var(--ink-900);
+}
+.skeleton-bridge-why {
+  display: block;
+  font-size: 12.5px;
+  color: var(--ink-500);
+  margin-top: 2px;
+}
+
+.skeleton-flow {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  counter-reset: flow;
+}
+.skeleton-flow-item {
+  display: grid;
+  grid-template-columns: 50px 1fr auto;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--paper-50);
+  border: 1px solid var(--paper-200);
+  border-radius: var(--r-sm);
+}
+.skeleton-flow-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--signal-amber-text);
+  align-self: center;
+}
+.skeleton-flow-body { display: block; }
+.skeleton-flow-label {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink-900);
+  display: block;
+  margin-bottom: 4px;
+}
+.skeleton-flow-intent {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-500);
+}
+.skeleton-flow-time {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  color: var(--ink-500);
+  align-self: start;
+  padding-top: 4px;
+  white-space: nowrap;
+}
+.skeleton-flow-time::before { content: "⏱ "; }
+
+.skeleton-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.skeleton-list-item {
+  padding: 10px 14px;
+  background: var(--paper-50);
+  border: 1px solid var(--paper-200);
+  border-left: 3px solid var(--signal-green);
+  border-radius: var(--r-sm);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-700);
+}
+
+.skeleton-author-notes {
+  margin-top: 28px;
+  padding: 16px 20px;
+  background: var(--terminal-900);
+  border-radius: var(--r-md);
+  color: var(--paper-200);
+}
+.skeleton-author-notes-head {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--signal-amber);
+  margin: 0 0 12px;
+}
+.skeleton-author-notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--paper-100);
+  font-family: var(--font-mono);
+}
+.skeleton-author-notes-list li::before {
+  content: "// ";
+  color: var(--signal-amber);
+  margin-right: 6px;
+}
+
+@media (max-width: 720px) {
+  .skeleton-bridge { grid-template-columns: 1fr; }
+  .skeleton-bigidea { grid-template-columns: 40px 1fr; }
+  .skeleton-bigidea-num { font-size: 22px; }
+  .skeleton-flow-item { grid-template-columns: 1fr; }
+  .skeleton-flow-time { padding-top: 0; }
+}
+
+/* ───── Capture Template ─────
+   A markdown snippet shown at the bottom of every built lesson. Students copy
+   it into their Obsidian vault. The snippet pre-fills frontmatter + section
+   headings so the note exists before the work does. */
+.capture-template {
+  margin: 28px 0 0;
+  padding: 18px 22px 20px;
+  background: var(--terminal-900);
+  border-radius: var(--r-md);
+  color: var(--paper-100);
+  font-family: var(--font-body);
+}
+.capture-template-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.capture-template-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  background: var(--signal-green);
+  color: var(--ink-900);
+  padding: 4px 9px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.capture-template-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--paper-50);
+}
+.capture-template-target {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  color: var(--paper-300);
+  margin-left: auto;
+}
+.capture-template-intro {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--paper-200);
+  margin: 0 0 14px;
+}
+.capture-template-pre {
+  margin: 0;
+  padding: 14px 16px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--paper-100);
+  overflow-x: auto;
+  white-space: pre;
+}
+.capture-template-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.capture-template-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 7px 12px;
+  border: 1px solid var(--paper-200);
+  border-radius: var(--r-sm);
+  background: var(--paper-50);
+  color: var(--ink-900);
+  cursor: pointer;
+}
+.capture-template-btn:hover { background: var(--paper-100); }
+.capture-template-status {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--signal-green);
+  align-self: center;
+}
+
+@media print {
+  .capture-template-actions { display: none; }
+  .capture-template { background: transparent !important; color: var(--ink-900) !important; border: 1px solid var(--ink-900); }
+  .capture-template-pre { background: transparent !important; color: var(--ink-900) !important; }
+  .capture-template-title, .capture-template-intro { color: var(--ink-900) !important; }
+}

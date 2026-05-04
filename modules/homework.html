@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSCI-Y100 · Homework + Calendar · all 8 weeks</title>
+  <meta name="description" content="A single-page task list of every CSCI-Y100 deliverable across the 8-week course, with due dates, checkbox tracking, print-friendly layout, and a downloadable .ics calendar that gives native reminders." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    @page { size: letter; margin: 0.55in 0.65in; }
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    html { font-size: 14px; }
+    body { margin: 0; background: var(--paper-200); color: var(--ink-900); font-family: var(--font-body); line-height: 1.55; }
+    .skip-link { position: absolute; left: -9999px; }
+    .skip-link:focus { left: 12px; top: 12px; background: var(--ink-900); color: #fff; padding: 8px 14px; z-index: 999; }
+
+    /* Toolbar */
+    .toolbar { position: sticky; top: 0; z-index: 100; background: var(--ink-900); color: var(--paper-50); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .toolbar-left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .toolbar .label { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em; color: var(--signal-amber); }
+    .toolbar .crumb { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em; color: var(--paper-300); }
+    .toolbar-right { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .tbtn { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 14px; border-radius: 4px; cursor: pointer; border: 1px solid var(--paper-300); background: transparent; color: var(--paper-100); }
+    .tbtn:hover { background: var(--paper-300); color: var(--ink-900); }
+    .tbtn--primary { background: var(--signal-amber); color: var(--ink-900); border-color: var(--signal-amber); }
+    .tbtn--primary:hover { background: #f7c46a; }
+    .tbtn:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+    .page { max-width: 920px; margin: 24px auto 60px; padding: 0 28px; }
+    @media print {
+      body { background: #fff; }
+      .toolbar, .no-print { display: none !important; }
+      .page { max-width: none; padding: 0; margin: 0; }
+      .week:not(:last-child) { page-break-after: always; }
+    }
+
+    /* Hero */
+    .hero { background: var(--paper-50); border: 2px solid var(--ink-900); padding: 28px 32px; margin-bottom: 22px; position: relative; }
+    .hero-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; flex-wrap: wrap; gap: 12px; }
+    .hero-crest { width: 48px; height: 48px; background: var(--crimson); color: #fff; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 24px; display: inline-flex; align-items: center; justify-content: center; }
+    .hero-meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--ink-500); text-align: right; }
+    .hero h1 { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 56px; letter-spacing: -0.025em; margin: 0 0 8px; line-height: 1.0; }
+    .hero h1 em { color: var(--crimson); font-style: italic; }
+    .hero .lede { font-size: 17px; line-height: 1.5; color: var(--ink-700); max-width: 720px; margin: 0 0 18px; }
+
+    /* Date config */
+    .config { background: var(--paper-100); border: 1px dashed var(--paper-300); border-radius: 4px; padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .config label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--ink-700); letter-spacing: 0.1em; }
+    .config input[type="date"] { padding: 6px 10px; font-family: var(--font-mono); font-size: 13px; border: 1px solid var(--paper-300); border-radius: 3px; background: #fff; }
+    .config .config-help { font-size: 12.5px; color: var(--ink-500); flex: 1; min-width: 240px; }
+
+    /* At-a-glance counters */
+    .glance { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-bottom: 24px; }
+    .glance-card { background: var(--paper-50); border: 1px solid var(--paper-200); border-top: 4px solid var(--ink-900); padding: 14px 16px; }
+    .glance-card .lbl { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; color: var(--ink-500); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 4px; }
+    .glance-card .n { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 36px; color: var(--ink-900); line-height: 1; font-variant-numeric: tabular-nums; }
+    .glance-card .sub { font-size: 12px; color: var(--ink-500); margin-top: 4px; }
+    .glance-card.due-soon { border-top-color: var(--signal-amber); }
+    .glance-card.due-soon .n { color: var(--signal-amber-text); }
+    .glance-card.overdue { border-top-color: var(--signal-red); }
+    .glance-card.overdue .n { color: var(--signal-red-text); }
+    .glance-card.done { border-top-color: var(--signal-green); }
+    .glance-card.done .n { color: var(--signal-green-text); }
+
+    /* Timeline strip */
+    .timeline { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin-bottom: 28px; }
+    .timeline a { padding: 10px 8px; background: var(--paper-50); border: 1px solid var(--paper-200); border-radius: 4px; text-decoration: none; color: var(--ink-900); text-align: center; transition: background 120ms ease; position: relative; }
+    .timeline a:hover { background: var(--paper-100); }
+    .timeline a.this-week { background: var(--ink-900); color: var(--paper-50); border-color: var(--ink-900); }
+    .timeline a.past { opacity: 0.55; }
+    .timeline a.past .pill-done { position: absolute; top: 4px; right: 4px; font-family: var(--font-mono); font-size: 8px; font-weight: 700; color: var(--signal-green-text); letter-spacing: 0.1em; }
+    .timeline .wk { display: block; font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--ink-500); letter-spacing: 0.1em; margin-bottom: 2px; }
+    .timeline a.this-week .wk { color: var(--signal-amber); }
+    .timeline .ttl { display: block; font-family: var(--font-display); font-style: italic; font-size: 13px; font-weight: 600; line-height: 1.15; }
+    .timeline .pts { display: block; font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-500); margin-top: 4px; }
+
+    @media (max-width: 760px) {
+      .timeline { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* Week cards */
+    .week { background: var(--paper-50); border: 1px solid var(--paper-200); border-radius: 6px; padding: 22px 26px; margin-bottom: 16px; position: relative; }
+    .week.this-week { border: 2px solid var(--ink-900); border-left: 6px solid var(--signal-amber); }
+    .week.past { background: var(--paper-100); }
+    .week-head { display: grid; grid-template-columns: 80px 1fr auto; gap: 18px; align-items: baseline; padding-bottom: 12px; border-bottom: 2px solid var(--ink-900); margin-bottom: 16px; }
+    .week-num { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--crimson); letter-spacing: 0.18em; }
+    .week-title { font-family: var(--font-display); font-style: italic; font-size: 28px; font-weight: 600; color: var(--ink-900); line-height: 1.05; margin: 0; }
+    .week-anchor { font-size: 14px; color: var(--ink-500); margin-top: 4px; font-style: italic; }
+    .week-dates { text-align: right; font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); letter-spacing: 0.05em; }
+    .week-dates dt { font-weight: 700; color: var(--ink-700); margin-bottom: 2px; letter-spacing: 0.1em; text-transform: uppercase; font-size: 9.5px; }
+    .week-dates dd { margin: 0 0 8px; font-size: 13px; color: var(--ink-900); font-family: var(--font-mono); }
+
+    .deliverables { list-style: none; padding: 0; margin: 0 0 14px; display: flex; flex-direction: column; gap: 8px; }
+    .deliv { display: grid; grid-template-columns: 36px 1fr auto; gap: 14px; align-items: start; padding: 10px 14px; background: #fff; border: 1px solid var(--paper-200); border-radius: 4px; }
+    .deliv.done { background: rgba(93, 187, 126, 0.08); border-color: var(--signal-green); }
+    .deliv.done .deliv-name { text-decoration: line-through; color: var(--ink-500); }
+    .deliv-check { background: transparent; border: 0; padding: 0; cursor: pointer; align-self: start; }
+    .deliv-box { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border: 2px solid var(--ink-900); border-radius: 4px; font-family: var(--font-mono); font-weight: 700; font-size: 16px; color: var(--signal-green-text); background: #fff; }
+    .deliv-body { min-width: 0; }
+    .deliv-name { font-family: var(--font-display); font-style: italic; font-size: 16px; font-weight: 600; color: var(--ink-900); line-height: 1.3; margin-bottom: 2px; }
+    .deliv-detail { font-size: 13px; color: var(--ink-700); line-height: 1.5; }
+    .deliv-pts { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--crimson); letter-spacing: 0.1em; align-self: start; padding-top: 4px; white-space: nowrap; }
+
+    .week-links { display: flex; gap: 14px; flex-wrap: wrap; padding-top: 12px; border-top: 1px dashed var(--paper-300); font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); }
+    .week-links a { color: var(--ink-700); text-decoration: none; padding-bottom: 1px; border-bottom: 1px dashed var(--ink-300); }
+    .week-links a:hover { color: var(--crimson); border-color: var(--crimson); }
+
+    .week-flag { display: inline-block; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; padding: 3px 8px; border-radius: 3px; text-transform: uppercase; margin-left: 12px; }
+    .week-flag.due-soon { background: var(--signal-amber); color: var(--ink-900); }
+    .week-flag.overdue { background: var(--signal-red); color: #fff; }
+    .week-flag.done { background: var(--signal-green); color: #fff; }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 40px; }
+      .week-head { grid-template-columns: 1fr; gap: 8px; }
+      .week-dates { text-align: left; }
+      .deliv { grid-template-columns: 30px 1fr; }
+      .deliv-pts { grid-column: 1 / -1; padding-top: 0; }
+    }
+
+    /* Print */
+    @media print {
+      .hero { border: 2px solid #000; }
+      .timeline, .config, .glance { display: none; }
+      .week { border: 1px solid #888; box-shadow: none; }
+      .week.this-week { border: 2px solid #000; }
+      .week-flag { border: 1px solid currentColor; }
+      .deliv { border-color: #aaa; }
+    }
+
+    .footer-note { margin-top: 32px; padding: 16px 20px; background: var(--paper-100); border-left: 4px solid var(--signal-blue); font-size: 13.5px; line-height: 1.6; color: var(--ink-700); border-radius: 3px; }
+    .footer-note strong { color: var(--ink-900); }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to homework list</a>
+
+  <div class="toolbar no-print" role="toolbar" aria-label="Document actions">
+    <div class="toolbar-left">
+      <span class="label">HOMEWORK</span>
+      <span class="crumb">·&nbsp; CSCI-Y100 · all 8 weeks</span>
+    </div>
+    <div class="toolbar-right">
+      <button type="button" class="tbtn" id="btn-print">Print task list</button>
+      <button type="button" class="tbtn tbtn--primary" id="btn-ics">Download .ics calendar</button>
+      <a class="tbtn" href="../index.html">← Course canvas</a>
+    </div>
+  </div>
+
+  <main id="main" class="page">
+
+    <section class="hero">
+      <div class="hero-head">
+        <div class="hero-crest" aria-hidden="true">IU</div>
+        <div class="hero-meta">CSCI-Y100 · LUDDY STUDY SKILLS · v2.0</div>
+      </div>
+      <h1>Every <em>deliverable</em>, in one place.</h1>
+      <p class="lede">All 24 deliverables across the 8-week course. Set your course start date and the due dates compute automatically. Click to mark items done — your progress saves to this browser. Print the whole thing or download a calendar file (.ics) that drops every deadline into your phone or laptop calendar with native reminders.</p>
+    </section>
+
+    <section class="config no-print" aria-label="Course start date">
+      <label for="start-date">COURSE START · WEEK 1 CLASS DATE</label>
+      <input type="date" id="start-date" />
+      <span class="config-help">Set the date of your first Week 1 class. Every due date below recomputes. Saves to your browser.</span>
+    </section>
+
+    <section class="glance" aria-label="At a glance">
+      <div class="glance-card"><div class="lbl">Total deliverables</div><div class="n" id="g-total">—</div><div class="sub">across all 8 weeks</div></div>
+      <div class="glance-card done"><div class="lbl">Marked done</div><div class="n" id="g-done">0</div><div class="sub">click checkboxes to update</div></div>
+      <div class="glance-card due-soon"><div class="lbl">Due this week</div><div class="n" id="g-soon">—</div><div class="sub">within 7 days from today</div></div>
+      <div class="glance-card overdue"><div class="lbl">Overdue</div><div class="n" id="g-over">—</div><div class="sub">past due, not marked done</div></div>
+    </section>
+
+    <nav class="timeline no-print" aria-label="Jump to a week">
+      <!-- populated by JS -->
+    </nav>
+
+    <div id="weeks-list"><!-- populated by JS --></div>
+
+    <p class="footer-note">
+      <strong>Native reminders:</strong> click "Download .ics calendar" above. Open the file with Google Calendar, Apple Calendar, Outlook, or your phone — every deadline becomes an event with a 1-day-before reminder. The reminders fire from your OS, not from this page, so you don't need to keep this tab open.<br /><br />
+      <strong>Privacy note:</strong> the date you set, your checked-off items, and any text you've typed across the course all live in this browser only. The .ics file is generated locally — nothing is uploaded anywhere.
+    </p>
+  </main>
+
+  <script>
+    // ─── Course data ──────────────────────────────────────────────────────
+    // 8 weeks × deliverables. classOffset = days from course start (W1 class = 0).
+    // dueOffset = days from course start to due-by date (Sunday 11:59 pm of class week).
+    const WEEKS = [
+      { num: 1, key: 'spawn-point', title: 'Spawn Point',
+        anchor: 'What can the toolbox actually do?',
+        classOffset: 0, dueOffset: 6,
+        files: { lesson: 'spawn-point.html', rubric: 'spawn-point-tilt-rubric.html', guide: 'spawn-point-facilitator-guide.html' },
+        deliverables: [
+          { name: 'Capability map screenshot', detail: 'Mark 8 capabilities with what you would make. Post in Canvas.', points: 30 },
+          { name: 'Cardboard prototype + photo', detail: 'A small physical prototype of one verb you picked. Photo + 1-line caption.', points: 30 },
+          { name: 'Project seed posted', detail: 'WHO/WHAT/verbs seed for your final project, posted to the W1 Discussion.', points: 30 },
+        ],
+      },
+      { num: 2, key: 'compute-time', title: 'Compute Time',
+        anchor: 'Where do my hours actually go?',
+        classOffset: 7, dueOffset: 13,
+        files: { lesson: 'compute-time.html', rubric: 'compute-time-tilt-rubric.html', guide: 'compute-time-facilitator-guide.html' },
+        deliverables: [
+          { name: 'Audit grid · 168 hours filled in', detail: 'Real entries every couple hours for one week. Screenshot or download.', points: 30 },
+          { name: 'Spike + crash map · screenshot', detail: 'Posted in Canvas Discussion for peer eyes.', points: 30 },
+          { name: 'ABC re-budget · downloaded', detail: 'A column 3–5 items, B column 5–8, C column long. Saved in vault.', points: 30 },
+        ],
+      },
+      { num: 3, key: 'setup-quest', title: 'Setup Quest · Second Brain',
+        anchor: 'Can I run code AND keep my own notes?',
+        classOffset: 14, dueOffset: 20,
+        files: { lesson: 'setup-quest.html', rubric: 'setup-quest-tilt-rubric.html', guide: 'setup-quest-facilitator-guide.html' },
+        deliverables: [
+          { name: 'Working dev environment', detail: 'Terminal + editor + Python + git, verified by `echo "hi"` and `python --version`.', points: 25 },
+          { name: 'GitHub repo with first commit', detail: 'Even an empty repo counts. URL logged in Start Log.', points: 25 },
+          { name: 'Obsidian vault · 5 folders + first note', detail: 'Vault path logged. First Weeks/W03 note saved.', points: 25 },
+          { name: 'First credible source from IU library DB', detail: 'NOT Google. Sources/[topic].md with title + link + "why I trust this".', points: 25 },
+        ],
+      },
+      { num: 4, key: 'project-seed-v01', title: 'Project Seed v0.1',
+        anchor: 'Can I ship — and document — a real thing?',
+        classOffset: 21, dueOffset: 27,
+        files: { lesson: 'project-seed-v01.html', rubric: 'project-seed-v01-tilt-rubric.html', guide: 'project-seed-v01-facilitator-guide.html' },
+        deliverables: [
+          { name: 'v0.1 pushed to GitHub today', detail: 'A real artifact someone else can test in under 5 minutes. Commit message names what shipped.', points: 35 },
+          { name: 'Two classmate observations captured', detail: 'In your Bugs/ folder, with named partners + observation + question.', points: 25 },
+          { name: 'Reckoning · 3 sentences, under 60 words', detail: 'Reflections/W04-reckoning.md — what shipped / what didn\'t / what W5 needs.', points: 25 },
+          { name: 'Three lines logged in Start Log', detail: 'GitHub URL · classmate count · reckoning path.', points: 15 },
+        ],
+      },
+      { num: 5, key: 'debugging-mindset', title: 'The Debugging Mindset',
+        anchor: 'Are bugs information or verdicts?',
+        classOffset: 28, dueOffset: 34,
+        files: { lesson: 'debugging-mindset.html', rubric: 'rubric.html', guide: '' },
+        deliverables: [
+          { name: 'Structured bug report · one real bug', detail: 'From your own coursework. Filled-in form export, dropped into Bugs/.', points: 60 },
+          { name: 'Pair-debug reply · async thread', detail: 'Read partner\'s bug report, name one new hypothesis they didn\'t consider.', points: 25 },
+          { name: 'Stuck-story posted to W5 Discussion', detail: 'One anecdote about a recent stuck moment + replies to two classmates.', points: 15 },
+        ],
+      },
+      { num: 6, key: 'ai-copilot-camp', title: 'AI Co-Pilot Camp',
+        anchor: 'Is AI an oracle or a collaborator?',
+        classOffset: 35, dueOffset: 41,
+        files: { lesson: 'ai-copilot-camp.html', rubric: 'ai-copilot-camp-tilt-rubric.html', guide: 'ai-copilot-camp-facilitator-guide.html' },
+        deliverables: [
+          { name: '5-day Prompt Journal', detail: 'One prompt per weekday × 5 days · what you tried / what shipped / what you\'d change. Single PDF or Doc to Canvas.', points: 70 },
+          { name: 'Citation audit logged', detail: 'At least one AI-generated citation verified (or caught fake) in IU library DB.', points: 30 },
+        ],
+      },
+      { num: 7, key: 'honest-start', title: 'The Honest Start',
+        anchor: "What's underneath my avoidance?",
+        classOffset: 42, dueOffset: 48,
+        files: { lesson: 'honest-start.html', rubric: 'honest-start-tilt-rubric.html', guide: 'honest-start-facilitator-guide.html' },
+        deliverables: [
+          { name: 'Procrastination Autopsy · in vault', detail: 'Reflections/W07-autopsy.md · private to you · names the underneath thing.', points: 40 },
+          { name: 'Motivation Stack · 3 layers', detail: 'External accountability + environmental nudge + tiny ritual. Posted in Discussion.', points: 30 },
+          { name: 'Honest Start log · 1 paragraph', detail: 'One real attempt at the avoided task this week, with what worked.', points: 30 },
+        ],
+      },
+      { num: 8, key: 'final-demo', title: 'Final Demo + Reckoning',
+        anchor: 'Did I ship — and what does my vault show?',
+        classOffset: 49, dueOffset: 55,
+        files: { lesson: 'final-demo.html', rubric: 'final-demo-tilt-rubric.html', guide: 'final-demo-facilitator-guide.html' },
+        deliverables: [
+          { name: 'v1 demo · live to 3 classmates', detail: 'Three demo rounds: pairs, table of 4, open studio. TA records 30 sec of strongest moment.', points: 40 },
+          { name: '5 Big Ideas reckoning', detail: 'Reflections/W08-reckoning.md · five lines, one per Big Idea, each citing a vault note.', points: 40 },
+          { name: 'Trajectory paragraph', detail: 'What you\'ll ship next + the habit + the date. Reflections/W08-trajectory.md.', points: 15 },
+          { name: 'Final Export-your-work .txt to Canvas', detail: 'The closing artifact — entire course\'s record of you, externalized.', points: 5 },
+        ],
+      },
+    ];
+
+    // ─── State ────────────────────────────────────────────────────────────
+    const STORAGE_START = 'homework:start-date';
+    const STORAGE_DONE  = 'homework:done';
+    const DEFAULT_START = '2026-01-12';
+
+    let startDate = readStartDate();
+    let done = readDone();
+
+    function readStartDate() {
+      try { return localStorage.getItem(STORAGE_START) || DEFAULT_START; }
+      catch (e) { return DEFAULT_START; }
+    }
+    function writeStartDate(v) {
+      try { localStorage.setItem(STORAGE_START, v); } catch (e) {}
+    }
+    function readDone() {
+      try {
+        const raw = localStorage.getItem(STORAGE_DONE);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) { return {}; }
+    }
+    function writeDone() {
+      try { localStorage.setItem(STORAGE_DONE, JSON.stringify(done)); } catch (e) {}
+    }
+    function deliverableId(weekNum, idx) { return 'w' + weekNum + ':d' + idx; }
+
+    // ─── Date helpers ─────────────────────────────────────────────────────
+    function parseDate(yyyymmdd) {
+      const [y, m, d] = yyyymmdd.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
+    function addDays(date, days) {
+      const out = new Date(date);
+      out.setDate(out.getDate() + days);
+      return out;
+    }
+    function fmtDate(date) {
+      const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return days[date.getDay()] + ' · ' + months[date.getMonth()] + ' ' + date.getDate();
+    }
+    function fmtDateTime(date, time) {
+      return fmtDate(date) + ' · ' + time;
+    }
+    function daysFromToday(date) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const target = new Date(date);
+      target.setHours(0, 0, 0, 0);
+      return Math.round((target - today) / (24 * 60 * 60 * 1000));
+    }
+
+    // ─── Render ───────────────────────────────────────────────────────────
+    function render() {
+      const startEl = document.getElementById('start-date');
+      startEl.value = startDate;
+
+      const start = parseDate(startDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      let totalDeliv = 0;
+      let totalDone = 0;
+      let dueSoon = 0;
+      let overdue = 0;
+
+      // Weeks
+      const weeksHtml = WEEKS.map(w => {
+        const classDate = addDays(start, w.classOffset);
+        const dueDate = addDays(start, w.dueOffset);
+        const dueDays = daysFromToday(dueDate);
+
+        const isThisWeek = dueDays >= 0 && dueDays <= 6;
+        const isPast = dueDays < 0;
+
+        let weekFlag = '';
+        if (isThisWeek) weekFlag = '<span class="week-flag due-soon">Due this week</span>';
+        else if (isPast && dueDays < 0) weekFlag = '<span class="week-flag overdue">Past due</span>';
+
+        const delivHtml = w.deliverables.map((d, i) => {
+          totalDeliv++;
+          const id = deliverableId(w.num, i);
+          const isDone = !!done[id];
+          if (isDone) totalDone++;
+          else if (dueDays < 0) overdue++;
+          else if (dueDays <= 6) dueSoon++;
+
+          return `
+            <li class="deliv ${isDone ? 'done' : ''}">
+              <button type="button" class="deliv-check" data-id="${id}" aria-pressed="${isDone}" aria-label="Toggle ${d.name}">
+                <span class="deliv-box">${isDone ? '✓' : ''}</span>
+              </button>
+              <div class="deliv-body">
+                <div class="deliv-name">${d.name}</div>
+                <div class="deliv-detail">${d.detail}</div>
+              </div>
+              <span class="deliv-pts">${d.points} pts</span>
+            </li>`;
+        }).join('');
+
+        const totalPts = w.deliverables.reduce((sum, d) => sum + d.points, 0);
+        const allDone = w.deliverables.every((_, i) => done[deliverableId(w.num, i)]);
+
+        const links = [];
+        if (w.files.lesson) links.push(`<a href="${w.files.lesson}">Lesson page</a>`);
+        if (w.files.rubric) links.push(`<a href="${w.files.rubric}">Rubric</a>`);
+        if (w.files.guide)  links.push(`<a href="${w.files.guide}">Facilitator guide</a>`);
+
+        return `
+          <article class="week ${isThisWeek ? 'this-week' : ''} ${isPast && allDone ? 'past' : ''}" id="week-${w.num}">
+            <div class="week-head">
+              <span class="week-num">WK ${String(w.num).padStart(2, '0')}</span>
+              <div>
+                <h2 class="week-title">${w.title}${weekFlag}${allDone ? '<span class="week-flag done">All done</span>' : ''}</h2>
+                <p class="week-anchor">${w.anchor}</p>
+              </div>
+              <dl class="week-dates">
+                <dt>Class</dt><dd>${fmtDate(classDate)}</dd>
+                <dt>Due</dt><dd>${fmtDateTime(dueDate, '11:59 pm')}</dd>
+              </dl>
+            </div>
+            <ul class="deliverables">${delivHtml}</ul>
+            <div class="week-links">
+              <span style="font-weight:700;letter-spacing:0.1em;color:var(--ink-700);">${totalPts} pts total</span>
+              <span>·</span>
+              ${links.join(' <span>·</span> ')}
+            </div>
+          </article>`;
+      }).join('');
+
+      document.getElementById('weeks-list').innerHTML = weeksHtml;
+
+      // Counters
+      document.getElementById('g-total').textContent = totalDeliv;
+      document.getElementById('g-done').textContent = totalDone;
+      document.getElementById('g-soon').textContent = dueSoon;
+      document.getElementById('g-over').textContent = overdue;
+
+      // Timeline
+      const tlHtml = WEEKS.map(w => {
+        const dueDate = addDays(start, w.dueOffset);
+        const dueDays = daysFromToday(dueDate);
+        const isThisWeek = dueDays >= 0 && dueDays <= 6;
+        const isPast = dueDays < 0;
+        const allDone = w.deliverables.every((_, i) => done[deliverableId(w.num, i)]);
+        const cls = (isThisWeek ? 'this-week ' : '') + (isPast && !allDone ? '' : isPast ? 'past' : '');
+        const totalPts = w.deliverables.reduce((sum, d) => sum + d.points, 0);
+        return `<a href="#week-${w.num}" class="${cls}" aria-label="Jump to Week ${w.num}: ${w.title}"><span class="wk">W${String(w.num).padStart(2, '0')}</span><span class="ttl">${w.title}</span><span class="pts">${totalPts} pts</span>${allDone ? '<span class="pill-done">DONE</span>' : ''}</a>`;
+      }).join('');
+      document.querySelector('.timeline').innerHTML = tlHtml;
+
+      // Re-bind checkbox handlers
+      document.querySelectorAll('.deliv-check').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-id');
+          done[id] = !done[id];
+          if (!done[id]) delete done[id];
+          writeDone();
+          render();
+        });
+      });
+    }
+
+    document.getElementById('start-date').addEventListener('change', (e) => {
+      const v = e.target.value || DEFAULT_START;
+      startDate = v;
+      writeStartDate(v);
+      render();
+    });
+
+    document.getElementById('btn-print').addEventListener('click', () => window.print());
+
+    // ─── ICS export ───────────────────────────────────────────────────────
+    document.getElementById('btn-ics').addEventListener('click', () => {
+      const start = parseDate(startDate);
+      const lines = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//IU Luddy//CSCI-Y100//EN',
+        'CALSCALE:GREGORIAN',
+        'METHOD:PUBLISH',
+        'X-WR-CALNAME:CSCI-Y100 Homework',
+        'X-WR-CALDESC:Auto-generated deadlines from your homework page.',
+      ];
+
+      function fmtICS(date, time) {
+        // time = "HH:MM"
+        const [h, m] = time.split(':').map(Number);
+        const d = new Date(date);
+        d.setHours(h, m, 0, 0);
+        const pad = (n) => String(n).padStart(2, '0');
+        return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate())
+             + 'T' + pad(d.getHours()) + pad(d.getMinutes()) + '00';
+      }
+
+      WEEKS.forEach(w => {
+        const dueDate = addDays(start, w.dueOffset);
+        w.deliverables.forEach((d, i) => {
+          const uid = 'w' + w.num + 'd' + i + '@csci-y100';
+          const dtstart = fmtICS(dueDate, '23:30'); // 30 min before deadline
+          const dtend = fmtICS(dueDate, '23:59');
+          const summary = `[Y100 W${w.num}] ${d.name}`;
+          const desc = (d.detail + '\\n\\nLesson: ' + w.title + '\\nWorth: ' + d.points + ' pts').replace(/\n/g, '\\n');
+          lines.push(
+            'BEGIN:VEVENT',
+            'UID:' + uid,
+            'DTSTAMP:' + fmtICS(new Date(), '12:00'),
+            'DTSTART:' + dtstart,
+            'DTEND:' + dtend,
+            'SUMMARY:' + summary,
+            'DESCRIPTION:' + desc,
+            'BEGIN:VALARM',
+            'ACTION:DISPLAY',
+            'DESCRIPTION:' + summary,
+            'TRIGGER:-P1D',
+            'END:VALARM',
+            'BEGIN:VALARM',
+            'ACTION:DISPLAY',
+            'DESCRIPTION:' + summary + ' — 2 hours',
+            'TRIGGER:-PT2H',
+            'END:VALARM',
+            'END:VEVENT',
+          );
+        });
+
+        // Class event
+        const classDate = addDays(start, w.classOffset);
+        const classUid = 'w' + w.num + 'class@csci-y100';
+        lines.push(
+          'BEGIN:VEVENT',
+          'UID:' + classUid,
+          'DTSTAMP:' + fmtICS(new Date(), '12:00'),
+          'DTSTART:' + fmtICS(classDate, '10:00'),
+          'DTEND:' + fmtICS(classDate, '11:30'),
+          'SUMMARY:' + `[Y100 W${w.num}] Class · ${w.title}`,
+          'DESCRIPTION:' + (w.anchor + '\\n\\nIn-class · 90 min').replace(/\n/g, '\\n'),
+          'END:VEVENT',
+        );
+      });
+
+      lines.push('END:VCALENDAR');
+      const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'csci-y100-homework.ics';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+
+    // First render
+    render();
+  </script>
+</body>
+</html>

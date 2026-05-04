@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compute Time · Slide Deck · CSCI-Y100 Week 3</title>
+  <meta name="description" content="Slide deck for the Compute Time module (CSCI-Y100 Week 3). Use arrow keys, Page Up/Down, or Space to navigate." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <script type="application/json" id="speaker-notes">
+  [
+    "Welcome to Week 3. Today we treat time the way a CS class treats memory — a fixed budget, allocated on purpose, profiled when things slow down. By the end of class you'll have three artifacts: an honest 168-hour audit, a 15-week spike chart, and an ABC list for tomorrow morning. The goal isn't to feel productive. The goal is to compute your time.",
+
+    "Sticker shock. Have everyone shout the first guess. Most overshoot or undershoot. Reveal: 168. Show the subtraction live — sleep, class, work — and let the number get small in real time. The room will go quiet around 'fixed costs.' That's the point. Land on: whatever's left is the only time you control.",
+
+    "Cold open. Three students. Same 168 hours, three different leaks, three different fixes. Click through Jordan, Maya, Ana. Read each diagnostic line aloud. After each: show of hands — who's been Jordan? Maya? Ana? End on: same surface (overwhelmed), different leak. The fix has to match the leak.",
+
+    "Anchor concept. Hold this slide for the full 8 minutes. Write the four words on the whiteboard. Don't rush AUDIT — most students think they know where their hours go. They don't. The Loop runs every Sunday for the rest of the term, not once. Repeat the key phrase three times: Compute Time is a verb.",
+
+    "AUDIT — deliverable #1. 15 minutes. Read the brief: paint each cell with a category. Show your own filled grid first. Be honest about your screen-time block. Confirm it auto-saves. Walk a slow loop. If a student stares at 'screens,' whisper: phone settings have your number, pull it up. At 0:31, call the 2-minute warning.",
+
+    "MAP. 10 minutes. Each student opens every syllabus and marks every deliverable on the 15-week strip. Walk the room quietly. At 0:42, show your own spike chart. Land on: the bad weeks have dates. Strategy isn't to work harder during them — it's to work earlier before them.",
+
+    "Transition. Tell students to pull up this week's actual to-do list — Canvas, notes app, whatever they have. Walk the room. Anyone with a blank list? Whisper: list 5 things due in the next 7 days. Anything counts. Go.",
+
+    "TRIAGE — deliverable #2. 20 minutes. Read the four quadrants. 3 minutes silent dragging. The hard part: force at least one DELETE. Most students refuse. If a student's DELETE quadrant is empty, they are lying to themselves about what's important. The dodged quadrant is SCHEDULE — that's where studying lives. If empty, their term runs on emergencies.",
+
+    "RE-BUDGET — deliverable #3. 12 minutes. A = today, non-negotiable, max 3. B = today if A is done. C = nice if there's air. Realistic time estimates. If A > 4 hours, cut. Watch for students writing 8+ A's — that's a wish, not a list. Last 3 minutes: 2-3 read aloud, class votes realistic / not.",
+
+    "Take-home. The Sunday Ritual. Run the full 4-step Loop in 15 minutes. Same notebook page each week. Show the Time Log template — A's planned, A's done, what leaked. Due Sunday 8pm, late = full credit by Monday class. Bring it to next class.",
+
+    "Closing reframe. Don't soften this. Read it as written. The point is to land that you cannot make more time — nobody in this room ever will. But you can spend the next 168 on purpose. Every Sunday. That's the whole skill.",
+
+    "Open the floor. Common questions: what if my week never goes to plan (good — the data is the point, gap = signal). My Sunday is busy (pick any day, same day, before tomorrow's first deliverable). My screen-time is embarrassing (so is mine, re-budget two of those hours). I have a real job (audit still works, fewer cells, Eisenhower matters more).",
+
+    "End slate. Send them off. Confirm: Time Log due Sunday, bring to next class. Office hours open if anyone wants to talk after."
+  ]
+  </script>
+
+  <style>
+    html, body { margin: 0; padding: 0; background: #000; color: var(--ink-900); font-family: var(--font-body); overflow: hidden; }
+    deck-stage { display: block; width: 100vw; height: 100vh; }
+
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    section {
+      width: 1920px; height: 1080px;
+      background: var(--paper-50);
+      position: relative;
+      overflow: hidden;
+      font-family: var(--font-body);
+      color: var(--ink-900);
+    }
+
+    .slide-pad { padding: 96px 120px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; }
+    .crumb { font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.2em; color: var(--crimson); margin-bottom: 32px; }
+    .slide-num { position: absolute; bottom: 40px; right: 60px; font-family: var(--font-mono); font-size: 16px; color: var(--ink-300); letter-spacing: 0.12em; }
+    .slide-foot { position: absolute; bottom: 40px; left: 120px; font-family: var(--font-mono); font-size: 14px; color: var(--ink-300); letter-spacing: 0.12em; }
+
+    h1.title { font-family: var(--font-display); font-weight: 600; font-style: italic; font-size: 144px; line-height: 0.95; letter-spacing: -0.03em; margin: 0; }
+    h1.title em { font-style: italic; color: var(--crimson); }
+    h2.section-h { font-family: var(--font-display); font-weight: 600; font-style: italic; font-size: 96px; line-height: 1; letter-spacing: -0.025em; margin: 0 0 28px; }
+    h2.section-h em { color: var(--crimson); }
+    .lede { font-size: 30px; line-height: 1.45; color: var(--ink-700); max-width: 1300px; }
+
+    .title-slide {
+      background: var(--paper-50);
+      background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0);
+      background-size: 28px 28px;
+    }
+    .title-slide .crest { width: 84px; height: 84px; background: var(--crimson); color: #fff; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 42px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 32px; }
+    .title-slide .meta { margin-top: 56px; display: grid; grid-template-columns: repeat(4, auto); gap: 56px; justify-content: start; }
+    .title-slide .meta dt { font-family: var(--font-mono); font-size: 14px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 6px; }
+    .title-slide .meta dd { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 28px; font-weight: 600; color: var(--ink-900); }
+
+    .section-slate { background: var(--ink-900); color: var(--paper-50); }
+    .section-slate .slide-pad { justify-content: center; }
+    .section-slate .crumb { color: var(--signal-amber); }
+    .section-slate h2.section-h { color: var(--paper-50); font-size: 132px; line-height: 0.95; }
+    .section-slate h2.section-h em { color: var(--signal-amber); }
+    .section-slate .lede { color: var(--paper-300); }
+
+    /* === Sticker shock === */
+    .shock .big-num {
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 480px; line-height: 0.85; color: var(--crimson); letter-spacing: -0.04em;
+      margin: 24px 0 0;
+    }
+    .shock .sub-rows {
+      margin-top: 36px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    .shock .sub-row { background: var(--paper-100); border: 2px solid var(--paper-200); border-top: 6px solid var(--ink-900); padding: 22px 26px; }
+    .shock .sub-row .lbl { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 10px; }
+    .shock .sub-row .val { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 64px; line-height: 1; }
+    .shock .sub-row .val .unit { font-size: 24px; color: var(--ink-500); margin-left: 6px; }
+
+    /* === Cold open === */
+    .cold .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
+    .cold .student { background: var(--paper-100); border: 2px solid var(--paper-200); border-top: 8px solid; border-radius: 10px; padding: 36px 32px; }
+    .cold .student .ava { width: 64px; height: 64px; border-radius: 50%; color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 30px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+    .cold .student .name { font-family: var(--font-display); font-style: italic; font-size: 48px; font-weight: 600; line-height: 1; margin-bottom: 6px; }
+    .cold .student .vibe { font-family: var(--font-mono); font-size: 16px; font-weight: 700; letter-spacing: 0.15em; margin-bottom: 24px; }
+    .cold .student .quote { font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--ink-900); line-height: 1.4; padding-top: 18px; border-top: 2px dashed var(--paper-300); }
+    .cold .student .underneath { margin-top: 16px; font-family: var(--font-mono); font-size: 15px; line-height: 1.5; color: var(--ink-700); }
+    .cold .student .underneath strong { color: var(--ink-900); display: block; font-size: 11px; letter-spacing: 0.18em; margin-bottom: 4px; }
+
+    /* === The Compute Loop === */
+    .loop .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 40px; }
+    .loop .step { background: var(--paper-100); border: 2px solid var(--paper-200); border-left: 10px solid; border-radius: 8px; padding: 28px 30px; }
+    .loop .step .verb { font-family: var(--font-display); font-weight: 700; font-style: italic; font-size: 60px; line-height: 1; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .loop .step .says { font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--ink-900); line-height: 1.3; margin-bottom: 14px; }
+    .loop .step .out { font-family: var(--font-mono); font-size: 14px; line-height: 1.55; color: var(--ink-700); border-top: 1px dashed var(--paper-300); padding-top: 12px; }
+    .loop .step .out strong { color: var(--ink-900); }
+    .loop .arrow-row { margin-top: 32px; display: flex; gap: 24px; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 16px; letter-spacing: 0.15em; color: var(--ink-700); }
+
+    /* === Brief slides === */
+    .brief .grid-2 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; margin-top: 40px; }
+    .brief .steps { list-style: none; padding: 0; margin: 0; counter-reset: step; }
+    .brief .steps li { counter-increment: step; display: grid; grid-template-columns: 56px 1fr; gap: 22px; padding: 22px 0; border-bottom: 1px dashed var(--paper-300); }
+    .brief .steps li::before { content: counter(step, decimal-leading-zero); font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--crimson); padding-top: 4px; }
+    .brief .steps .hd { font-family: var(--font-display); font-style: italic; font-size: 32px; font-weight: 600; line-height: 1.1; margin-bottom: 8px; }
+    .brief .steps .body { font-size: 22px; color: var(--ink-700); line-height: 1.5; }
+    .brief .timecard { background: var(--ink-900); color: var(--paper-100); padding: 36px 40px; border-radius: 10px; align-self: start; }
+    .brief .timecard .big { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 120px; line-height: 1; color: var(--paper-50); }
+    .brief .timecard .lbl { font-family: var(--font-mono); font-size: 16px; letter-spacing: 0.15em; color: var(--signal-amber); margin-top: 12px; }
+    .brief .timecard dl { margin: 28px 0 0; padding-top: 22px; border-top: 1px dashed var(--paper-300); }
+    .brief .timecard dt { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; color: var(--paper-300); margin-bottom: 4px; }
+    .brief .timecard dd { font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--paper-50); margin: 0 0 14px; }
+
+    /* === Spike chart slide === */
+    .spike .strip { display: grid; grid-template-columns: repeat(15, 1fr); gap: 6px; margin-top: 56px; }
+    .spike .col { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .spike .bar { width: 100%; background: var(--paper-200); border-radius: 4px 4px 0 0; }
+    .spike .bar.s1 { height: 80px; background: var(--paper-300); }
+    .spike .bar.s2 { height: 140px; background: var(--paper-300); }
+    .spike .bar.s3 { height: 220px; background: var(--signal-amber); }
+    .spike .bar.s4 { height: 320px; background: var(--signal-red); }
+    .spike .bar.s5 { height: 400px; background: var(--crimson); }
+    .spike .lbl { font-family: var(--font-mono); font-size: 16px; color: var(--ink-700); letter-spacing: 0.1em; }
+    .spike .legend { margin-top: 36px; display: flex; gap: 28px; font-family: var(--font-mono); font-size: 16px; letter-spacing: 0.1em; color: var(--ink-700); }
+    .spike .legend span { display: inline-flex; align-items: center; gap: 8px; }
+    .spike .legend i { width: 16px; height: 16px; display: inline-block; border-radius: 3px; }
+
+    /* === Eisenhower 2x2 === */
+    .matrix .grid { display: grid; grid-template-columns: 60px 1fr 1fr; grid-template-rows: 60px 1fr 1fr; gap: 14px; margin-top: 32px; height: 660px; }
+    .matrix .axis-x { grid-column: 2 / span 2; display: flex; justify-content: space-around; font-family: var(--font-mono); font-weight: 700; font-size: 18px; letter-spacing: 0.15em; color: var(--ink-700); }
+    .matrix .axis-y { grid-row: 2 / span 2; writing-mode: vertical-rl; transform: rotate(180deg); display: flex; justify-content: space-around; font-family: var(--font-mono); font-weight: 700; font-size: 18px; letter-spacing: 0.15em; color: var(--ink-700); }
+    .matrix .cell { border: 3px solid var(--ink-900); padding: 26px 28px; display: flex; flex-direction: column; }
+    .matrix .cell .vd { font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.18em; margin-bottom: 8px; }
+    .matrix .cell .verb { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 84px; line-height: 0.95; }
+    .matrix .cell .desc { font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--ink-700); margin-top: 10px; line-height: 1.35; }
+    .matrix .c-do     { background: rgba(176,46,30,0.08); border-color: var(--signal-red-text); }
+    .matrix .c-do .verb { color: var(--signal-red-text); }
+    .matrix .c-sched  { background: rgba(47,122,74,0.08); border-color: var(--signal-green-text); }
+    .matrix .c-sched .verb { color: var(--signal-green-text); }
+    .matrix .c-shrink { background: rgba(184,133,29,0.08); border-color: var(--signal-amber-text); }
+    .matrix .c-shrink .verb { color: var(--signal-amber-text); }
+    .matrix .c-del    { background: var(--paper-100); border-color: var(--ink-500); }
+    .matrix .c-del .verb { color: var(--ink-500); }
+
+    /* === ABC === */
+    .abc .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+    .abc .col { background: var(--paper-100); border: 2px solid var(--paper-200); border-top: 10px solid; border-radius: 10px; padding: 32px 30px; }
+    .abc .col .ltr { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 180px; line-height: 0.85; letter-spacing: -0.04em; }
+    .abc .col .rule { font-family: var(--font-display); font-style: italic; font-size: 26px; line-height: 1.3; color: var(--ink-900); margin: 14px 0 18px; }
+    .abc .col .ex { font-family: var(--font-mono); font-size: 14px; line-height: 1.7; color: var(--ink-700); border-top: 1px dashed var(--paper-300); padding-top: 14px; }
+
+    /* === Closer === */
+    .closer { background: var(--ink-900); color: var(--paper-50); }
+    .closer .slide-pad { justify-content: center; align-items: flex-start; }
+    .closer .stamp { display: inline-block; border: 3px solid var(--signal-amber); color: var(--signal-amber); font-family: var(--font-mono); font-size: 18px; font-weight: 700; letter-spacing: 0.18em; padding: 10px 18px; transform: rotate(-2deg); margin-bottom: 32px; }
+    .closer h1 { color: var(--paper-50); font-size: 132px; }
+    .closer h1 em { color: var(--signal-amber); }
+    .closer .sub { font-family: var(--font-display); font-style: italic; font-size: 36px; color: var(--paper-300); margin-top: 24px; max-width: 1500px; }
+
+    /* === End slate === */
+    .end-slate { background: var(--paper-50); background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0); background-size: 28px 28px; }
+    .end-slate .slide-pad { justify-content: center; align-items: center; text-align: center; }
+    .end-slate .ascii { font-family: var(--font-mono); font-size: 24px; color: var(--ink-300); letter-spacing: 0.1em; white-space: pre; line-height: 1.3; margin-bottom: 56px; }
+    .end-slate .out { font-family: var(--font-display); font-style: italic; font-size: 84px; color: var(--ink-900); line-height: 1.1; max-width: 1500px; }
+    .end-slate .out em { color: var(--crimson); }
+
+    .qa { background: var(--paper-100); }
+    .qa .slide-pad { justify-content: center; }
+    .qa .big-q { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 320px; line-height: 1; color: var(--crimson); margin: 0 0 24px; }
+  </style>
+
+  <script src="deck-stage.js"></script>
+</head>
+<body>
+  <deck-stage>
+
+    <!-- ============ 01 · TITLE ============ -->
+    <section class="title-slide" data-screen-label="01 Title">
+      <div class="slide-pad">
+        <div class="crest" aria-label="Indiana University">IU</div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 03</div>
+        <h1 class="title">Compute<br /><em>Time.</em></h1>
+        <dl class="meta">
+          <div><dt>DURATION</dt><dd>90 minutes</dd></div>
+          <div><dt>DELIVERABLES</dt><dd>3 (in class)</dd></div>
+          <div><dt>TAKE-HOME</dt><dd>Sunday Ritual</dd></div>
+          <div><dt>POSTURE</dt><dd>"Spend it on purpose."</dd></div>
+        </dl>
+      </div>
+      <div class="slide-foot">v2.0 · 2026</div>
+      <div class="slide-num">01 / 13</div>
+    </section>
+
+    <!-- ============ 02 · STICKER SHOCK ============ -->
+    <section class="shock" data-screen-label="02 Sticker shock">
+      <div class="slide-pad">
+        <div class="crumb">00 · STICKER SHOCK · 5 MIN · GUESS BEFORE YOU CALCULATE</div>
+        <h2 class="section-h">How many hours<br />do you <em>actually</em> have?</h2>
+
+        <div class="big-num" aria-label="One hundred sixty-eight hours per week">168</div>
+
+        <div class="sub-rows" role="list" aria-label="Weekly fixed costs">
+          <div class="sub-row" role="listitem"><div class="lbl">↳ SLEEP (8 × 7)</div><div class="val">−56<span class="unit">hrs</span></div></div>
+          <div class="sub-row" role="listitem"><div class="lbl">↳ CLASSES (15 hrs)</div><div class="val">−15<span class="unit">hrs</span></div></div>
+          <div class="sub-row" role="listitem"><div class="lbl">↳ JOB / EAT / TRANSIT</div><div class="val">−25<span class="unit">hrs</span></div></div>
+          <div class="sub-row" role="listitem" style="border-top-color: var(--crimson)"><div class="lbl" style="color: var(--crimson)">↳ DISCRETIONARY</div><div class="val" style="color: var(--crimson)">72<span class="unit">hrs</span></div></div>
+        </div>
+      </div>
+      <div class="slide-num">02 / 13</div>
+    </section>
+
+    <!-- ============ 03 · COLD OPEN ============ -->
+    <section class="cold" data-screen-label="03 Cold open">
+      <div class="slide-pad">
+        <div class="crumb">① COLD OPEN · 5 MIN · SAME 168 · DIFFERENT LEAK</div>
+        <h2 class="section-h">Three students.<br /><em>Time-broke.</em></h2>
+
+        <div class="grid">
+          <article class="student" style="border-top-color: var(--signal-amber)">
+            <div class="ava" style="background: var(--signal-amber); color: var(--ink-900)">J</div>
+            <div class="name">Jordan</div>
+            <div class="vibe" style="color: var(--signal-amber-text)">↳ INVISIBLE LEAK</div>
+            <div class="quote">"I'm always tired and never done. I don't know where the time goes."</div>
+            <div class="underneath"><strong>DIAGNOSTIC</strong>22 hrs/wk on screens he can't account for. Doesn't need a planner — needs an audit.</div>
+          </article>
+          <article class="student" style="border-top-color: var(--signal-red)">
+            <div class="ava" style="background: var(--signal-red)">M</div>
+            <div class="name">Maya</div>
+            <div class="vibe" style="color: var(--signal-red-text)">↳ NO MAP</div>
+            <div class="quote">"Everything always hits at once. I'm always behind."</div>
+            <div class="underneath"><strong>DIAGNOSTIC</strong>Three deliverables stacked Wk 6 — none of them surprises if she'd looked. Doesn't need more hours; needs the chart.</div>
+          </article>
+          <article class="student" style="border-top-color: var(--signal-blue)">
+            <div class="ava" style="background: var(--signal-blue)">A</div>
+            <div class="name">Ana</div>
+            <div class="vibe" style="color: var(--signal-blue-text)">↳ NO TRIAGE</div>
+            <div class="quote">"Everything on my list feels equally on fire. So I do none of it."</div>
+            <div class="underneath"><strong>DIAGNOSTIC</strong>List has 27 items, all marked URGENT. Doesn't need more time; needs to delete.</div>
+          </article>
+        </div>
+      </div>
+      <div class="slide-num">03 / 13</div>
+    </section>
+
+    <!-- ============ 04 · THE COMPUTE LOOP ============ -->
+    <section class="loop" data-screen-label="04 The Compute Loop">
+      <div class="slide-pad">
+        <div class="crumb">② THE COMPUTE LOOP · 8 MIN · ANCHOR CONCEPT</div>
+        <h2 class="section-h">You can't make more time.<br /><em>You can spend it on purpose.</em></h2>
+
+        <div class="grid" role="list" aria-label="The four steps of the Compute Loop">
+          <article class="step" role="listitem" style="border-color: var(--signal-blue)">
+            <div class="verb" style="color: var(--signal-blue-text)">AUDIT</div>
+            <div class="says">Where do my hours actually go?</div>
+            <div class="out"><strong>OUT:</strong> 168-hour grid — your real numbers.</div>
+          </article>
+          <article class="step" role="listitem" style="border-color: var(--signal-amber)">
+            <div class="verb" style="color: var(--signal-amber-text)">MAP</div>
+            <div class="says">When does the term get hard?</div>
+            <div class="out"><strong>OUT:</strong> 15-week spike chart — every deliverable.</div>
+          </article>
+          <article class="step" role="listitem" style="border-color: var(--signal-red)">
+            <div class="verb" style="color: var(--signal-red-text)">TRIAGE</div>
+            <div class="says">What actually matters this week?</div>
+            <div class="out"><strong>OUT:</strong> Eisenhower 2×2 — at least one DELETE.</div>
+          </article>
+          <article class="step" role="listitem" style="border-color: var(--signal-green)">
+            <div class="verb" style="color: var(--signal-green-text)">RE-BUDGET</div>
+            <div class="says">What does tomorrow look like?</div>
+            <div class="out"><strong>OUT:</strong> ABC list — max 3 A's, realistic times.</div>
+          </article>
+        </div>
+        <div class="arrow-row" aria-hidden="true">RUN THE LOOP &nbsp; ↻ &nbsp; EVERY SUNDAY &nbsp; · &nbsp; 15 MIN &nbsp; · &nbsp; SAME PAGE</div>
+      </div>
+      <div class="slide-num">04 / 13</div>
+    </section>
+
+    <!-- ============ 05 · AUDIT BRIEF ============ -->
+    <section class="brief" data-screen-label="05 AUDIT brief">
+      <div class="slide-pad">
+        <div class="crumb">③ AUDIT · 15 MIN · DELIVERABLE #1 · 30 PTS</div>
+        <h2 class="section-h">Paint <em>your</em> 168.</h2>
+
+        <div class="grid-2">
+          <ol class="steps">
+            <li><div><div class="hd">Pick a category per cell</div><div class="body">Sleep · class · study · work · social · screens · transit · other.</div></div></li>
+            <li><div><div class="hd">Be honest about screens</div><div class="body">Phone screen-time settings have your number. Pull it up. Use it.</div></div></li>
+            <li><div><div class="hd">Total each category</div><div class="body">The arithmetic is the lesson. Don't argue with the bars.</div></div></li>
+            <li><div><div class="hd">Mark one leak</div><div class="body">One category you'd take back. That's where Sunday's re-budget starts.</div></div></li>
+          </ol>
+
+          <aside class="timecard">
+            <div class="big">15</div>
+            <div class="lbl">MINUTES · QUIET WORK</div>
+            <dl>
+              <div><dt>STUCK?</dt><dd>open Settings &gt; Screen Time</dd></div>
+              <div><dt>POINTS</dt><dd>30 · auto-saves to your browser</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+      <div class="slide-num">05 / 13</div>
+    </section>
+
+    <!-- ============ 06 · MAP / SPIKE CHART ============ -->
+    <section class="spike" data-screen-label="06 MAP — spike chart">
+      <div class="slide-pad">
+        <div class="crumb">④ MAP · 10 MIN · 15-WEEK SPIKE CHART</div>
+        <h2 class="section-h">Bad weeks have <em>dates.</em></h2>
+
+        <div class="strip" aria-hidden="true">
+          <div class="col"><div class="bar s1"></div><div class="lbl">1</div></div>
+          <div class="col"><div class="bar s1"></div><div class="lbl">2</div></div>
+          <div class="col"><div class="bar s2"></div><div class="lbl">3</div></div>
+          <div class="col"><div class="bar s2"></div><div class="lbl">4</div></div>
+          <div class="col"><div class="bar s2"></div><div class="lbl">5</div></div>
+          <div class="col"><div class="bar s3"></div><div class="lbl">6</div></div>
+          <div class="col"><div class="bar s4"></div><div class="lbl">7</div></div>
+          <div class="col"><div class="bar s2"></div><div class="lbl">8</div></div>
+          <div class="col"><div class="bar s2"></div><div class="lbl">9</div></div>
+          <div class="col"><div class="bar s3"></div><div class="lbl">10</div></div>
+          <div class="col"><div class="bar s2"></div><div class="lbl">11</div></div>
+          <div class="col"><div class="bar s2"></div><div class="lbl">12</div></div>
+          <div class="col"><div class="bar s3"></div><div class="lbl">13</div></div>
+          <div class="col"><div class="bar s4"></div><div class="lbl">14</div></div>
+          <div class="col"><div class="bar s5"></div><div class="lbl">15</div></div>
+        </div>
+
+        <div class="legend" aria-label="Legend">
+          <span><i style="background: var(--paper-300)"></i> Light</span>
+          <span><i style="background: var(--signal-amber)"></i> Spike</span>
+          <span><i style="background: var(--signal-red)"></i> Heavy</span>
+          <span><i style="background: var(--crimson)"></i> Peak</span>
+        </div>
+
+        <div class="lede" style="margin-top: 36px; max-width: 1400px;">
+          Every syllabus, every deliverable, every weight — onto the strip. The strategy isn't to grind harder during Wk 14. It's to start in Wk 11.
+        </div>
+      </div>
+      <div class="slide-num">06 / 13</div>
+    </section>
+
+    <!-- ============ 07 · TRANSITION ============ -->
+    <section class="section-slate" data-screen-label="07 Transition to Triage">
+      <div class="slide-pad">
+        <div class="crumb">↓ NOW THE LIST IN FRONT OF YOU</div>
+        <h2 class="section-h">Pull up <em>this week's</em><br />real to-do list.</h2>
+        <div class="lede" style="margin-top: 32px;">
+          Canvas. Notes app. Sticky notes. Whatever you already have. Nothing new to write — we're going to do something with what's there.
+        </div>
+      </div>
+      <div class="slide-num" style="color: var(--paper-300)">07 / 13</div>
+    </section>
+
+    <!-- ============ 08 · TRIAGE / EISENHOWER ============ -->
+    <section class="matrix" data-screen-label="08 TRIAGE — Eisenhower">
+      <div class="slide-pad">
+        <div class="crumb">⑤ TRIAGE · 20 MIN · DELIVERABLE #2 · 25 PTS</div>
+        <h2 class="section-h">Every task → <em>a quadrant.</em></h2>
+
+        <div class="grid">
+          <div></div>
+          <div class="axis-x" aria-hidden="true"><span>↑ URGENT</span><span>↑ NOT URGENT</span></div>
+          <div class="axis-y" aria-hidden="true"><span>↑ NOT IMPORTANT</span><span>↑ IMPORTANT</span></div>
+          <div class="cell c-do"><div class="vd">URGENT × IMPORTANT</div><div class="verb">DO</div><div class="desc">Today. Right now. The fire.</div></div>
+          <div class="cell c-sched"><div class="vd">NOT URGENT × IMPORTANT</div><div class="verb">SCHEDULE</div><div class="desc">Where studying lives. Most students leave it empty — that's the problem.</div></div>
+          <div class="cell c-shrink"><div class="vd">URGENT × NOT IMPORTANT</div><div class="verb">SHRINK</div><div class="desc">Delegate. Batch. Cut to 10 min.</div></div>
+          <div class="cell c-del"><div class="vd">NOT URGENT × NOT IMPORTANT</div><div class="verb">DELETE</div><div class="desc">Permission to not do the thing. Hardest skill in the module.</div></div>
+        </div>
+      </div>
+      <div class="slide-num">08 / 13</div>
+    </section>
+
+    <!-- ============ 09 · ABC LIST ============ -->
+    <section class="abc" data-screen-label="09 RE-BUDGET — ABC list">
+      <div class="slide-pad">
+        <div class="crumb">⑥ RE-BUDGET · 12 MIN · DELIVERABLE #3 · 25 PTS</div>
+        <h2 class="section-h">Tomorrow's <em>ABC list.</em></h2>
+
+        <div class="grid">
+          <div class="col" style="border-top-color: var(--signal-red)">
+            <div class="ltr" style="color: var(--signal-red-text)">A</div>
+            <div class="rule">Today, non-negotiable. <strong>Max 3.</strong></div>
+            <div class="ex">Each with a realistic time estimate.<br />Total &gt; 4 hrs? Cut.<br />Total &lt; 1 hr? Add.</div>
+          </div>
+          <div class="col" style="border-top-color: var(--signal-amber)">
+            <div class="ltr" style="color: var(--signal-amber-text)">B</div>
+            <div class="rule">Today <em>if A is done.</em></div>
+            <div class="ex">Important but not on fire.<br />Most B's quietly become A's by Friday.<br />That's why MAP exists.</div>
+          </div>
+          <div class="col" style="border-top-color: var(--signal-blue)">
+            <div class="ltr" style="color: var(--signal-blue-text)">C</div>
+            <div class="rule">Nice <em>if there's air.</em></div>
+            <div class="ex">Errands · vibes · mild ambition.<br />Most days, C goes untouched.<br />That's fine.</div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-num">09 / 13</div>
+    </section>
+
+    <!-- ============ 10 · TAKE-HOME / SUNDAY RITUAL ============ -->
+    <section class="brief" data-screen-label="10 Take-home — Sunday Ritual">
+      <div class="slide-pad">
+        <div class="crumb">⑦ TAKE-HOME · WEEKLY · 50 PTS</div>
+        <h2 class="section-h">The <em>Sunday Ritual.</em></h2>
+
+        <div class="grid-2">
+          <ol class="steps">
+            <li><div><div class="hd">Pick a Sunday slot</div><div class="body">Same time, same place, every week. 15 minutes.</div></div></li>
+            <li><div><div class="hd">Run the four-step Loop</div><div class="body">AUDIT (3) · MAP (3) · TRIAGE (5) · RE-BUDGET (4). Same notebook page each week.</div></div></li>
+            <li><div><div class="hd">Log the gap</div><div class="body">Each weekday: A's planned vs A's done. The gap is the signal.</div></div></li>
+            <li><div><div class="hd">Bring it to class</div><div class="body">Mondays. We read patterns together for the first 10 minutes.</div></div></li>
+          </ol>
+
+          <aside class="timecard">
+            <div class="big">15</div>
+            <div class="lbl">MINUTES · EVERY SUNDAY</div>
+            <dl>
+              <div><dt>DUE</dt><dd>Mondays · bring the log</dd></div>
+              <div><dt>POLICY</dt><dd>revise &amp; resubmit if &lt; 33</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+      <div class="slide-num">10 / 13</div>
+    </section>
+
+    <!-- ============ 11 · CLOSER ============ -->
+    <section class="closer" data-screen-label="11 Closer reframe">
+      <div class="slide-pad">
+        <div class="stamp">REMEMBER THIS</div>
+        <h1 class="title">You can't make<br />more time.<br /><em>So spend it on purpose.</em></h1>
+        <div class="sub">Audit. Map. Triage. Re-budget.<br />Every Sunday. For the rest of the term. That's the whole skill.</div>
+      </div>
+      <div class="slide-num" style="color: var(--paper-300)">11 / 13</div>
+    </section>
+
+    <!-- ============ 12 · Q&A ============ -->
+    <section class="qa" data-screen-label="12 Questions">
+      <div class="slide-pad">
+        <div class="crumb">↳ HONEST QUESTIONS</div>
+        <div class="big-q" aria-label="Q?">Q?</div>
+        <div class="lede" style="font-size: 36px;">No question is a bad one. The harder, the better.</div>
+      </div>
+      <div class="slide-num">12 / 13</div>
+    </section>
+
+    <!-- ============ 13 · END SLATE ============ -->
+    <section class="end-slate" data-screen-label="13 End slate">
+      <div class="slide-pad">
+        <div class="ascii" aria-hidden="true">+--------------------------------------------+
+|  END OF MODULE  ·  Sunday Ritual = weekly  |
++--------------------------------------------+</div>
+        <div class="out">go forth and<br />compute <em>your time.</em></div>
+        <div class="slide-foot" style="position: static; margin-top: 64px; text-align: center; left: 0; right: 0;">CSCI-Y100 · v2.0 · 2026 &nbsp;·&nbsp; Time Log due Mondays</div>
+      </div>
+      <div class="slide-num">13 / 13</div>
+    </section>
+
+  </deck-stage>
+</body>
+</html>

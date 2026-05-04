@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Setup Quest · Slide Deck · CSCI-Y100 Week 3</title>
+  <meta name="description" content="Slide deck for the Setup Quest module (CSCI-Y100 Week 3). Use arrow keys, Page Up/Down, or Space to navigate." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <script type="application/json" id="speaker-notes">
+  [
+    "Title slate. Welcome them back. Three weeks ago we found the toolbox. Two weeks ago we found the time. Today we make the third move 80% of CS students never make on purpose: we externalize. Read the lede, name the three install rounds, and signal the verification approach: nobody leaves with a half-broken setup.",
+
+    "Cold open. Hold this slate for a beat. The line that matters: knowledge worth keeping must be externalized. Ask the room: what did you learn in W2 that you couldn't recall right now without looking? Wait. Don't fill the silence. Then frame today as the answer to that silence.",
+
+    "Anchor question. Hold for 5 seconds before reading. The two halves are deliberate — running code is the standard CS install moment; keeping notes is the part most curricula skip. Today does both because they're the same kind of move: externalizing the work so future-you can find it.",
+
+    "Big Ideas. Two of the five hit hard today. Verbs over tools (#2): the install IS the capability. Externalize (#4): Obsidian + git + library are three different externalization surfaces that all do the same job. Don't deep-dive — these will land through the work, not the slide.",
+
+    "Round 1 brief. Terminal + editor. 20 minutes. Read the verification target out loud — `echo \"hi\"` and `pwd`. Read the role split: facilitator demos at projector, TAs walk and don't sit. Set the timer. The watch-for is PATH issues on Windows.",
+
+    "Round 2 brief. Runtime + git. 15 minutes. The verification is a commit, not just an install. Demo the four-line sequence: `git init` → README → `git add` → `git commit -m \"first\"`. Push to GitHub. Flag GitHub auth — students need a personal access token or SSH key, not a password.",
+
+    "Round 3 brief. Obsidian + IU library. 15 minutes. Install Obsidian. Five folders. Bookmark library home, database list, librarian chat. If a librarian dropped in, hand the room over for 10 minutes — they know it better than you. Don't fight for the mic.",
+
+    "First note · first source. 15 minutes. The use, not the install, is the lesson. First note in Weeks/. First source in Sources/, pulled from an IU database, NOT Google. Constraint matters — TAs flag students who try to bypass it. Stand at the door if you have to.",
+
+    "Wrap-up + 1:1. 12 minutes. TAs sweep. You visit the most-stuck student. The optics matter. If a student's stack is genuinely broken, schedule a 1:1 before W4 — don't pretend it's fixed.",
+
+    "Take-home. Three lines. GitHub repo URL · Obsidian vault path · first source citation. Logged in Start Log. Spot-checked at 1:1s. The cost of skipping this lands in W4 — flag that.",
+
+    "Closer slate. Read the line as written. Externalization is the move that separates students who finish the major from students who quietly drop. Two installs is the demo. The habit is the lesson.",
+
+    "End slate. Confirm office hours for setup repair. Door's open. Onward to W4."
+  ]
+  </script>
+
+  <style>
+    html, body { margin: 0; padding: 0; background: #000; color: var(--ink-900); font-family: var(--font-body); overflow: hidden; }
+    deck-stage { display: block; width: 100vw; height: 100vh; }
+
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+      --signal-purple-text: #5C418F;
+    }
+
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+
+    section { width: 1920px; height: 1080px; background: var(--paper-50); position: relative; overflow: hidden; font-family: var(--font-body); color: var(--ink-900); }
+    .slide-pad { padding: 96px 120px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; }
+    .crumb { font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.2em; color: var(--crimson); margin-bottom: 32px; }
+    .slide-num { position: absolute; bottom: 40px; right: 60px; font-family: var(--font-mono); font-size: 16px; color: var(--ink-300); letter-spacing: 0.12em; }
+    .slide-foot { position: absolute; bottom: 40px; left: 120px; font-family: var(--font-mono); font-size: 14px; color: var(--ink-300); letter-spacing: 0.12em; }
+
+    h1.title { font-family: var(--font-display); font-weight: 600; font-style: italic; font-size: 144px; line-height: 0.95; letter-spacing: -0.03em; margin: 0; }
+    h1.title em { font-style: italic; color: var(--crimson); }
+    h2.section-h { font-family: var(--font-display); font-weight: 600; font-style: italic; font-size: 96px; line-height: 1; letter-spacing: -0.025em; margin: 0 0 28px; }
+    h2.section-h em { color: var(--crimson); }
+    .lede { font-size: 30px; line-height: 1.45; color: var(--ink-700); max-width: 1500px; }
+
+    .title-slide { background: var(--paper-50); background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0); background-size: 28px 28px; }
+    .title-slide .crest { width: 84px; height: 84px; background: var(--crimson); color: #fff; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 42px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 32px; }
+    .title-slide .meta { margin-top: 56px; display: grid; grid-template-columns: repeat(4, auto); gap: 56px; justify-content: start; }
+    .title-slide .meta dt { font-family: var(--font-mono); font-size: 14px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 6px; }
+    .title-slide .meta dd { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 28px; font-weight: 600; color: var(--ink-900); }
+
+    .section-slate { background: var(--ink-900); color: var(--paper-50); }
+    .section-slate .slide-pad { justify-content: center; }
+    .section-slate .crumb { color: var(--signal-amber); }
+    .section-slate h2.section-h { color: var(--paper-50); font-size: 120px; line-height: 0.95; }
+    .section-slate h2.section-h em { color: var(--signal-amber); }
+    .section-slate .lede { color: var(--paper-300); }
+    .section-slate .slide-foot { color: var(--paper-300); }
+
+    .anchor-slide { background: var(--paper-50); }
+    .anchor-slide .anchor-q { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 132px; line-height: 1; letter-spacing: -0.025em; margin: 24px 0 0; max-width: 1700px; }
+    .anchor-slide .anchor-q em { color: var(--crimson); }
+
+    .ideas-slide .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px; margin-top: 32px; }
+    .ideas-slide .card { background: var(--paper-100); border: 4px solid var(--ink-900); border-left-width: 12px; padding: 32px 36px; position: relative; }
+    .ideas-slide .card .num { position: absolute; top: 16px; right: 24px; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 96px; line-height: 1; color: var(--signal-purple); opacity: 0.85; }
+    .ideas-slide .card h3 { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 40px; margin: 0 0 14px; line-height: 1.1; max-width: 80%; }
+    .ideas-slide .card p { font-size: 22px; line-height: 1.45; color: var(--ink-700); margin: 0; }
+
+    .brief { background: var(--paper-50); }
+    .brief .crumb { color: var(--signal-blue-text); }
+    .brief h2.section-h { font-size: 88px; }
+    .brief .grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; margin-top: 32px; flex: 1; }
+    .brief .col h4 { font-family: var(--font-mono); font-size: 16px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--crimson); margin: 0 0 12px; }
+    .brief .col ul { list-style: none; padding: 0; margin: 0; }
+    .brief .col li { font-size: 24px; line-height: 1.45; padding: 10px 0; border-bottom: 1px dashed var(--paper-300); display: grid; grid-template-columns: 28px 1fr; gap: 14px; }
+    .brief .col li::before { content: '\2713'; color: var(--signal-green-text); font-family: var(--font-mono); font-weight: 700; font-size: 22px; }
+    .brief .verify-card { background: var(--ink-900); color: var(--paper-50); padding: 28px 32px; }
+    .brief .verify-card h4 { color: var(--signal-amber); font-family: var(--font-mono); font-size: 16px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin: 0 0 12px; }
+    .brief .verify-card code { font-family: var(--font-mono); font-size: 26px; line-height: 1.6; color: var(--paper-50); display: block; }
+
+    .closer { background: var(--paper-50); display: flex; align-items: center; justify-content: center; }
+    .closer .slide-pad { justify-content: center; align-items: flex-start; }
+    .closer h2 { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 110px; line-height: 1; letter-spacing: -0.025em; margin: 0; max-width: 1600px; }
+    .closer h2 em { color: var(--crimson); }
+    .closer .sub { margin-top: 32px; font-size: 28px; color: var(--ink-700); max-width: 1400px; line-height: 1.4; font-style: italic; }
+
+    .end-slate { background: var(--terminal-900); color: var(--paper-50); display: grid; place-items: center; }
+    .end-slate .frame { text-align: center; }
+    .end-slate .ascii { font-family: var(--font-mono); font-size: 24px; color: var(--signal-green); white-space: pre; margin-bottom: 36px; }
+    .end-slate h2 { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 88px; margin: 0; }
+    .end-slate h2 em { color: var(--signal-amber); }
+  </style>
+</head>
+<body>
+  <deck-stage>
+
+    <section class="title-slide" data-screen-label="Title — Setup Quest">
+      <div class="slide-pad">
+        <div class="crest" aria-hidden="true">IU</div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 03</div>
+        <h1 class="title">Setup<br /><em>Quest.</em></h1>
+        <p class="lede" style="margin-top:36px;">90 minutes, three install rounds, two verifications. Today you leave with a working dev environment and a working second brain — both yours, both yours to maintain.</p>
+        <dl class="meta">
+          <div><dt>WEEK</dt><dd>03 of 08</dd></div>
+          <div><dt>DURATION</dt><dd>90 minutes</dd></div>
+          <div><dt>POSTURE</dt><dd>Lab · TAs hands-on</dd></div>
+          <div><dt>DELIVERABLES</dt><dd>4 in Start Log</dd></div>
+        </dl>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">01 / 12</div>
+      </div>
+    </section>
+
+    <section class="section-slate" data-screen-label="Cold open — why a second brain">
+      <div class="slide-pad">
+        <div class="crumb">⓪ COLD OPEN · 8 MIN · CLOSE THE LAPTOP</div>
+        <h2 class="section-h">Knowledge worth keeping<br />must be <em>externalized.</em></h2>
+        <p class="lede" style="margin-top:36px;">Most CS students never do this on purpose. By W12 they can't remember what they did in W4. We're going to make sure that's not you.</p>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">02 / 12</div>
+      </div>
+    </section>
+
+    <section class="anchor-slide" data-screen-label="Anchor question">
+      <div class="slide-pad">
+        <div class="crumb">⓪ ANCHOR · 90 MIN · TWO VERBS</div>
+        <h2 class="anchor-q">Can I run code <em>AND</em><br />keep my own notes?</h2>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">03 / 12</div>
+      </div>
+    </section>
+
+    <section class="ideas-slide" data-screen-label="Big Ideas this lesson hits">
+      <div class="slide-pad">
+        <div class="crumb">⓪ FRAMING · TWO BIG IDEAS</div>
+        <h2 class="section-h">Why <em>this</em>, why <em>now.</em></h2>
+        <div class="grid">
+          <div class="card">
+            <span class="num" aria-hidden="true">#2</span>
+            <h3>Verbs over tools.</h3>
+            <p>The install IS the capability. By end of class, you can do the verb "run code on my own machine" — not just name the tools that make that possible.</p>
+          </div>
+          <div class="card">
+            <span class="num" aria-hidden="true">#4</span>
+            <h3>Knowledge worth keeping<br />must be externalized.</h3>
+            <p>Obsidian, git, and the IU library are three externalization surfaces. Different jobs, same move: get the work out of your head and into something searchable.</p>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">04 / 12</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Round 1 — terminal + editor">
+      <div class="slide-pad">
+        <div class="crumb">① ROUND 1 · 20 MIN · TAs WALK</div>
+        <h2 class="section-h">Round 1 — <em>terminal</em> + <em>editor.</em></h2>
+        <div class="grid">
+          <div class="col">
+            <h4>You will</h4>
+            <ul>
+              <li>Install VS Code (or instructor-specified editor).</li>
+              <li>Open a terminal — built-in panel inside the editor counts.</li>
+              <li>Navigate one folder up, one folder down. Edit a file. Save.</li>
+              <li>Run the verification command at your own machine, aloud.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>Verify</h4>
+              <code>$ echo "hi"</code>
+              <code>$ pwd</code>
+              <code style="color:var(--signal-amber);font-size:18px;margin-top:12px;">// outputs the line + your home path</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">05 / 12</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Round 2 — runtime + git">
+      <div class="slide-pad">
+        <div class="crumb">② ROUND 2 · 15 MIN · COMMIT IS THE GOAL</div>
+        <h2 class="section-h">Round 2 — <em>runtime</em> + <em>git.</em></h2>
+        <div class="grid">
+          <div class="col">
+            <h4>You will</h4>
+            <ul>
+              <li>Install Python (or course language). Verify the version.</li>
+              <li>Run a one-line `print("hi")` script. The room sees output.</li>
+              <li>Initialize a git repo. Commit a one-line README.</li>
+              <li>Push to a new GitHub repo. The repo can be empty — the act of pushing is the lesson.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>Verify</h4>
+              <code>$ python --version</code>
+              <code>$ git --version</code>
+              <code>$ git log --oneline</code>
+              <code style="color:var(--signal-amber);font-size:18px;margin-top:12px;">// shows at least 1 commit</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">06 / 12</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Round 3 — Obsidian + IU library">
+      <div class="slide-pad">
+        <div class="crumb">③ ROUND 3 · 15 MIN · SECOND BRAIN</div>
+        <h2 class="section-h">Round 3 — <em>Obsidian</em> + <em>library.</em></h2>
+        <div class="grid">
+          <div class="col">
+            <h4>You will</h4>
+            <ul>
+              <li>Install Obsidian. Create a vault named <strong>csci-y100</strong>.</li>
+              <li>Build the folder structure: <strong>Weeks/ · Project/ · Bugs/ · Reflections/ · Sources/</strong></li>
+              <li>Bookmark IU Libraries home, the database list, and the chat-with-a-librarian button.</li>
+              <li>Show your TA the five folders. Get checked off in your Start Log.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>Verify</h4>
+              <code>vault: ~/csci-y100/</code>
+              <code>folders: 5</code>
+              <code>library bookmarks: 3</code>
+              <code style="color:var(--signal-amber);font-size:18px;margin-top:12px;">// TA initials in Start Log</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">07 / 12</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="First note · first source">
+      <div class="slide-pad">
+        <div class="crumb">④ FIRST NOTE · 15 MIN · USE WHAT YOU INSTALLED</div>
+        <h2 class="section-h">First <em>note.</em> First <em>source.</em></h2>
+        <p class="lede" style="margin-top:0;font-size:26px;max-width:1500px;">Installing tools is not a capability. Using them is. We're doing both today, in the same room, with help at your elbow.</p>
+        <div class="grid" style="grid-template-columns:1fr 1fr;">
+          <div class="col">
+            <h4>First note · Weeks/W03-setup-quest.md</h4>
+            <ul>
+              <li>One sentence on what you installed.</li>
+              <li>Save. That's it.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>First source · Sources/[topic].md</h4>
+            <ul>
+              <li>Find one credible source on something you're curious about.</li>
+              <li><strong>From an IU database. NOT Google.</strong></li>
+              <li>Capture title, link, and one sentence on why you trust it.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">08 / 12</div>
+      </div>
+    </section>
+
+    <section class="section-slate" data-screen-label="Wrap-up + 1:1 troubleshoot">
+      <div class="slide-pad">
+        <div class="crumb">⑤ WRAP-UP · 12 MIN · NO STUDENT LEAVES BROKEN</div>
+        <h2 class="section-h">If your stack is broken,<br />we fix it <em>now.</em></h2>
+        <p class="lede" style="margin-top:32px;">TAs sweep. Facilitator visits the most-stuck student. Hardware-broken setups get a 1:1 office-hours slot scheduled before W4. We don't pretend it's fixed.</p>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">09 / 12</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Take-home">
+      <div class="slide-pad">
+        <div class="crumb">⑥ TAKE-HOME · 5 MIN · LOG THE ARTIFACTS</div>
+        <h2 class="section-h">Three lines, <em>logged.</em></h2>
+        <p class="lede" style="font-size:26px;max-width:1500px;">In your Start Log, record three things. No story, no prose. Spot-checked at 1:1s.</p>
+        <div class="grid">
+          <div class="col">
+            <h4>Log this</h4>
+            <ul>
+              <li>GitHub repo URL.</li>
+              <li>Obsidian vault path on disk.</li>
+              <li>First source citation (title + link).</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>Why bother</h4>
+              <code style="font-family:var(--font-display);font-style:italic;font-size:24px;line-height:1.5;">If anything is broken by W4 Monday, drop into office hours. The cost compounds.</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">10 / 12</div>
+      </div>
+    </section>
+
+    <section class="closer" data-screen-label="Closer">
+      <div class="slide-pad">
+        <div class="crumb">CLOSER</div>
+        <h2>The toolbox is now <em>yours.</em><br />The notes are now <em>yours.</em></h2>
+        <p class="sub">Two installs is the demo. The habit is the lesson. Every other week from here ships a capture template that lives in the vault you just made.</p>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">11 / 12</div>
+      </div>
+    </section>
+
+    <section class="end-slate" data-screen-label="End">
+      <div class="frame">
+        <div class="ascii" aria-hidden="true">+----------------------------------------+
+|  W03  ·  installed  ·  externalized   |
++----------------------------------------+</div>
+        <h2>See you in <em>Project Seed v0.1.</em></h2>
+      </div>
+      <div class="slide-foot" style="color:var(--paper-300);">CSCI-Y100 · v2.0 · 2026</div>
+      <div class="slide-num" style="color:var(--paper-300);">12 / 12</div>
+    </section>
+
+  </deck-stage>
+
+  <script src="deck-stage.js"></script>
+</body>
+</html>

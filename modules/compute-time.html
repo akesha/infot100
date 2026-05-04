@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Week 2 · Compute Time · CSCI-Y100</title>
+  <meta name="description" content="Week 2 of CSCI-Y100: a 90-minute Compute Time module. Audit one real week on the 168-hour grid, map spike + crash, triage in Eisenhower's matrix, and re-budget." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    html, body { margin: 0; padding: 0; background: var(--paper-50); color: var(--ink-900); font-family: var(--font-body); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulseGreen { 0%, 100% { box-shadow: 0 0 0 0 rgba(93,187,126,0.5); } 50% { box-shadow: 0 0 0 8px rgba(93,187,126,0); } }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* Drag-friendly cursors */
+    .ct-grab { cursor: grab; }
+    .ct-grab:active { cursor: grabbing; }
+
+    /* signal text accents (for triggers-style cards) */
+    :root {
+      --signal-amber-text: #B8851D;
+      --signal-red-text:   #B83A22;
+      --signal-blue-text:  #3A5FA8;
+      --signal-green-text: #3F8A56;
+      --signal-purple-text: #5C418F;
+    }
+  </style>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div id="root">
+    <p style="padding:32px;font:16px/1.5 system-ui,sans-serif;color:#5A523F;">Loading Week 2: Compute Time…</p>
+  </div>
+  <noscript>
+    <div style="max-width:640px;margin:60px auto;padding:24px 28px;background:#FBF7F0;border:2px solid #16140F;font:16px/1.55 system-ui,sans-serif;">
+      <h1 style="font-family:Georgia,serif;font-style:italic;margin:0 0 10px;">JavaScript needed</h1>
+      <p>This interactive module renders with React. Please enable JavaScript, or open the static <a href="compute-time-facilitator-guide.html">facilitator guide</a> or <a href="compute-time-slides.html">slides</a> instead.</p>
+    </div>
+  </noscript>
+
+  <script type="text/babel" src="ct-sections/00-stickershock.jsx"></script>
+  <script type="text/babel" src="ct-sections/01-coldopen.jsx"></script>
+  <script type="text/babel" src="ct-sections/02-loop.jsx"></script>
+  <script type="text/babel" src="ct-sections/03-audit.jsx"></script>
+  <script type="text/babel" src="ct-sections/04-map.jsx"></script>
+  <script type="text/babel" src="ct-sections/05-triage.jsx"></script>
+  <script type="text/babel" src="ct-sections/06-rebudget.jsx"></script>
+  <script type="text/babel" src="ct-sections/07-takehome.jsx"></script>
+  <script type="text/babel" src="async-track.jsx"></script>
+  <script type="text/babel" src="engagement.jsx"></script>
+  <script type="text/babel" src="media-slot.jsx"></script>
+  <script type="text/babel" src="course-arc.jsx"></script>
+  <script type="text/babel" src="capture-template.jsx"></script>
+
+  <script type="text/babel">
+    const sections = [
+      { id: 'shock',  label: 'Sticker shock',     time: '5 min',  Cmp: window.CTSectionShock },
+      { id: 'cold',   label: 'Cold open',         time: '5 min',  Cmp: window.CTSectionColdOpen },
+      { id: 'loop',   label: 'The Compute Loop',  time: '8 min',  Cmp: window.CTSectionLoop },
+      { id: 'audit',  label: 'AUDIT · 168 grid',  time: '15 min', Cmp: window.CTSectionAudit },
+      { id: 'map',    label: 'MAP · spike + crash', time: '24 min', Cmp: window.CTSectionMap },
+      { id: 'triage', label: 'TRIAGE · court',     time: '30 min', Cmp: window.CTSectionTriage },
+      { id: 'budget', label: 'RE-BUDGET · ABC list', time: '12 min', Cmp: window.CTSectionRebudget },
+      { id: 'home',   label: 'Take-home',         time: '5 min',  Cmp: window.CTSectionTakeHome },
+    ];
+
+    const asyncTrack = [
+      { refId: 'shock', label: 'Sticker shock', soloTime: '5 min',
+        activity: 'Read the sticker-shock infographic below. Compute your true hourly cost (tuition + fees ÷ semester hours). Add it to your Start Log.',
+        deliverable: 'Start Log entry — facilitator spot-checks during 1:1s.' },
+      { refId: 'cold', label: 'Cold open', soloTime: '4 min',
+        activity: 'Watch the recorded cold open or read the 1-page text version. Note where you currently spend the most "wasted" hours.',
+        deliverable: 'Private — no posting required.',
+        recording: 'Linked at top of Canvas → Week 2.' },
+      { refId: 'loop', label: 'The Compute Loop', soloTime: '6 min',
+        activity: 'Read The Compute Loop overview below (audit → map → triage → re-budget). Skim once, you\'ll do each phase in order next.',
+        deliverable: 'No deliverable for this step.' },
+      { refId: 'audit', label: 'AUDIT · 168 grid', soloTime: '20 min',
+        activity: 'Fill in the 168-hour grid below. The widget auto-saves to localStorage so you can pick it up later in the week.',
+        deliverable: 'Canvas → Week 2 → "Audit grid" assignment (download or screenshot).' },
+      { refId: 'map', label: 'MAP · spike + crash', soloTime: '25 min',
+        activity: 'Mark your spike + crash zones using the in-page tool. Save and post a screenshot of your map for peer eyes.',
+        deliverable: 'Canvas → Week 2 → "Map" Discussion (post screenshot)',
+        peerLoop: 'React or comment on at least two classmates\' maps before Sunday.' },
+      { refId: 'triage', label: 'TRIAGE · court', soloTime: '30 min',
+        activity: 'Run the in-page triage court solo. Record your top three triage decisions (keep / cut / reschedule) with one-line reasons.',
+        deliverable: 'Canvas → Week 2 → "Triage decisions" Discussion',
+        peerLoop: 'Reply to two classmates with one observation each by Sunday night.' },
+      { refId: 'budget', label: 'RE-BUDGET · ABC list', soloTime: '12 min',
+        activity: 'Re-budget your week using the ABC list tool. Save the result; you\'ll reference it again in Week 7.',
+        deliverable: 'Canvas → Week 2 → "Re-budget" assignment (download or screenshot).' },
+      { refId: 'home', label: 'Take-home', soloTime: '5 min',
+        activity: 'Same as the in-class take-home: confirm the three Compute Time deliverables are submitted before Sunday 11:59 pm.',
+        deliverable: 'All three Week 2 items posted/uploaded in Canvas.' },
+    ];
+
+    const engagement = {
+      selfChecks: {
+        shock: {
+          question: 'Roughly, what does one hour of class actually cost you in tuition + fees?',
+          hint: 'Total semester cost ÷ total contact hours. Don\'t round generously — a real number works better here.',
+          answer: 'For most full-time IU residents the per-contact-hour cost lands between $40 and $120. The exact number is less important than the order of magnitude — every hour you skip or sleepwalk through has a price tag.'
+        },
+        cold: {
+          question: 'Where does your week currently leak the most time?',
+          hint: 'Be specific. "Phone" is the answer everyone gives — go a layer deeper. Which app, which time of day?',
+          answer: 'Strong responses name a specific surface (e.g., "TikTok between 11pm and 1am") rather than a vague one. The map step will quantify this.'
+        },
+        loop: {
+          question: 'In one sentence each: what does AUDIT, MAP, TRIAGE, and RE-BUDGET actually do?',
+          hint: 'They\'re a sequence — each one feeds the next.',
+          answer: 'AUDIT: log where the hours actually went. MAP: find the spike + crash zones. TRIAGE: decide what gets kept, cut, or moved. RE-BUDGET: redraw the week with those decisions baked in.'
+        },
+        audit: {
+          question: 'What was the gap between your guess (last week) and what the grid showed (this week)?',
+          hint: 'Almost everyone is wrong by 5–15 hours in some category. Where did yours land?',
+          answer: 'Common pattern: you under-estimate "scrolling/screens" and over-estimate "studying" by 3–8 hours each. The gap itself is the data.'
+        },
+        map: {
+          question: 'Where is your spike — and what comes right after it?',
+          hint: 'A spike is a high-output stretch. The crash that follows is usually the cost of the spike.',
+          answer: 'Most students have a 3–6 hour spike (often Tue or Thu) followed by a multi-hour crash. The crash is real recovery, not laziness — the question is whether the spike was worth the crash.'
+        },
+        triage: {
+          question: 'Of your top three triage decisions, which one are you most likely to undo by Wednesday?',
+          hint: 'Pre-mortem: which cut feels good now but will hurt at 11pm Tuesday?',
+          answer: 'Usually the social-coded cut (gym buddy, group chat, late-night hangout). Naming it now makes it harder to silently undo later.'
+        },
+        budget: {
+          question: 'What\'s in your A column, and what got demoted to C?',
+          hint: 'A = must happen, B = should happen, C = nice to have. C should be longer than A.',
+          answer: 'Strong re-budgets have 3–5 A items, 5–8 B items, and a long C column. A short C column means you\'re still over-committed.'
+        },
+        home: {
+          question: 'When this week goes sideways (it will), what\'s the one thing you\'ll protect?',
+          hint: 'Pick the one A-column item that everything else flexes around.',
+        },
+      },
+      reflection: {
+        title: 'Compute Time reflection',
+        intro: 'Three short prompts. Auto-saves as you type. Hit "Copy for Canvas" when you\'re done and paste into the Week 2 reflection assignment.',
+        prompts: [
+          'What did the audit grid surface that you genuinely didn\'t know about your week?',
+          'Which triage decision will be hardest to actually keep — and what\'s the single move that would help you keep it?',
+          'If next week\'s audit looked exactly like this week\'s, would you be okay with that? If not, what\'s changing?',
+        ],
+      },
+    };
+
+    const captureTemplate = {
+      title: 'Compute Time · Obsidian capture',
+      target: 'Weeks/W02-compute-time.md',
+      intro: 'Drop this template into your vault. The Audit + Triage + Re-budget headings give you a place to land each phase as you do it.',
+      markdown: `---
+type: lesson
+week: 02
+lesson: Compute Time
+date:${' '}
+status: open
+hour_cost_usd:${' '}
+---
+
+# Compute Time — Week 2
+
+## Anchor question
+Where do my hours actually go?
+
+## Per-hour cost (tuition + fees ÷ contact hours)
+$ ___ /contact hour
+
+## Audit gap (guess vs. reality)
+- Category I under-counted:${' '}
+- Category I over-counted:${' '}
+- Direction of error (in hours):${' '}
+
+## Spike + crash map
+- Spike (3–6 hr high-output stretch):${' '}
+- Crash (recovery cost):${' '}
+- Was the spike worth the crash?${' '}
+
+## Triage decisions (top 3)
+1. KEEP:${' '}
+2. CUT:${' '}
+3. MOVE:${' '}
+
+## Re-budget · ABC list
+**A — must happen:**
+-${' '}
+
+**B — should happen:**
+-${' '}
+
+**C — nice to have:**
+-${' '}
+
+## Reflection
+> What did the audit grid surface that I genuinely didn't know?
+
+> Which triage decision will be hardest to keep — and the single move that would help me keep it:
+
+> If next week's audit looks exactly like this week's, am I OK with that?
+
+## Links / sources
+-${' '}
+`,
+    };
+
+    const media = {
+      cold: {
+        type: 'placeholder',
+        label: 'cold-open clip',
+        caption: 'Cold open · 168 hours and the tradeoff you\'re already making',
+        src: '',
+        transcript:
+`You have 168 hours this week. Same as everyone in this room. Same as the person in your class with the 4.0 and the part-time job. Same as the person about to drop. Wait — actually no, that's not true. The person with the 4.0 might have unloaded 30 hours into something we'll never see; the person about to drop might be giving 50 hours to a job. So the 168 isn't the same. The TRADEOFFS in 168 are.
+
+Most of you have never sat down and counted. You guess. The guess is always wrong by 5 to 15 hours, in some category, in a direction you don't expect. Sometimes you've been under-counting sleep ('I only get 5 hours' — actually 7). Sometimes you've been over-counting studying ('I studied for hours' — actually 25 minutes broken up across an evening of TikTok).
+
+The cold open today is this: you can't budget time you can't see. So before we triage anything, we audit. Audit means: log it for one week. Not a guess, not a mood-based summary. Real entries, every couple hours. By next Sunday, you'll know — for the first time — where your hours actually go.
+
+Then we map. Then we triage. Then we re-budget. That's the loop. It works because none of the steps are the heroic version. Audit isn't 'become a productivity guru.' It's 'write down what you did.' The reason most students never do it is because the heroic version is what gets sold and the boring version is what works.
+
+90 minutes from now, you'll have a re-budgeted week. Some of you will be relieved. Some of you will be quietly horrified. Both are correct reactions — they're just data.`
+      },
+    };
+
+    function App() {
+      const [active, setActive] = React.useState('shock');
+
+      React.useEffect(() => {
+        const opts = { rootMargin: '-30% 0px -55% 0px', threshold: 0 };
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+        }, opts);
+        sections.forEach(s => {
+          const el = document.getElementById(s.id);
+          if (el) obs.observe(el);
+        });
+        return () => obs.disconnect();
+      }, []);
+
+      const goto = (id) => {
+        const el = document.getElementById(id);
+        if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: 'smooth' });
+      };
+
+      return (
+        <div style={{ position: 'relative' }}>
+          <header style={topBar.bar}>
+            <div style={topBar.left}>
+              <span style={topBar.iuMark}>IU</span>
+              <span style={topBar.crumb}>CSCI-Y100 · WEEK 02</span>
+            </div>
+            <div style={topBar.center}>
+              <span style={topBar.title}>Compute Time · audit, map, triage, re-budget</span>
+            </div>
+            <div style={topBar.right}>
+              <span style={topBar.chip}>⏱ 90 min</span>
+              <span style={{ ...topBar.chip, background: 'var(--signal-green)', color: '#fff', borderColor: 'var(--signal-green)' }}>3 deliverables</span>
+              <button type="button" className="lesson-print-btn" onClick={() => window.print()}>Print worksheet</button>
+            </div>
+          </header>
+
+          <nav style={rail.nav} aria-label="Module sections">
+            <div style={rail.head}>CLASS FLOW</div>
+            <div style={rail.list}>
+              {sections.map((s, i) => (
+                <button
+                  key={s.id}
+                  onClick={() => goto(s.id)}
+                  aria-current={active === s.id ? 'location' : undefined}
+                  aria-label={`Section ${i+1}: ${s.label}, ${s.time}`}
+                  style={{
+                    ...rail.item,
+                    ...(active === s.id ? rail.itemActive : {}),
+                  }}
+                >
+                  <span style={rail.idx}>{i.toString().padStart(2,'0')}</span>
+                  <span style={rail.lbl}>{s.label}</span>
+                  <span style={rail.time}>{s.time}</span>
+                </button>
+              ))}
+            </div>
+            <a href="../index.html" style={rail.back}>← Back to canvas</a>
+          </nav>
+
+          <main id="main-content" style={main.wrap}>
+            <div style={{ paddingTop: 28 }}>
+              {window.CourseArc && (
+                <window.CourseArc currentKey="compute-time" />
+              )}
+              {window.AsyncTrack && (
+                <window.AsyncTrack
+                  data={asyncTrack}
+                  lessonKey="compute-time"
+                  totalTime="~107 min"
+                  canvasHub="Canvas → Week 2 module"
+                  intro={<><strong>Heads up:</strong> async mirror of Week 2. Same Compute Loop, same three deliverables, no synchronous block. The in-page tools (audit grid, map, triage, ABC list) all save to your browser — work in any order across the week.</>}
+                />
+              )}
+            </div>
+            {sections.map((s) => {
+              const C = s.Cmp;
+              const sc = engagement.selfChecks[s.id];
+              const m = media[s.id];
+              return (
+                <section id={s.id} key={s.id} data-screen-label={`${s.label}`} style={main.section}>
+                  {m && window.MediaSlot && (
+                    <window.MediaSlot data={m} lessonKey="compute-time" sectionId={s.id} />
+                  )}
+                  {C ? <C /> : <div style={{ padding: 80, color: 'var(--signal-red)' }}>Missing: {s.id}</div>}
+                  {sc && window.SelfCheck && (
+                    <window.SelfCheck data={sc} lessonKey="compute-time" sectionId={s.id} />
+                  )}
+                </section>
+              );
+            })}
+
+            {window.ReflectionJournal && (
+              <window.ReflectionJournal data={engagement.reflection} lessonKey="compute-time">
+                {window.ExportWork && (
+                  <window.ExportWork lessonKey="compute-time" lessonTitle="Week 2 · Compute Time" />
+                )}
+              </window.ReflectionJournal>
+            )}
+
+            {window.CaptureTemplate && (
+              <window.CaptureTemplate data={captureTemplate} />
+            )}
+
+            <footer style={main.foot}>
+              <div style={{ color: 'var(--ink-300)', marginBottom: 18, fontFamily: 'var(--font-mono)', fontSize: 11, whiteSpace: 'pre' }} aria-hidden="true">
+{`+--------------------------------------------+
+|  END OF MODULE  ·  168 hrs. spend them on purpose.|
++--------------------------------------------+`}
+              </div>
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontStyle: 'italic', color: 'var(--ink-500)' }}>
+                You can't make more time. You can <span style={{ color: 'var(--crimson)' }}>see it</span> and <span style={{ color: 'var(--crimson)' }}>spend it</span>.
+              </div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--ink-300)', letterSpacing: '0.15em', marginTop: 28 }}>
+                CSCI-Y100 · v2.0 · 2026
+              </div>
+            </footer>
+          </main>
+        </div>
+      );
+    }
+
+    const topBar = {
+      bar: {
+        position: 'sticky', top: 0, zIndex: 50,
+        display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center',
+        padding: '12px 32px',
+        background: 'var(--ink-900)', color: 'var(--paper-100)',
+        borderBottom: '3px solid var(--crimson)',
+      },
+      left: { display: 'flex', alignItems: 'center', gap: 12, justifySelf: 'start' },
+      center: { justifySelf: 'center' },
+      right: { display: 'flex', gap: 10, justifySelf: 'end' },
+      iuMark: {
+        width: 26, height: 26, background: 'var(--crimson)', color: '#fff',
+        fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 13, fontStyle: 'italic',
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+      },
+      crumb: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--paper-300)', letterSpacing: '0.1em' },
+      title: { fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 600, fontStyle: 'italic', color: 'var(--paper-50)' },
+      chip: {
+        fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.05em',
+        border: '1px solid var(--paper-300)', color: 'var(--paper-100)',
+        padding: '4px 8px', borderRadius: 3,
+      },
+    };
+
+    const rail = {
+      nav: {
+        position: 'fixed', top: 80, left: 32, width: 220,
+        background: 'var(--paper-100)', border: '1px solid var(--paper-200)',
+        padding: '18px 14px 14px', borderRadius: 6,
+        boxShadow: 'var(--shadow-paper)',
+        zIndex: 20,
+      },
+      head: {
+        fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700,
+        color: 'var(--ink-900)', letterSpacing: '0.18em',
+        marginBottom: 14, paddingBottom: 10, borderBottom: '2px solid var(--ink-900)',
+      },
+      list: { display: 'flex', flexDirection: 'column', gap: 2 },
+      item: {
+        display: 'grid', gridTemplateColumns: '24px 1fr auto', alignItems: 'center', gap: 8,
+        background: 'transparent', border: 'none', cursor: 'pointer',
+        padding: '8px 10px', borderRadius: 3,
+        textAlign: 'left', color: 'var(--ink-700)',
+        fontFamily: 'var(--font-body)', fontSize: 12.5,
+      },
+      itemActive: {
+        background: 'var(--ink-900)', color: 'var(--paper-50)',
+      },
+      idx: { fontFamily: 'var(--font-mono)', fontSize: 10, opacity: 0.7 },
+      lbl: { fontWeight: 600 },
+      time: { fontFamily: 'var(--font-mono)', fontSize: 9.5, opacity: 0.7 },
+      back: {
+        display: 'block', marginTop: 16, paddingTop: 12, borderTop: '1px dashed var(--paper-300)',
+        fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-500)',
+        textDecoration: 'none', textAlign: 'center',
+      },
+    };
+
+    const main = {
+      wrap: { marginLeft: 280, padding: '0 56px 0 24px', maxWidth: 1100 },
+      section: { padding: '60px 0', borderBottom: '1px solid var(--paper-200)', minHeight: 'min-content' },
+      foot: { padding: '90px 0 120px', textAlign: 'center' },
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

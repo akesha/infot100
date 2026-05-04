@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Co-Pilot Camp · Slide Deck · CSCI-Y100 Week 6</title>
+  <meta name="description" content="Slide deck for the AI Co-Pilot Camp module (CSCI-Y100 Week 6). Use arrow keys, Page Up/Down, or Space to navigate." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <script type="application/json" id="speaker-notes">
+  [
+    "Welcome to AI Co-Pilot Camp. This is a 90-minute working session on using AI well. There will be no quiz. There is one deliverable — a Prompt Lab you'll start in class and a Prompt Journal you'll run for 5 days. Set the tone: this is not a 'thou shalt not use AI' lecture. We're going to use AI in this room, on the projector, with the lights on. The goal is to learn the difference between using AI and being used by AI.",
+
+    "Quick poll. Don't tell anyone what you picked yet. We'll do this together: you'll see a Python question and three AI replies. Two are confidently wrong. One is right. Pick the one you'd trust.",
+
+    "Reveal slide. After they vote — show of hands per answer, tally on the board. Then click the Trust Fall on the module to walk through the verdicts. The lesson lands hardest if the wrong answer was popular. Don't shame anyone. Say: 'AI sounds right whether it is or not — even strong CS students get fooled. Today is about closing that gap.'",
+
+    "Cold open. Three students with the same CS-200 lab. Same AI tool open. Different relationships with it. Walk through Devon, Sage, Robin — focus on what they THINK and how that shows up in what they DO. Take 5 minutes. End by pointing at Robin: 'Robin uses AI like a senior dev uses code review — fast, critical, never the final word.'",
+
+    "Anchor concept. Four moves. Every time. Hold this slide on screen for 8 minutes — this is the spine of the whole module. Walk the room through one bad ask vs one co-pilot ask per move. Don't lecture; ask volunteers what 'bad' looks like. They know.",
+
+    "Live demo. Open ChatGPT or Claude on the projector. Run all three prompts on the same question. Pause on level 02 — ask the class 'what's still missing?' — let THEM tell you what level 03 needs. The phrase to drop, written on the board: 'AI is a mirror — vague in, vague out.'",
+
+    "Transition slide. We've watched Robin. Now you become Robin. Set up: 'In 5 minutes you're going to do this with one of YOUR assignments. Open Canvas now and pull up something you have due in the next two weeks. Any class.'",
+
+    "Prompt Lab — the deliverable. 25 minutes. Three progressive prompts on a real assignment. Then the Credit Ledger — they mark, for each part of the work, who owns it: ME / SHARED / AI. Walk the room. Common stuck point: students who can't think of an assignment — give them a backup ('describe your weekend in 3 sentences' works fine). Saves automatically; emphasize this.",
+
+    "Pair audit. 20 minutes. Have them pair with someone from a different major if possible — surfaces interesting framing differences. Trade V3 prompts. Score on the four axes. Push them to discuss the LOWEST score, not the highest. ETHICAL is the axis they avoid — name it: 'where would you be embarrassed to show your professor this prompt?'",
+
+    "Take-home brief. The 5-day Prompt Journal. 30 seconds per AI ask, 4-sentence reflection on Friday. Read out the criteria — honest engagement beats polish, revise-and-resubmit if under 33. Show the Markdown template. Tell them: 'Bring it to class week 7. First 10 min we group up and look for patterns across the room.'",
+
+    "Closing reframe. AI is the co-pilot. You still fly. Connect back to Trust Fall, cold open, and the Loop. One sentence to leave them with: 'When you graduate, the people who got hired will be the ones who can use AI without being used by it. That's a skill. It's the skill we're practicing.'",
+
+    "Open the floor. Honest questions. Common ones to be ready for: 'Will my professors let me use AI?' (varies — check syllabus, ask), 'Is this cheating?' (depends on what AI did vs what you did — ledger answers this), 'What if I just use AI for everything?' (ask them to sit with that — the journal will tell them).",
+
+    "End slate. Send them off. Confirm: Prompt Journal due next class, bring a copy to share. Optional reading: link them to the IU AI literacy resources (in the facilitator guide). Door's open if they want to talk after."
+  ]
+  </script>
+
+  <style>
+    html, body { margin: 0; padding: 0; background: #000; color: var(--ink-900); font-family: var(--font-body); overflow: hidden; }
+    deck-stage { display: block; width: 100vw; height: 100vh; }
+
+    /* === A11y: text-safe tints of signal colors for body text on paper backgrounds.
+           The base --signal-* are tuned for borders/icons/large-display use.
+           These darker variants pass WCAG AA (4.5:1) on --paper-50 / --paper-100. === */
+    :root {
+      --signal-amber-text: #8a6920;   /* on paper-50/100 */
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Each <section> is a 1920×1080 slide. */
+    section {
+      width: 1920px; height: 1080px;
+      background: var(--paper-50);
+      position: relative;
+      overflow: hidden;
+      font-family: var(--font-body);
+      color: var(--ink-900);
+    }
+
+    /* === Reusable slide components === */
+    .slide-pad { padding: 96px 120px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; }
+    .crumb {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      letter-spacing: 0.2em;
+      color: var(--crimson);
+      margin-bottom: 32px;
+    }
+    .crumb-light { color: var(--signal-amber); }
+    .slide-num {
+      position: absolute; bottom: 40px; right: 60px;
+      font-family: var(--font-mono); font-size: 16px; color: var(--ink-300);
+      letter-spacing: 0.12em;
+    }
+    .slide-foot {
+      position: absolute; bottom: 40px; left: 120px;
+      font-family: var(--font-mono); font-size: 14px; color: var(--ink-300);
+      letter-spacing: 0.12em;
+    }
+
+    h1.title {
+      font-family: var(--font-display); font-weight: 600; font-style: italic;
+      font-size: 144px; line-height: 0.95; letter-spacing: -0.03em;
+      margin: 0;
+    }
+    h1.title em { font-style: italic; color: var(--crimson); }
+    h2.section-h {
+      font-family: var(--font-display); font-weight: 600; font-style: italic;
+      font-size: 96px; line-height: 1; letter-spacing: -0.025em;
+      margin: 0 0 28px;
+    }
+    h2.section-h em { color: var(--crimson); }
+    .lede {
+      font-size: 30px; line-height: 1.45; color: var(--ink-700);
+      max-width: 1300px;
+    }
+
+    /* === Title slide === */
+    .title-slide {
+      background: var(--paper-50);
+      background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0);
+      background-size: 28px 28px;
+    }
+    .title-slide .crest {
+      width: 84px; height: 84px; background: var(--crimson); color: #fff;
+      font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 42px;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 32px;
+    }
+    .title-slide .meta {
+      margin-top: 56px;
+      display: grid; grid-template-columns: repeat(4, auto); gap: 56px;
+      justify-content: start;
+    }
+    .title-slide .meta dt {
+      font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+      letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 6px;
+    }
+    .title-slide .meta dd {
+      margin: 0; font-family: var(--font-display); font-style: italic;
+      font-size: 28px; font-weight: 600; color: var(--ink-900);
+    }
+
+    /* === Section slate (between sections) === */
+    .section-slate {
+      background: var(--ink-900); color: var(--paper-50);
+    }
+    .section-slate .slide-pad { justify-content: center; }
+    .section-slate .crumb { color: var(--signal-amber); }
+    .section-slate h2.section-h { color: var(--paper-50); font-size: 132px; line-height: 0.95; }
+    .section-slate h2.section-h em { color: var(--signal-amber); }
+    .section-slate .lede { color: var(--paper-300); }
+
+    /* === Trust Fall === */
+    .trust-fall .question {
+      background: var(--terminal-900); color: var(--paper-100);
+      padding: 36px 44px; border-radius: 8px;
+      border: 1px solid var(--terminal-500);
+      margin-top: 32px;
+      font-family: var(--font-mono); font-size: 36px;
+    }
+    .trust-fall .question .prompt { color: var(--signal-green); margin-right: 12px; }
+    .trust-fall .grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      margin-top: 56px;
+    }
+    .trust-fall .card {
+      background: var(--paper-100); border: 2px solid var(--paper-200);
+      border-radius: 10px; padding: 28px 30px;
+    }
+    .trust-fall .card .botname {
+      display: inline-block; color: var(--ink-900); padding: 8px 16px;
+      font-family: var(--font-mono); font-size: 16px; font-weight: 700;
+      letter-spacing: 0.05em; border-radius: 4px; margin-bottom: 16px;
+    }
+    .trust-fall .card .reply {
+      font-family: var(--font-mono); font-size: 19px; line-height: 1.55;
+      color: var(--ink-900); white-space: pre-wrap;
+    }
+
+    /* === Cold open === */
+    .cold-open .grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+      margin-top: 56px;
+    }
+    .cold-open .student {
+      background: var(--paper-100); border: 2px solid var(--paper-200);
+      border-top: 8px solid; border-radius: 10px; padding: 36px 32px;
+    }
+    .cold-open .student .ava {
+      width: 64px; height: 64px; border-radius: 50%; color: #fff;
+      font-family: var(--font-display); font-weight: 700; font-size: 30px;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .cold-open .student .name {
+      font-family: var(--font-display); font-style: italic; font-size: 48px; font-weight: 600;
+      line-height: 1; margin-bottom: 6px;
+    }
+    .cold-open .student .vibe {
+      font-family: var(--font-mono); font-size: 16px; font-weight: 700;
+      letter-spacing: 0.15em; margin-bottom: 24px;
+    }
+    .cold-open .student .quote {
+      font-family: var(--font-display); font-style: italic; font-size: 22px;
+      color: var(--ink-900); line-height: 1.4; padding-top: 18px;
+      border-top: 2px dashed var(--paper-300);
+    }
+
+    /* === Loop === */
+    .loop .grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px;
+      margin-top: 56px;
+    }
+    .loop .step {
+      background: var(--paper-100); border: 2px solid var(--paper-200);
+      border-radius: 10px; padding: 28px 32px;
+    }
+    .loop .step .n {
+      font-family: var(--font-mono); font-size: 16px; font-weight: 700;
+      letter-spacing: 0.15em; margin-bottom: 6px;
+    }
+    .loop .step .verb {
+      font-family: var(--font-display); font-weight: 700; font-style: italic;
+      font-size: 72px; line-height: 1; letter-spacing: -0.02em; margin-bottom: 14px;
+    }
+    .loop .step .one {
+      font-family: var(--font-display); font-style: italic; font-size: 28px;
+      color: var(--ink-900); line-height: 1.3;
+    }
+    .loop-arrow {
+      position: absolute; bottom: 110px; left: 0; right: 0;
+      text-align: center;
+      font-family: var(--font-display); font-style: italic; font-size: 26px;
+      color: var(--ink-700);
+    }
+
+    /* === Race the AIs === */
+    .race h2.section-h { font-size: 88px; }
+    .race .question-strip {
+      background: var(--ink-900); color: var(--paper-100);
+      padding: 24px 36px; border-radius: 6px; margin-top: 24px;
+      display: flex; gap: 28px; align-items: center;
+    }
+    .race .qlabel { font-family: var(--font-mono); font-size: 16px; color: var(--signal-amber); letter-spacing: 0.18em; }
+    .race .qbody { font-family: var(--font-display); font-style: italic; font-size: 32px; color: var(--paper-50); }
+    .race .levels {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 36px;
+    }
+    .race .level {
+      background: var(--paper-100); border: 2px solid var(--paper-200);
+      border-top: 8px solid; border-radius: 10px; padding: 24px 28px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .race .level .lname {
+      font-family: var(--font-display); font-style: italic; font-size: 44px; font-weight: 700;
+      line-height: 1;
+    }
+    .race .level .lsub {
+      font-family: var(--font-mono); font-size: 14px; color: var(--ink-500);
+      letter-spacing: 0.05em; margin-top: -6px;
+    }
+    .race .level .prompt-box {
+      background: var(--paper-50); border: 1px solid var(--paper-200);
+      border-radius: 4px; padding: 16px 18px;
+      font-family: var(--font-mono); font-size: 17px; color: var(--ink-900);
+      line-height: 1.5; min-height: 200px;
+    }
+
+    /* === Lab / Pair / Home brief === */
+    .brief .grid-2 {
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px;
+      margin-top: 40px;
+    }
+    .brief .steps {
+      list-style: none; padding: 0; margin: 0; counter-reset: step;
+    }
+    .brief .steps li {
+      counter-increment: step;
+      display: grid; grid-template-columns: 56px 1fr; gap: 22px;
+      padding: 22px 0; border-bottom: 1px dashed var(--paper-300);
+    }
+    .brief .steps li::before {
+      content: counter(step, decimal-leading-zero);
+      font-family: var(--font-mono); font-size: 22px; font-weight: 700;
+      color: var(--crimson); padding-top: 4px;
+    }
+    .brief .steps .hd {
+      font-family: var(--font-display); font-style: italic; font-size: 32px;
+      font-weight: 600; line-height: 1.1; margin-bottom: 8px;
+    }
+    .brief .steps .body {
+      font-size: 22px; color: var(--ink-700); line-height: 1.5;
+    }
+    .brief .timecard {
+      background: var(--ink-900); color: var(--paper-100);
+      padding: 36px 40px; border-radius: 10px;
+      align-self: start;
+    }
+    .brief .timecard .big {
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 120px; line-height: 1; color: var(--paper-50);
+    }
+    .brief .timecard .lbl {
+      font-family: var(--font-mono); font-size: 16px; letter-spacing: 0.15em;
+      color: var(--signal-amber); margin-top: 12px;
+    }
+    .brief .timecard dl { margin: 28px 0 0; padding-top: 22px; border-top: 1px dashed var(--paper-300); }
+    .brief .timecard dt { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; color: var(--paper-300); margin-bottom: 4px; }
+    .brief .timecard dd { font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--paper-50); margin: 0 0 14px; }
+
+    /* === Closer === */
+    .closer { background: var(--ink-900); color: var(--paper-50); }
+    .closer .slide-pad { justify-content: center; align-items: flex-start; }
+    .closer .stamp {
+      display: inline-block; border: 3px solid var(--signal-amber);
+      color: var(--signal-amber); font-family: var(--font-mono);
+      font-size: 18px; font-weight: 700; letter-spacing: 0.18em;
+      padding: 10px 18px; transform: rotate(-2deg); margin-bottom: 32px;
+    }
+    .closer h1 { color: var(--paper-50); font-size: 156px; }
+    .closer h1 em { color: var(--signal-amber); }
+    .closer .sub {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 36px; color: var(--paper-300); margin-top: 24px;
+    }
+
+    /* === End slate === */
+    .end-slate {
+      background: var(--paper-50);
+      background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0);
+      background-size: 28px 28px;
+    }
+    .end-slate .slide-pad { justify-content: center; align-items: center; text-align: center; }
+    .end-slate .ascii {
+      font-family: var(--font-mono); font-size: 24px; color: var(--ink-300);
+      letter-spacing: 0.1em; white-space: pre; line-height: 1.3; margin-bottom: 56px;
+    }
+    .end-slate .out {
+      font-family: var(--font-display); font-style: italic; font-size: 84px;
+      color: var(--ink-900); line-height: 1.1; max-width: 1500px;
+    }
+    .end-slate .out em { color: var(--crimson); }
+
+    /* === Q&A === */
+    .qa { background: var(--paper-100); }
+    .qa .slide-pad { justify-content: center; }
+    .qa .big-q {
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 320px; line-height: 1; color: var(--crimson);
+      margin: 0 0 24px;
+    }
+  </style>
+
+  <script src="deck-stage.js"></script>
+</head>
+<body>
+  <deck-stage>
+
+    <!-- ============ 01 · TITLE ============ -->
+    <section class="title-slide" data-screen-label="01 Title">
+      <div class="slide-pad">
+        <div class="crest" aria-label="Indiana University">IU</div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 06</div>
+        <h1 class="title">AI Co-Pilot<br /><em>Camp.</em></h1>
+        <dl class="meta">
+          <div>
+            <dt>DURATION</dt>
+            <dd>90 minutes</dd>
+          </div>
+          <div>
+            <dt>DELIVERABLE</dt>
+            <dd>1 (Prompt Lab)</dd>
+          </div>
+          <div>
+            <dt>TAKE-HOME</dt>
+            <dd>5-day journal</dd>
+          </div>
+          <div>
+            <dt>POSTURE</dt>
+            <dd>"You fly"</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="slide-foot">v2.0 · 2026</div>
+      <div class="slide-num">01 / 13</div>
+    </section>
+
+    <!-- ============ 02 · TRUST FALL — QUESTION ============ -->
+    <section class="trust-fall" data-screen-label="02 Trust Fall — Question">
+      <div class="slide-pad">
+        <div class="crumb">00 · ICEBREAKER · TRUST FALL · 10 MIN</div>
+        <h2 class="section-h">Three AIs walk into<br /><em>your homework.</em></h2>
+        <div class="lede">Two are wrong. One is right. All three sound equally confident. Pick the one you'd trust — don't tell anyone yet.</div>
+
+        <div class="question" role="figure" aria-label="The Python question shown to all three AIs">
+          <span class="prompt" aria-hidden="true">&gt;</span>
+          What does this Python code print? — print([1,2,3] * 2)
+        </div>
+
+        <div class="grid" role="list" aria-label="Three AI answers">
+          <article class="card" role="listitem">
+            <div class="botname" style="background: var(--signal-green)">GPT-Style</div>
+            <div class="reply">It prints [2, 4, 6]. The * 2 multiplies each element by 2 — element-wise multiplication, the standard list behavior.</div>
+          </article>
+          <article class="card" role="listitem">
+            <div class="botname" style="background: var(--signal-amber)">Claude-Style</div>
+            <div class="reply">[1,2,3] * 2 evaluates to [1, 2, 3, 1, 2, 3] — multiplying a list by an int repeats it. (For element-wise, you'd need numpy.)</div>
+          </article>
+          <article class="card" role="listitem">
+            <div class="botname" style="background: var(--signal-red)">Mixed-bag</div>
+            <div class="reply">It prints [1, 2, 3] twice on separate lines because * 2 is shorthand for two prints.</div>
+          </article>
+        </div>
+      </div>
+      <div class="slide-num">02 / 13</div>
+    </section>
+
+    <!-- ============ 03 · TRUST FALL — REVEAL ============ -->
+    <section class="section-slate" data-screen-label="03 Trust Fall — Reveal">
+      <div class="slide-pad">
+        <div class="crumb">↳ THE REVEAL</div>
+        <h2 class="section-h">AI sounds right<br /><em>whether it is or not.</em></h2>
+        <div class="lede" style="margin-top: 32px;">
+          <strong style="color: var(--paper-50);">Claude-Style was correct.</strong> The other two were confidently wrong — in different ways. The lesson: confidence is not a signal. Today we learn how to tell the difference.
+        </div>
+      </div>
+      <div class="slide-num" style="color: var(--paper-300)">03 / 13</div>
+    </section>
+
+    <!-- ============ 04 · COLD OPEN ============ -->
+    <section class="cold-open" data-screen-label="04 Cold open">
+      <div class="slide-pad">
+        <div class="crumb">① COLD OPEN · 5 MIN</div>
+        <h2 class="section-h">Three students.<br /><em>Same assignment.</em></h2>
+
+        <div class="grid">
+          <article class="student" style="border-top-color: var(--signal-red)">
+            <div class="ava" style="background: var(--signal-red)">D</div>
+            <div class="name">Devon</div>
+            <div class="vibe" style="color: var(--signal-red-text)">↳ DEPENDENT</div>
+            <div class="quote">"I can't write a single line without AI. If ChatGPT goes down, I'm cooked."</div>
+          </article>
+          <article class="student" style="border-top-color: var(--signal-amber)">
+            <div class="ava" style="background: var(--signal-amber); color: var(--ink-900)">S</div>
+            <div class="name">Sage</div>
+            <div class="vibe" style="color: var(--signal-amber-text)">↳ FORBIDDEN</div>
+            <div class="quote">"Real CS students don't use AI. Even looking at it feels like a moral failure."</div>
+          </article>
+          <article class="student" style="border-top-color: var(--signal-green)">
+            <div class="ava" style="background: var(--signal-green); color: var(--ink-900)">R</div>
+            <div class="name">Robin</div>
+            <div class="vibe" style="color: var(--signal-green-text)">↳ CO-PILOT</div>
+            <div class="quote">"I'm the pilot. AI is my co-pilot. I read every word and I still own the landing."</div>
+          </article>
+        </div>
+      </div>
+      <div class="slide-num">04 / 13</div>
+    </section>
+
+    <!-- ============ 05 · LOOP ============ -->
+    <section class="loop" data-screen-label="05 The Co-pilot Loop">
+      <div class="slide-pad">
+        <div class="crumb">② THE CO-PILOT LOOP · 8 MIN</div>
+        <h2 class="section-h">Four moves. <em>Every time.</em></h2>
+
+        <div class="grid" role="list" aria-label="The four steps of the Co-pilot Loop">
+          <div class="step" role="listitem" style="border-color: var(--signal-blue)">
+            <div class="n" style="color: var(--signal-blue-text)">01</div>
+            <div class="verb" style="color: var(--signal-blue-text)">FRAME</div>
+            <div class="one">Set the context AI doesn't have.</div>
+          </div>
+          <div class="step" role="listitem" style="border-color: var(--signal-amber)">
+            <div class="n" style="color: var(--signal-amber-text)">02</div>
+            <div class="verb" style="color: var(--signal-amber-text)">PROBE</div>
+            <div class="one">Ask follow-ups. Don't accept the first answer.</div>
+          </div>
+          <div class="step" role="listitem" style="border-color: var(--signal-green)">
+            <div class="n" style="color: var(--signal-green-text)">03</div>
+            <div class="verb" style="color: var(--signal-green-text)">VERIFY</div>
+            <div class="one">Run it. Read it. Don't trust it.</div>
+          </div>
+          <div class="step" role="listitem" style="border-color: var(--crimson)">
+            <div class="n" style="color: var(--crimson)">04</div>
+            <div class="verb" style="color: var(--crimson)">OWN</div>
+            <div class="one">Could you write this from scratch tomorrow?</div>
+          </div>
+        </div>
+      </div>
+      <div class="loop-arrow"><span aria-hidden="true">↻</span> &nbsp; OWN sends you back to FRAME with a smaller, sharper question. That's the work.</div>
+      <div class="slide-num">05 / 13</div>
+    </section>
+
+    <!-- ============ 06 · RACE THE AIS ============ -->
+    <section class="race" data-screen-label="06 Race the AIs">
+      <div class="slide-pad">
+        <div class="crumb">③ RACE THE AIS · 12 MIN · LIVE DEMO</div>
+        <h2 class="section-h">Same question. <em>Three prompts.</em></h2>
+
+        <div class="question-strip">
+          <span class="qlabel">QUESTION:</span>
+          <span class="qbody">How do I make my Python script run faster?</span>
+        </div>
+
+        <div class="levels">
+          <article class="level" style="border-top-color: var(--signal-red)">
+            <div>
+              <div class="lname" style="color: var(--signal-red-text)">Vague</div>
+              <div class="lsub">the lazy ask</div>
+            </div>
+            <div class="prompt-box">make my python script faster</div>
+          </article>
+          <article class="level" style="border-top-color: var(--signal-amber)">
+            <div>
+              <div class="lname" style="color: var(--signal-amber-text)">Better</div>
+              <div class="lsub">with FRAME</div>
+            </div>
+            <div class="prompt-box">I have a python script that processes a 10MB CSV. It takes 45 seconds. how do I make it faster</div>
+          </article>
+          <article class="level" style="border-top-color: var(--signal-green)">
+            <div>
+              <div class="lname" style="color: var(--signal-green-text)">Co-pilot</div>
+              <div class="lsub">FRAME + PROBE + VERIFY</div>
+            </div>
+            <div class="prompt-box">I'm in CSCI-Y211. Script reads a 10MB CSV, counts unique values per column. 45s on my machine. I tried removing prints (saved 1s). Goal: under 10s, but I want to UNDERSTAND why my version is slow before I copy a fix…</div>
+          </article>
+        </div>
+      </div>
+      <div class="slide-num">06 / 13</div>
+    </section>
+
+    <!-- ============ 07 · TRANSITION TO LAB ============ -->
+    <section class="section-slate" data-screen-label="07 Transition to Lab">
+      <div class="slide-pad">
+        <div class="crumb">↓ NOW IT'S YOUR TURN</div>
+        <h2 class="section-h">Open Canvas.<br /><em>Pick a real assignment.</em></h2>
+        <div class="lede" style="margin-top: 32px;">
+          From any class. Due in the next two weeks. You're going to write the same prompt three times — and sign the credit ledger.
+        </div>
+      </div>
+      <div class="slide-num" style="color: var(--paper-300)">07 / 13</div>
+    </section>
+
+    <!-- ============ 08 · PROMPT LAB BRIEF ============ -->
+    <section class="brief" data-screen-label="08 Prompt Lab brief">
+      <div class="slide-pad">
+        <div class="crumb">④ PROMPT LAB · 25 MIN · DELIVERABLE</div>
+        <h2 class="section-h">Engineer your own<br /><em>co-pilot prompt.</em></h2>
+
+        <div class="grid-2">
+          <ol class="steps">
+            <li>
+              <div>
+                <div class="hd">Set up</div>
+                <div class="body">Course code + one-sentence task description.</div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <div class="hd">Three progressive prompts</div>
+                <div class="body"><strong>V1 Vague</strong> → <strong>V2 with FRAME</strong> → <strong>V3 full Loop</strong>. Each better than the last.</div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <div class="hd">Sign the Credit Ledger</div>
+                <div class="body">10 tasks. Mark each: <em>ME</em>, <em>SHARED</em>, or <em>AI</em>. Honest answers only.</div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <div class="hd">Submit</div>
+                <div class="body">Saves to your browser as you type. Submit on Canvas before pair audit.</div>
+              </div>
+            </li>
+          </ol>
+
+          <aside class="timecard">
+            <div class="big">25</div>
+            <div class="lbl">MINUTES · WORK QUIETLY</div>
+            <dl>
+              <div>
+                <dt>STUCK?</dt>
+                <dd>raise a hand</dd>
+              </div>
+              <div>
+                <dt>DONE EARLY?</dt>
+                <dd>start the journal</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+      <div class="slide-num">08 / 13</div>
+    </section>
+
+    <!-- ============ 09 · PAIR AUDIT BRIEF ============ -->
+    <section class="brief" data-screen-label="09 Pair audit brief">
+      <div class="slide-pad">
+        <div class="crumb">⑤ PAIR AUDIT · 20 MIN</div>
+        <h2 class="section-h">Trade prompts.<br /><em>Rate each other.</em></h2>
+
+        <div class="grid-2">
+          <ol class="steps">
+            <li>
+              <div>
+                <div class="hd">Find a partner</div>
+                <div class="body">Different major if possible. Surfaces real framing differences.</div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <div class="hd">Read theirs slowly</div>
+                <div class="body">Out loud is fine. Score on four axes: <strong>SPECIFIC · SCOPED · VERIFIABLE · ETHICAL.</strong></div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <div class="hd">Discuss the lowest score</div>
+                <div class="body">Not the highest. The lowest one is where the prompt is weakest — and where the conversation is most useful.</div>
+              </div>
+            </li>
+          </ol>
+
+          <aside class="timecard">
+            <div class="big">20</div>
+            <div class="lbl">MINUTES · TALK LOUDLY</div>
+            <dl>
+              <div>
+                <dt>SCORING</dt>
+                <dd>1–5 per axis</dd>
+              </div>
+              <div>
+                <dt>VERDICT</dt>
+                <dd>20 = co-pilot</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+      <div class="slide-num">09 / 13</div>
+    </section>
+
+    <!-- ============ 10 · TAKE-HOME BRIEF ============ -->
+    <section class="brief" data-screen-label="10 Take-home brief">
+      <div class="slide-pad">
+        <div class="crumb">⑥ TAKE-HOME · 5 DAYS · 50 PTS</div>
+        <h2 class="section-h">The 5-day<br /><em>Prompt Journal.</em></h2>
+
+        <div class="grid-2">
+          <ol class="steps">
+            <li>
+              <div>
+                <div class="hd">Log every AI ask</div>
+                <div class="body">Any class, any topic. ~30 seconds per row.</div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <div class="hd">Five fields per row</div>
+                <div class="body">When · Class &amp; ask · Loop hit (F/P/V/O) · Owner (ME/SHARED/AI) · One-line surprise.</div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <div class="hd">Friday: 4-sentence reflection</div>
+                <div class="body">Pattern? Surprise? Where the Loop fell apart? One specific change for next week.</div>
+              </div>
+            </li>
+          </ol>
+
+          <aside class="timecard">
+            <div class="big">5</div>
+            <div class="lbl">DAYS · 50 POINTS</div>
+            <dl>
+              <div>
+                <dt>DUE</dt>
+                <dd>Next class · Canvas</dd>
+              </div>
+              <div>
+                <dt>BRING</dt>
+                <dd>a copy to share</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+      <div class="slide-num">10 / 13</div>
+    </section>
+
+    <!-- ============ 11 · CLOSER REFRAME ============ -->
+    <section class="closer" data-screen-label="11 Closer reframe">
+      <div class="slide-pad">
+        <div class="stamp">REMEMBER THIS</div>
+        <h1 class="title">AI is the<br />co-pilot.<br /><em>You still fly.</em></h1>
+        <div class="sub">When you graduate, the people who got hired<br />will be the ones who use AI without being used by it.</div>
+      </div>
+      <div class="slide-num" style="color: var(--paper-300)">11 / 13</div>
+    </section>
+
+    <!-- ============ 12 · Q&A ============ -->
+    <section class="qa" data-screen-label="12 Questions">
+      <div class="slide-pad">
+        <div class="crumb">↳ HONEST QUESTIONS</div>
+        <div class="big-q" aria-label="Q?">Q?</div>
+        <div class="lede" style="font-size: 36px;">No question is a bad one. The harder, the better.</div>
+      </div>
+      <div class="slide-num">12 / 13</div>
+    </section>
+
+    <!-- ============ 13 · END SLATE ============ -->
+    <section class="end-slate" data-screen-label="13 End slate">
+      <div class="slide-pad">
+        <div class="ascii" aria-hidden="true">+--------------------------------------------+
+|  END OF MODULE  ·  fly your own plane      |
++--------------------------------------------+</div>
+        <div class="out">go forth and use AI<br />like a <em>senior dev</em><br />uses code review.</div>
+        <div class="slide-foot" style="position: static; margin-top: 64px; text-align: center; left: 0; right: 0;">CSCI-Y100 · v2.0 · 2026 &nbsp;·&nbsp; Prompt Journal due next class</div>
+      </div>
+      <div class="slide-num">13 / 13</div>
+    </section>
+
+  </deck-stage>
+</body>
+</html>

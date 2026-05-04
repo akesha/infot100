@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compute Time · TILT Rubric · CSCI-Y100</title>
+  <meta name="description" content="Transparent (TILT) rubric for the Compute Time module's three deliverables: audit, map, triage. Purpose, task, criteria." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600;1,9..144,700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    @page { size: letter; margin: 0.55in 0.65in; }
+
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    html { font-size: 13.5px; }
+    body { margin: 0; background: var(--paper-200); color: var(--ink-900); font-family: var(--font-body); font-size: 13.5px; line-height: 1.5; }
+
+    .toolbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink-900); color: var(--paper-50);
+      padding: 12px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em;
+    }
+    .toolbar .label { color: var(--signal-amber); }
+    .toolbar button {
+      background: var(--signal-amber); color: var(--ink-900);
+      border: 0; padding: 8px 18px;
+      font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.1em;
+      cursor: pointer; border-radius: 4px;
+    }
+    .toolbar button:hover { background: #f7c46a; }
+    .toolbar button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .skip-link { position: absolute; left: -9999px; top: 0; background: var(--ink-900); color: #fff; padding: 8px 14px; }
+    .skip-link:focus { left: 12px; top: 12px; z-index: 999; }
+
+    .page {
+      background: var(--paper-50);
+      width: 8.5in; min-height: 11in;
+      box-sizing: border-box; padding: 0.6in 0.7in;
+      margin: 24px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      page-break-after: always; position: relative;
+    }
+    .page:last-of-type { page-break-after: auto; }
+
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; padding: 0; box-shadow: none; width: auto; min-height: auto; }
+      .no-print { display: none !important; }
+    }
+
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
+    h1 { font-size: 56px; line-height: 0.95; letter-spacing: -0.02em; margin: 0 0 8px; font-style: italic; }
+    h1 em { color: var(--crimson); }
+    h2 {
+      font-size: 24px; line-height: 1.05; margin: 22px 0 10px;
+      font-style: italic; letter-spacing: -0.01em;
+      padding-bottom: 6px; border-bottom: 2px solid var(--ink-900);
+    }
+    h3 { font-size: 16px; margin: 14px 0 6px; font-style: italic; }
+    p { margin: 0 0 8px; }
+
+    .crumb { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; color: var(--ink-500); }
+    .crumb-strong { color: var(--crimson); font-weight: 700; }
+
+    .footer-strip {
+      position: absolute; bottom: 0.35in; left: 0.7in; right: 0.7in;
+      display: flex; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 9.5px;
+      letter-spacing: 0.12em; color: var(--ink-300);
+      padding-top: 6px; border-top: 1px solid var(--paper-200);
+    }
+
+    .cover { background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0); background-size: 22px 22px; }
+    .cover-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 36px; }
+    .cover-crest {
+      width: 48px; height: 48px; background: var(--crimson); color: #fff;
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 24px;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .cover h1 { font-size: 84px; }
+    .cover .lede { font-size: 18px; line-height: 1.45; max-width: 580px; color: var(--ink-700); margin-top: 8px; font-family: var(--font-display); font-style: italic; }
+    .cover-stamp {
+      display: inline-block; border: 2.5px solid var(--crimson);
+      color: var(--crimson); font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      padding: 7px 13px; transform: rotate(-3deg); margin-bottom: 14px;
+    }
+
+    .tilt-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 12px 0; }
+    .tilt-card { border: 1.5px solid var(--ink-900); padding: 12px 14px; position: relative; background: var(--paper-50); page-break-inside: avoid; }
+    .tilt-card .tag {
+      display: inline-block; color: #fff;
+      padding: 4px 10px; font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+    .tilt-card .tag.purpose { background: var(--signal-blue); }
+    .tilt-card .tag.task { background: var(--signal-amber); color: var(--ink-900); }
+    .tilt-card .tag.criteria { background: var(--signal-green); }
+    .tilt-card h3 { margin: 0 0 6px; font-size: 18px; }
+    .tilt-card .body { font-size: 12.5px; line-height: 1.5; }
+    .tilt-card .body ul { margin: 6px 0 0; padding-left: 18px; }
+    .tilt-card .body li { margin-bottom: 3px; }
+
+    .rubric { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 6px; page-break-inside: avoid; }
+    .rubric thead th {
+      background: var(--ink-900); color: var(--paper-50);
+      padding: 8px 10px; text-align: left;
+      font-family: var(--font-mono); font-size: 10px;
+      font-weight: 700; letter-spacing: 0.12em; vertical-align: middle;
+    }
+    .rubric thead .level-h { width: 22%; }
+    .rubric thead .pts-h { width: 7%; text-align: center; background: var(--crimson); }
+    .rubric thead .crit-h { background: var(--paper-100); color: var(--ink-900); width: 22%; border-right: 1px solid var(--paper-200); }
+    .rubric tbody td { padding: 10px 10px; vertical-align: top; border-bottom: 1px solid var(--paper-200); line-height: 1.4; }
+    .rubric tbody .crit {
+      background: var(--paper-100);
+      font-family: var(--font-display); font-style: italic;
+      font-weight: 600; font-size: 14px;
+      border-right: 1px solid var(--paper-200);
+    }
+    .rubric tbody .crit .crit-pts {
+      display: block;
+      font-family: var(--font-mono); font-style: normal;
+      font-weight: 700; font-size: 10px; letter-spacing: 0.1em;
+      color: var(--crimson); margin-top: 4px;
+    }
+    .rubric tbody .ex { background: var(--signal-green); color: #fff; }
+    .rubric tbody .pf { background: rgba(93,187,126,0.16); }
+    .rubric tbody .dv { background: rgba(232,169,59,0.16); }
+    .rubric tbody .ne { background: rgba(216,85,60,0.14); }
+    .rubric tbody .pts-cell {
+      text-align: center;
+      font-family: var(--font-mono); font-weight: 700;
+      background: var(--paper-100); font-size: 13px;
+    }
+    .rubric tbody td strong {
+      display: block; font-family: var(--font-mono);
+      font-size: 9.5px; letter-spacing: 0.1em;
+      margin-bottom: 4px; text-transform: uppercase;
+    }
+    .rubric tbody .ex strong { color: rgba(255,255,255,0.85); }
+    .rubric tbody .pf strong { color: var(--terminal-700); }
+    .rubric tbody .dv strong { color: #8a6920; }
+    .rubric tbody .ne strong { color: #a02e1e; }
+
+    .runhead {
+      display: grid; grid-template-columns: 1fr auto; gap: 16px;
+      align-items: baseline;
+      padding-bottom: 10px; border-bottom: 3px solid var(--ink-900);
+      margin-bottom: 16px;
+    }
+    .runhead h1 { font-size: 48px; line-height: 0.95; }
+    .runhead .meta { text-align: right; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--ink-500); }
+    .runhead .meta .total {
+      display: block; font-family: var(--font-display);
+      font-style: italic; font-weight: 700; font-size: 30px;
+      color: var(--crimson); line-height: 1;
+    }
+
+    .self-score {
+      page-break-inside: avoid;
+      background: var(--paper-100);
+      border-top: 3px solid var(--ink-900);
+      padding: 14px 16px; margin-top: 14px;
+    }
+    .self-score h3 { margin: 0 0 8px; }
+    .self-score .grid { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; font-size: 12.5px; }
+    .self-score .pts-box { width: 60px; height: 28px; border: 1.5px solid var(--ink-900); background: #fff; }
+    .self-score .total-box { width: 80px; height: 36px; border: 2px solid var(--ink-900); background: #fff; }
+    .self-score .total-row {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 18px; font-weight: 700;
+      padding-top: 8px; border-top: 1.5px solid var(--ink-900); margin-top: 4px;
+    }
+
+    .cover-meta {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 28px;
+      padding: 22px 0; border-top: 2px solid var(--ink-900);
+      border-bottom: 2px solid var(--ink-900); margin: 24px 0;
+    }
+    .cover-meta dt { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 4px; }
+    .cover-meta dd { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 18px; font-weight: 600; }
+
+    .pillar-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 8px; }
+    .pillar { border-top: 4px solid; padding: 14px 16px; background: var(--paper-100); }
+    .pillar .label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; margin-bottom: 6px; }
+    .pillar .one { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 22px; line-height: 1.15; }
+
+    .pull {
+      border-top: 2px solid var(--ink-900); border-bottom: 2px solid var(--ink-900);
+      padding: 12px 0; margin: 16px 0;
+      font-family: var(--font-display); font-style: italic;
+      font-size: 17px; line-height: 1.4;
+    }
+    .pull strong {
+      font-style: normal; font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.15em;
+      display: block; color: var(--crimson); margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to TILT rubric</a>
+
+  <div class="toolbar no-print" role="toolbar" aria-label="Document actions">
+    <span><span class="label">TILT RUBRIC</span> &nbsp;·&nbsp; Compute Time · 130 pts total</span>
+    <button type="button" onclick="window.print()" aria-label="Print this rubric">PRINT / SAVE PDF</button>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ PAGE 1 — COVER ============ -->
+    <article class="page cover" aria-labelledby="cover-title">
+      <header class="cover-head">
+        <div class="cover-crest" aria-label="Indiana University">IU</div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 03 · v2.0</div>
+      </header>
+
+      <div class="cover-stamp">TILT RUBRIC — TRANSPARENT ASSIGNMENT FRAMEWORK</div>
+      <h1 id="cover-title">How you'll be<br /><em>graded.</em></h1>
+      <p class="lede">Four artifacts. Four rubrics. No mystery. We grade the work you can <em>show</em> — your numbers, your map, your triage, your reps — not whether your week "felt productive."</p>
+
+      <dl class="cover-meta">
+        <div><dt>ARTIFACT 01</dt><dd>168-hour Audit Grid</dd></div>
+        <div><dt>POINTS</dt><dd>30 pts</dd></div>
+        <div><dt>DUE</dt><dd>End of class</dd></div>
+        <div><dt>ARTIFACT 02</dt><dd>Eisenhower Triage</dd></div>
+        <div><dt>POINTS</dt><dd>25 pts</dd></div>
+        <div><dt>DUE</dt><dd>End of class</dd></div>
+        <div><dt>ARTIFACT 03</dt><dd>Tomorrow's ABC List</dd></div>
+        <div><dt>POINTS</dt><dd>25 pts</dd></div>
+        <div><dt>DUE</dt><dd>End of class</dd></div>
+        <div><dt>ARTIFACT 04</dt><dd>Time Log + Sunday Ritual</dd></div>
+        <div><dt>POINTS</dt><dd>50 pts</dd></div>
+        <div><dt>DUE</dt><dd>Mondays · weekly</dd></div>
+      </dl>
+
+      <h2 style="margin-top: 8px;">The TILT framework</h2>
+      <p style="font-size: 13.5px; max-width: 720px;">Every assignment in this module follows the same three-part structure — <strong>Purpose</strong>, <strong>Task</strong>, <strong>Criteria</strong>. Lost on what we want? Find one of these three sections.</p>
+
+      <div class="pillar-strip" aria-label="The three TILT pillars">
+        <div class="pillar" style="border-top-color: var(--signal-blue);">
+          <div class="label" style="color: var(--signal-blue-text);">① PURPOSE</div>
+          <div class="one">Why we're asking. The skill it builds.</div>
+        </div>
+        <div class="pillar" style="border-top-color: var(--signal-amber);">
+          <div class="label" style="color: var(--signal-amber-text);">② TASK</div>
+          <div class="one">What you'll actually do, step by step.</div>
+        </div>
+        <div class="pillar" style="border-top-color: var(--signal-green);">
+          <div class="label" style="color: var(--signal-green-text);">③ CRITERIA</div>
+          <div class="one">What "good" looks like — at four levels.</div>
+        </div>
+      </div>
+
+      <div class="pull" style="margin-top: 22px;">
+        <strong>HOUSE POLICY · REVISE &amp; RESUBMIT</strong>
+        Anyone scoring below the "Proficient" line on any artifact gets <em>one free revision week, no penalty.</em> Time literacy is a habit — we'd rather you learn it slowly than fake it once.
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>COMPUTE TIME · TILT RUBRIC · PG 1 / 5</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 2 — AUDIT GRID ============ -->
+    <article class="page" aria-labelledby="audit-h">
+      <header class="runhead">
+        <h1 id="audit-h">168-hour Audit Grid. <em>30 pts.</em></h1>
+        <div class="meta">
+          IN-CLASS · 15 MIN
+          <span class="total">30</span>
+        </div>
+      </header>
+
+      <p class="crumb"><span class="crumb-strong">PG 2/5</span> &nbsp;·&nbsp; PAINT WHERE YOUR HOURS ACTUALLY GO</p>
+
+      <div class="tilt-band" role="list" aria-label="TILT framework for the Audit Grid">
+        <article class="tilt-card" role="listitem">
+          <span class="tag purpose">① PURPOSE</span>
+          <h3>The skill we're building.</h3>
+          <div class="body">
+            <p>"I have no time" is too vague to fix. <em>"I have 47 hours of discretionary time and 22 of them are on TikTok"</em> is fixable.</p>
+            <p>The Audit gives you reps on the move that converts a feeling ("overwhelmed") into a number you can re-budget. Most students are off by 15–25 hours/week on the question — and the gap is the lesson.</p>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag task">② TASK</span>
+          <h3>What you'll do.</h3>
+          <div class="body">
+            <ul>
+              <li>Paint <strong>every cell</strong> of the 168-hour grid with one of 8 categories.</li>
+              <li>Use real data — phone screen-time, calendar, paystub. <em>Not vibes.</em></li>
+              <li>Total each category. Compare to your <strong>guess from minute 1</strong>.</li>
+              <li>Mark <strong>one leak</strong> — the category you'd take back. That's where Sunday's re-budget starts.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag criteria">③ CRITERIA</span>
+          <h3>What "got it" looks like.</h3>
+          <div class="body">
+            <p>See the rubric below. Four criteria, four levels, 30 points total.</p>
+            <p><strong>Pass line:</strong> 19 pts. Below 19 → free revision week, no penalty. We grade the honesty, not the totals.</p>
+          </div>
+        </article>
+      </div>
+
+      <h2>Rubric — four criteria · four levels</h2>
+
+      <table class="rubric" role="table" aria-label="Audit Grid rubric — 4 criteria scored on 4 levels">
+        <thead>
+          <tr>
+            <th class="crit-h" scope="col">Criterion</th>
+            <th class="level-h" scope="col">Exemplary</th>
+            <th class="level-h" scope="col">Proficient</th>
+            <th class="level-h" scope="col">Developing</th>
+            <th class="level-h" scope="col">Not yet</th>
+            <th class="pts-h" scope="col">Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">Coverage <span class="crit-pts">8 PTS</span></td>
+            <td class="ex"><strong>7–8</strong>All 168 cells painted. Totals add to 168 within ±2.</td>
+            <td class="pf"><strong>5–6</strong>≥ 90% painted. Totals add within ±5.</td>
+            <td class="dv"><strong>3–4</strong>≥ 70% painted. Math doesn't quite close.</td>
+            <td class="ne"><strong>0–2</strong>Half-empty grid. Or all "study."</td>
+            <td class="pts-cell">/8</td>
+          </tr>
+          <tr>
+            <td class="crit">Honesty signal <span class="crit-pts">10 PTS</span></td>
+            <td class="ex"><strong>9–10</strong>Screens / scrolling / "other" totals are real. Receipts cited (Screen Time, paystub).</td>
+            <td class="pf"><strong>7–8</strong>Real numbers but one category clearly rounded down.</td>
+            <td class="dv"><strong>4–6</strong>Reads aspirational. Two-three categories flattering.</td>
+            <td class="ne"><strong>0–3</strong>Reads like a brag. No leaks anywhere.</td>
+            <td class="pts-cell">/10</td>
+          </tr>
+          <tr>
+            <td class="crit">Guess vs. reality <span class="crit-pts">6 PTS</span></td>
+            <td class="ex"><strong>5–6</strong>Initial guess captured + 2-sentence note on the biggest delta and what surprised you.</td>
+            <td class="pf"><strong>4</strong>Guess captured + delta noted, no reflection.</td>
+            <td class="dv"><strong>2–3</strong>Guess missing or "I knew it would be this."</td>
+            <td class="ne"><strong>0–1</strong>Skipped.</td>
+            <td class="pts-cell">/6</td>
+          </tr>
+          <tr>
+            <td class="crit">Leak named <span class="crit-pts">6 PTS</span></td>
+            <td class="ex"><strong>5–6</strong>One specific category named with an hour count + one realistic place to redirect those hours.</td>
+            <td class="pf"><strong>4</strong>Leak named with hours; redirect vague.</td>
+            <td class="dv"><strong>2–3</strong>"Phone." No number, no plan.</td>
+            <td class="ne"><strong>0–1</strong>Missing or "nothing to cut."</td>
+            <td class="pts-cell">/6</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score" aria-label="Self-score worksheet">
+        <h3>Self-score before you submit.</h3>
+        <div class="grid">
+          <span>Coverage — all 168 cells painted</span><span class="pts-box" aria-label="self score box, coverage, out of 8"></span>
+          <span>Honesty signal — receipts not vibes</span><span class="pts-box" aria-label="self score box, honesty, out of 10"></span>
+          <span>Guess vs. reality — captured + delta</span><span class="pts-box" aria-label="self score box, guess, out of 6"></span>
+          <span>Leak named — hours + redirect</span><span class="pts-box" aria-label="self score box, leak, out of 6"></span>
+          <span class="total-row">TOTAL · pass line is 19</span><span class="total-box" aria-label="total score box, out of 30"></span>
+        </div>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>COMPUTE TIME · TILT RUBRIC · PG 2 / 5</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 3 — EISENHOWER TRIAGE ============ -->
+    <article class="page" aria-labelledby="triage-h">
+      <header class="runhead">
+        <h1 id="triage-h">Eisenhower Triage. <em>25 pts.</em></h1>
+        <div class="meta">
+          IN-CLASS · 20 MIN
+          <span class="total">25</span>
+        </div>
+      </header>
+
+      <p class="crumb"><span class="crumb-strong">PG 3/5</span> &nbsp;·&nbsp; URGENT × IMPORTANT — AND THE PERMISSION TO DELETE</p>
+
+      <div class="tilt-band" role="list" aria-label="TILT framework for the Triage">
+        <article class="tilt-card" role="listitem">
+          <span class="tag purpose">① PURPOSE</span>
+          <h3>The skill we're building.</h3>
+          <div class="body">
+            <p>If everything on your list is "urgent," you don't have a list — you have a panic. The Eisenhower 2×2 forces you to separate <em>what's on fire</em> from <em>what's important</em>, which are not the same thing.</p>
+            <p>The hardest skill in the module is the DELETE quadrant. Most first-years cannot put anything there. Yours has to have at least one.</p>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag task">② TASK</span>
+          <h3>What you'll do.</h3>
+          <div class="body">
+            <ul>
+              <li>Take this week's <strong>actual to-do list</strong> — not invented, not aspirational.</li>
+              <li>Drop every task into <strong>one</strong> of four quadrants: DO · SCHEDULE · SHRINK · DELETE.</li>
+              <li>Force at least <strong>one task into DELETE</strong>. (No exceptions.)</li>
+              <li>Add a <strong>one-line justification</strong> to each quadrant for why that bucket fits.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag criteria">③ CRITERIA</span>
+          <h3>What "got it" looks like.</h3>
+          <div class="body">
+            <p>See the rubric below. Four criteria, four levels, 25 points total.</p>
+            <p><strong>Pass line:</strong> 16 pts. Below 16 → free revision week, no penalty. The DELETE quadrant is where points are won and lost.</p>
+          </div>
+        </article>
+      </div>
+
+      <h2>Rubric — four criteria · four levels</h2>
+
+      <table class="rubric" role="table" aria-label="Triage rubric — 4 criteria scored on 4 levels">
+        <thead>
+          <tr>
+            <th class="crit-h" scope="col">Criterion</th>
+            <th class="level-h" scope="col">Exemplary</th>
+            <th class="level-h" scope="col">Proficient</th>
+            <th class="level-h" scope="col">Developing</th>
+            <th class="level-h" scope="col">Not yet</th>
+            <th class="pts-h" scope="col">Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">List is real <span class="crit-pts">5 PTS</span></td>
+            <td class="ex"><strong>5</strong>≥ 8 specific tasks from this actual week, named with course/context.</td>
+            <td class="pf"><strong>4</strong>6–8 specific tasks. Mostly real.</td>
+            <td class="dv"><strong>2–3</strong>4–5 tasks. Or generic ("homework").</td>
+            <td class="ne"><strong>0–1</strong>Fewer than 4. Or invented.</td>
+            <td class="pts-cell">/5</td>
+          </tr>
+          <tr>
+            <td class="crit">Quadrant fit <span class="crit-pts">8 PTS</span></td>
+            <td class="ex"><strong>7–8</strong>Every task in a defensible quadrant. Distribution is plausible — not all-DO.</td>
+            <td class="pf"><strong>5–6</strong>Most tasks fit. 1–2 mis-quadranted.</td>
+            <td class="dv"><strong>3–4</strong>All-DO or all-SCHEDULE. Refuses to differentiate.</td>
+            <td class="ne"><strong>0–2</strong>Tasks placed at random.</td>
+            <td class="pts-cell">/8</td>
+          </tr>
+          <tr>
+            <td class="crit">DELETE quadrant <span class="crit-pts">7 PTS</span></td>
+            <td class="ex"><strong>6–7</strong>≥ 1 real task in DELETE with a one-line justification. Reads like a real cut.</td>
+            <td class="pf"><strong>4–5</strong>1 task in DELETE; justification thin.</td>
+            <td class="dv"><strong>2–3</strong>Something cosmetic in DELETE ("clean my desk") to game the rule.</td>
+            <td class="ne"><strong>0–1</strong>DELETE empty.</td>
+            <td class="pts-cell">/7</td>
+          </tr>
+          <tr>
+            <td class="crit">SCHEDULE has weight <span class="crit-pts">5 PTS</span></td>
+            <td class="ex"><strong>5</strong>SCHEDULE contains real important-not-urgent work — studying, exercise, sleep, relationships.</td>
+            <td class="pf"><strong>3–4</strong>SCHEDULE has 1–2 items that fit.</td>
+            <td class="dv"><strong>2</strong>SCHEDULE has only chores.</td>
+            <td class="ne"><strong>0–1</strong>SCHEDULE empty. Term runs on emergencies.</td>
+            <td class="pts-cell">/5</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score" aria-label="Self-score worksheet">
+        <h3>Self-score before you submit.</h3>
+        <div class="grid">
+          <span>List is real — ≥ 8 specific tasks</span><span class="pts-box" aria-label="self score box, list, out of 5"></span>
+          <span>Quadrant fit — defensible placement</span><span class="pts-box" aria-label="self score box, fit, out of 8"></span>
+          <span>DELETE quadrant — at least one real cut</span><span class="pts-box" aria-label="self score box, delete, out of 7"></span>
+          <span>SCHEDULE has weight — important-not-urgent</span><span class="pts-box" aria-label="self score box, schedule, out of 5"></span>
+          <span class="total-row">TOTAL · pass line is 16</span><span class="total-box" aria-label="total score box, out of 25"></span>
+        </div>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>COMPUTE TIME · TILT RUBRIC · PG 3 / 5</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 4 — ABC LIST ============ -->
+    <article class="page" aria-labelledby="abc-h">
+      <header class="runhead">
+        <h1 id="abc-h">Tomorrow's ABC List. <em>25 pts.</em></h1>
+        <div class="meta">
+          IN-CLASS · 12 MIN
+          <span class="total">25</span>
+        </div>
+      </header>
+
+      <p class="crumb"><span class="crumb-strong">PG 4/5</span> &nbsp;·&nbsp; A SINGLE PAGE YOU'LL ACTUALLY USE TOMORROW</p>
+
+      <div class="tilt-band" role="list" aria-label="TILT framework for the ABC List">
+        <article class="tilt-card" role="listitem">
+          <span class="tag purpose">① PURPOSE</span>
+          <h3>The skill we're building.</h3>
+          <div class="body">
+            <p>The audit told you what you have. The matrix told you what matters. The list is where it stops being theory and starts being tomorrow morning.</p>
+            <p>The constraint is <strong>realism</strong>: max 3 A's, real time estimates, total &lt; 4 hours of focused work. A list that won't fit is a wish.</p>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag task">② TASK</span>
+          <h3>What you'll do.</h3>
+          <div class="body">
+            <ul>
+              <li>Pull from your TRIAGE matrix. <strong>A's</strong> come from DO. <strong>B's</strong> from SCHEDULE. <strong>C's</strong> from anywhere.</li>
+              <li>Cap A's at <strong>three</strong>. Each with a realistic time estimate (in minutes).</li>
+              <li>Tally A column. If &gt; 4 hrs of focus → cut. If &lt; 1 hr → add (tomorrow's wasted).</li>
+              <li>Identify the <strong>"first A"</strong> — the one you'll start within 30 min of waking up.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag criteria">③ CRITERIA</span>
+          <h3>What "got it" looks like.</h3>
+          <div class="body">
+            <p>See the rubric below. Four criteria, four levels, 25 points total.</p>
+            <p><strong>Pass line:</strong> 16 pts. Below 16 → free revision week, no penalty. We're grading whether tomorrow has a fighting chance, not whether you executed.</p>
+          </div>
+        </article>
+      </div>
+
+      <h2>Rubric — four criteria · four levels</h2>
+
+      <table class="rubric" role="table" aria-label="ABC List rubric — 4 criteria scored on 4 levels">
+        <thead>
+          <tr>
+            <th class="crit-h" scope="col">Criterion</th>
+            <th class="level-h" scope="col">Exemplary</th>
+            <th class="level-h" scope="col">Proficient</th>
+            <th class="level-h" scope="col">Developing</th>
+            <th class="level-h" scope="col">Not yet</th>
+            <th class="pts-h" scope="col">Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">A's discipline <span class="crit-pts">7 PTS</span></td>
+            <td class="ex"><strong>6–7</strong>Exactly 1–3 A's. Each ties to a quadrant DO task. Total focus time 1–4 hrs.</td>
+            <td class="pf"><strong>4–5</strong>2–3 A's. Total focus time 1–4 hrs. One A loosely scoped.</td>
+            <td class="dv"><strong>2–3</strong>4–6 A's. Or all "study." Total focus time fantasy (&gt; 6 hrs).</td>
+            <td class="ne"><strong>0–1</strong>7+ A's. List is a wish.</td>
+            <td class="pts-cell">/7</td>
+          </tr>
+          <tr>
+            <td class="crit">Realistic estimates <span class="crit-pts">8 PTS</span></td>
+            <td class="ex"><strong>7–8</strong>Every task has a minute count. Estimates plausible (no 15-min essay drafts).</td>
+            <td class="pf"><strong>5–6</strong>Most tasks have estimates. 1–2 missing or optimistic.</td>
+            <td class="dv"><strong>3–4</strong>Half estimated. Half optimistic.</td>
+            <td class="ne"><strong>0–2</strong>Estimates absent. Or "all day."</td>
+            <td class="pts-cell">/8</td>
+          </tr>
+          <tr>
+            <td class="crit">First A is real <span class="crit-pts">5 PTS</span></td>
+            <td class="ex"><strong>5</strong>One A clearly marked as "first." Concrete — &lt; 30 min start, knowable end.</td>
+            <td class="pf"><strong>4</strong>First A marked, slightly fuzzy on the end-state.</td>
+            <td class="dv"><strong>2–3</strong>First A marked but vague ("work on paper").</td>
+            <td class="ne"><strong>0–1</strong>No first A.</td>
+            <td class="pts-cell">/5</td>
+          </tr>
+          <tr>
+            <td class="crit">B / C are sane <span class="crit-pts">5 PTS</span></td>
+            <td class="ex"><strong>5</strong>B's are actual important-not-urgent. C's are nice-to-have. Both bounded.</td>
+            <td class="pf"><strong>3–4</strong>B / C present. One slightly inflated.</td>
+            <td class="dv"><strong>2</strong>B / C blur into A. Or both empty.</td>
+            <td class="ne"><strong>0–1</strong>B / C absent or chaotic.</td>
+            <td class="pts-cell">/5</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score" aria-label="Self-score worksheet">
+        <h3>Self-score before you submit.</h3>
+        <div class="grid">
+          <span>A's discipline — max 3, &lt; 4 hrs total</span><span class="pts-box" aria-label="self score box, As, out of 7"></span>
+          <span>Realistic estimates — minutes on each</span><span class="pts-box" aria-label="self score box, estimates, out of 8"></span>
+          <span>First A is real — concrete + bounded</span><span class="pts-box" aria-label="self score box, first A, out of 5"></span>
+          <span>B / C are sane — bounded, not aspirational</span><span class="pts-box" aria-label="self score box, BC, out of 5"></span>
+          <span class="total-row">TOTAL · pass line is 16</span><span class="total-box" aria-label="total score box, out of 25"></span>
+        </div>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>COMPUTE TIME · TILT RUBRIC · PG 4 / 5</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 5 — TIME LOG / SUNDAY RITUAL ============ -->
+    <article class="page" aria-labelledby="log-h">
+      <header class="runhead">
+        <h1 id="log-h">Time Log + Sunday Ritual. <em>50 pts.</em></h1>
+        <div class="meta">
+          TAKE-HOME · WEEKLY
+          <span class="total">50</span>
+        </div>
+      </header>
+
+      <p class="crumb"><span class="crumb-strong">PG 5/5</span> &nbsp;·&nbsp; THE GAP BETWEEN PLANNED AND DONE IS THE LESSON</p>
+
+      <div class="tilt-band" role="list" aria-label="TILT framework for the Time Log">
+        <article class="tilt-card" role="listitem">
+          <span class="tag purpose">① PURPOSE</span>
+          <h3>The skill we're building.</h3>
+          <div class="body">
+            <p>One ABC list is a coin flip. A weekly Sunday Ritual + daily log over a term is a <em>system</em> — and the system is where the actual time literacy lives.</p>
+            <p>We trade polish for honesty. We want your real Wednesday — A's planned, A's done, what leaked. The gap is the data.</p>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag task">② TASK</span>
+          <h3>What you'll do.</h3>
+          <div class="body">
+            <ul>
+              <li><strong>Sunday (15 min):</strong> run the four-step Loop. AUDIT (3) · MAP (3) · TRIAGE (5) · RE-BUDGET (4).</li>
+              <li><strong>Each weekday:</strong> log one row — A's planned · A's done · what leaked · 1-line note.</li>
+              <li><strong>End of week:</strong> 4-sentence reflection — biggest leak, biggest win, broken assumption, next Sunday's fix.</li>
+              <li><strong>Bring it Mondays.</strong> First 10 minutes of class we read patterns together.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag criteria">③ CRITERIA</span>
+          <h3>What "got it" looks like.</h3>
+          <div class="body">
+            <p>See the rubric below. Four criteria, four levels, 50 points total.</p>
+            <p><strong>Pass line:</strong> 33 pts. Below 33 → free revision week, no penalty. <em>A messy log with real patterns beats a sparkling one with no learning.</em></p>
+          </div>
+        </article>
+      </div>
+
+      <h2>Rubric — four criteria · four levels</h2>
+
+      <table class="rubric" role="table" aria-label="Time Log rubric — 4 criteria scored on 4 levels">
+        <thead>
+          <tr>
+            <th class="crit-h" scope="col">Criterion</th>
+            <th class="level-h" scope="col">Exemplary</th>
+            <th class="level-h" scope="col">Proficient</th>
+            <th class="level-h" scope="col">Developing</th>
+            <th class="level-h" scope="col">Not yet</th>
+            <th class="pts-h" scope="col">Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">Sunday Ritual run <span class="crit-pts">12 PTS</span></td>
+            <td class="ex"><strong>11–12</strong>All 4 Loop steps visible. Time-stamped. Updated chart visible.</td>
+            <td class="pf"><strong>8–10</strong>3 of 4 steps run. Chart updated.</td>
+            <td class="dv"><strong>5–7</strong>2 of 4 steps. Or batched at end of week.</td>
+            <td class="ne"><strong>0–4</strong>Skipped or 1 step.</td>
+            <td class="pts-cell">/12</td>
+          </tr>
+          <tr>
+            <td class="crit">Daily coverage <span class="crit-pts">12 PTS</span></td>
+            <td class="ex"><strong>11–12</strong>≥ 6 of 7 days logged. Real distribution — not all entered Sunday night.</td>
+            <td class="pf"><strong>8–10</strong>5 of 7 days. Mostly real-time.</td>
+            <td class="dv"><strong>5–7</strong>3–4 days. Or all entered retroactively.</td>
+            <td class="ne"><strong>0–4</strong>≤ 2 days.</td>
+            <td class="pts-cell">/12</td>
+          </tr>
+          <tr>
+            <td class="crit">Honesty signal <span class="crit-pts">11 PTS</span></td>
+            <td class="ex"><strong>10–11</strong>"A's done" shows variety (3-of-3, 1-of-3, 0-of-3). Leaks named specifically. Wins <em>and</em> failures.</td>
+            <td class="pf"><strong>7–9</strong>Some variety. Leaks mostly named.</td>
+            <td class="dv"><strong>4–6</strong>Almost all "3 of 3." Leaks generic.</td>
+            <td class="ne"><strong>0–3</strong>Reads suspiciously clean. No leaks anywhere.</td>
+            <td class="pts-cell">/11</td>
+          </tr>
+          <tr>
+            <td class="crit">Reflection <span class="crit-pts">15 PTS</span></td>
+            <td class="ex"><strong>13–15</strong>4 sentences. <em>Biggest leak</em> specific, <em>biggest win</em> honest, <em>broken assumption</em> names a real Sunday miscalculation, <em>next fix</em> is one concrete change.</td>
+            <td class="pf"><strong>10–12</strong>4 sentences. 3 of 4 land.</td>
+            <td class="dv"><strong>6–9</strong>Reflection present but mostly summary. Next fix vague.</td>
+            <td class="ne"><strong>0–5</strong>Missing or under 2 sentences.</td>
+            <td class="pts-cell">/15</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score" aria-label="Self-score worksheet">
+        <h3>Self-score before you submit.</h3>
+        <div class="grid">
+          <span>Sunday Ritual run — all 4 Loop steps visible</span><span class="pts-box" aria-label="self score box, ritual, out of 12"></span>
+          <span>Daily coverage — ≥ 6 of 7 days, real distribution</span><span class="pts-box" aria-label="self score box, coverage, out of 12"></span>
+          <span>Honesty signal — A's done varies, leaks named</span><span class="pts-box" aria-label="self score box, honesty, out of 11"></span>
+          <span>Reflection — leak · win · broken assumption · next fix</span><span class="pts-box" aria-label="self score box, reflection, out of 15"></span>
+          <span class="total-row">TOTAL · pass line is 33</span><span class="total-box" aria-label="total score box, out of 50"></span>
+        </div>
+      </div>
+
+      <div class="pull" style="margin-top: 18px;">
+        <strong>WHY THIS RUBRIC LOOKS THIS WAY</strong>
+        Notice no axis rewards "having a good week" or "hitting all your A's." We can't grade those — and shouldn't try. We grade the work you can <em>show</em>: the rows, the gap, the honest reflection. Time literacy comes from the volume of weekly reps — eleven Sundays from now, your week-13 spike will arrive on schedule and you will be ready.
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>COMPUTE TIME · TILT RUBRIC · PG 5 / 5</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+  </main>
+</body>
+</html>

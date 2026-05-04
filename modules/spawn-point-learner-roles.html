@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spawn Point · Learner Roles · Unit 01</title>
+  <meta name="description" content="Learner roles for the Spawn Point module: role cards, capabilities, and how to use them in CSCI-Y100 Week 1." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600;1,9..144,700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    @page cover { size: letter portrait; margin: 0.55in 0.65in; }
+    @page table { size: letter landscape; margin: 0.45in 0.5in; }
+
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+      --signal-purple-text: #6b3a8c;
+      /* Role accent colors */
+      --role-nav:    #2f5aa1;
+      --role-int:    #2f7a4a;
+      --role-des:    #c25b2e;
+      --role-inq:    #6b3a8c;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    html { font-size: 13.5px; }
+    body { margin: 0; background: var(--paper-200); color: var(--ink-900); font-family: var(--font-body); font-size: 13.5px; line-height: 1.5; }
+
+    /* Force browsers to print background colors + accents instead of stripping them */
+    *, *::before, *::after {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
+    .toolbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink-900); color: var(--paper-50);
+      padding: 12px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em;
+    }
+    .toolbar .label { color: var(--signal-amber); }
+    .toolbar button {
+      background: var(--signal-amber); color: var(--ink-900);
+      border: 0; padding: 8px 18px;
+      font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.1em;
+      cursor: pointer; border-radius: 4px;
+    }
+    .toolbar button:hover { background: #f7c46a; }
+    .toolbar button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .skip-link { position: absolute; left: -9999px; top: 0; background: var(--ink-900); color: #fff; padding: 8px 14px; }
+    .skip-link:focus { left: 12px; top: 12px; z-index: 999; }
+
+    .page {
+      background: var(--paper-50);
+      box-sizing: border-box;
+      margin: 24px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      page-break-after: always; position: relative;
+    }
+    .page.portrait { width: 8.5in; min-height: 11in; padding: 0.6in 0.7in; page: cover; }
+    .page.landscape { width: 11in; min-height: 8.5in; padding: 0.45in 0.5in; page: table; }
+    .page:last-of-type { page-break-after: auto; }
+
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; box-shadow: none; }
+      .page.portrait { width: auto; min-height: auto; padding: 0.55in 0.65in; }
+      .page.landscape { width: auto; min-height: auto; padding: 0.45in 0.5in; }
+      .no-print { display: none !important; }
+      /* Stop footer from overlapping content in print */
+      .footer-strip {
+        position: static !important;
+        margin-top: 24px;
+        left: auto; right: auto; bottom: auto;
+      }
+    }
+
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
+    h1 { font-size: 56px; line-height: 0.95; letter-spacing: -0.02em; margin: 0 0 8px; font-style: italic; }
+    h1 em { color: var(--crimson); }
+    h2 {
+      font-size: 24px; line-height: 1.05; margin: 22px 0 10px;
+      font-style: italic; letter-spacing: -0.01em;
+      padding-bottom: 6px; border-bottom: 2px solid var(--ink-900);
+    }
+    h3 { font-size: 16px; margin: 14px 0 6px; font-style: italic; }
+    p { margin: 0 0 8px; }
+
+    .crumb { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; color: var(--ink-500); }
+    .crumb-strong { color: var(--crimson); font-weight: 700; }
+
+    .footer-strip {
+      position: absolute; bottom: 0.35in; left: 0.7in; right: 0.7in;
+      display: flex; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 9.5px;
+      letter-spacing: 0.12em; color: var(--ink-300);
+      padding-top: 6px; border-top: 1px solid var(--paper-200);
+    }
+    .page.landscape .footer-strip { left: 0.5in; right: 0.5in; bottom: 0.25in; }
+
+    /* ============ COVER ============ */
+    .cover { background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0); background-size: 22px 22px; }
+    .cover-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+    .cover-crest {
+      width: 48px; height: 48px; background: var(--crimson); color: #fff;
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 24px;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .cover h1 { font-size: 76px; }
+    .cover .lede { font-size: 17px; line-height: 1.45; max-width: 660px; color: var(--ink-700); margin-top: 6px; font-family: var(--font-display); font-style: italic; }
+    .cover-stamp {
+      display: inline-block; border: 2.5px solid var(--crimson);
+      color: var(--crimson); font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      padding: 7px 13px; transform: rotate(-3deg); margin-bottom: 12px;
+    }
+
+    .attribution {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.08em; color: var(--ink-500);
+      margin-top: 8px;
+    }
+
+    /* Role cards on cover */
+    .roles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 14px 0 6px; }
+    .role-card {
+      border-left: 5px solid; padding: 10px 12px 11px;
+      background: var(--paper-100);
+      page-break-inside: avoid;
+    }
+    .role-card .label {
+      font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+      letter-spacing: 0.18em; margin-bottom: 2px;
+    }
+    .role-card .name {
+      font-family: var(--font-display); font-style: italic;
+      font-weight: 700; font-size: 22px; line-height: 1; margin-bottom: 4px;
+    }
+    .role-card .ask {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 13.5px; color: var(--ink-700); margin-bottom: 6px;
+    }
+    .role-card .body { font-size: 11.5px; line-height: 1.4; }
+    .role-card.nav { border-color: var(--role-nav); }
+    .role-card.nav .label, .role-card.nav .name { color: var(--role-nav); }
+    .role-card.int { border-color: var(--role-int); }
+    .role-card.int .label, .role-card.int .name { color: var(--role-int); }
+    .role-card.des { border-color: var(--role-des); }
+    .role-card.des .label, .role-card.des .name { color: var(--role-des); }
+    .role-card.inq { border-color: var(--role-inq); }
+    .role-card.inq .label, .role-card.inq .name { color: var(--role-inq); }
+
+    .pull {
+      border-top: 2px solid var(--ink-900); border-bottom: 2px solid var(--ink-900);
+      padding: 10px 0; margin: 14px 0 6px;
+      font-family: var(--font-display); font-style: italic;
+      font-size: 14.5px; line-height: 1.4;
+    }
+    .pull strong {
+      font-style: normal; font-family: var(--font-mono);
+      font-size: 9.5px; letter-spacing: 0.15em;
+      display: block; color: var(--crimson); margin-bottom: 5px;
+    }
+
+    /* Coverage at-a-glance */
+    .glance {
+      margin-top: 12px;
+      border: 1.5px solid var(--ink-900);
+      padding: 12px 14px; background: var(--paper-100);
+    }
+    .glance h3 { margin: 0 0 8px; font-size: 14px; font-style: italic; }
+    .glance .row {
+      display: grid; grid-template-columns: 1.4fr repeat(4, 1fr);
+      gap: 6px; align-items: center; padding: 5px 0;
+      border-top: 1px dashed var(--paper-300); font-size: 11.5px;
+    }
+    .glance .row:first-of-type { border-top: 0; }
+    .glance .row .wkn { font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.08em; font-size: 10px; color: var(--ink-500); }
+    .glance .row .wkn em { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 13.5px; letter-spacing: 0; color: var(--ink-900); margin-left: 4px; }
+    .glance .row .dot {
+      text-align: center; font-family: var(--font-mono); font-weight: 700;
+      font-size: 14px;
+    }
+    .glance .header-row {
+      border-bottom: 2px solid var(--ink-900); padding-bottom: 6px;
+      font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+    .glance .header-row .col { text-align: center; }
+    .glance .col.nav { color: var(--role-nav); }
+    .glance .col.int { color: var(--role-int); }
+    .glance .col.des { color: var(--role-des); }
+    .glance .col.inq { color: var(--role-inq); }
+
+    .legend-key {
+      display: flex; gap: 16px; margin-top: 10px;
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.08em; color: var(--ink-700);
+      flex-wrap: wrap;
+    }
+    .legend-key span strong { font-family: var(--font-mono); font-size: 13px; }
+
+    /* ============ TABLE PAGE ============ */
+    .runhead {
+      display: grid; grid-template-columns: 1fr auto; gap: 16px;
+      align-items: baseline;
+      padding-bottom: 10px; border-bottom: 3px solid var(--ink-900);
+      margin-bottom: 12px;
+    }
+    .runhead h1 { font-size: 36px; line-height: 0.95; }
+    .runhead .meta { text-align: right; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--ink-500); }
+    .runhead .meta .total {
+      display: block; font-family: var(--font-display);
+      font-style: italic; font-weight: 700; font-size: 22px;
+      color: var(--crimson); line-height: 1;
+    }
+
+    .roles-table { width: 100%; border-collapse: collapse; font-size: 10px; line-height: 1.4; table-layout: fixed; }
+    .roles-table thead th {
+      background: var(--ink-900); color: var(--paper-50);
+      padding: 9px 7px; text-align: left;
+      font-family: var(--font-mono); font-size: 9.5px;
+      font-weight: 700; letter-spacing: 0.08em; vertical-align: top;
+      border-right: 1px solid #2a2620;
+    }
+    .roles-table thead th:last-child { border-right: 0; }
+    .roles-table thead .col-wk    { width: 6%; background: var(--crimson); }
+    .roles-table thead .col-asn   { width: 16%; }
+    .roles-table thead .col-pts   { width: 5%; text-align: center; }
+    .roles-table thead .col-role  { width: 16.25%; }
+    .roles-table thead .col-role.nav { background: var(--role-nav); }
+    .roles-table thead .col-role.int { background: var(--role-int); }
+    .roles-table thead .col-role.des { background: var(--role-des); }
+    .roles-table thead .col-role.inq { background: var(--role-inq); }
+    .roles-table thead .col-role .role-name {
+      display: block; font-family: var(--font-display); font-style: italic;
+      font-weight: 700; font-size: 14px; letter-spacing: -0.01em;
+      margin-bottom: 2px; text-transform: none;
+    }
+    .roles-table thead .col-role .role-q {
+      display: block; font-family: var(--font-display); font-style: italic;
+      font-weight: 500; font-size: 10px; letter-spacing: 0;
+      opacity: 0.92; text-transform: none;
+    }
+
+    .roles-table tbody td {
+      padding: 9px 7px; vertical-align: top;
+      border-bottom: 1px solid var(--paper-200);
+      border-right: 1px solid var(--paper-200);
+      background: var(--paper-50);
+    }
+    .roles-table tbody td:last-child { border-right: 0; }
+    .roles-table tbody tr.last td { border-bottom: 2px solid var(--ink-900); }
+    .roles-table tbody tr.week-divider td { border-bottom: 2px solid var(--ink-900); }
+
+    .roles-table .week-cell {
+      background: var(--paper-100);
+      font-family: var(--font-display); font-style: italic;
+      border-right: 2px solid var(--ink-900);
+      text-align: center;
+      vertical-align: middle;
+    }
+    .roles-table .week-cell .num {
+      display: block; font-size: 26px; font-weight: 700; line-height: 1;
+      color: var(--crimson);
+    }
+    .roles-table .week-cell .label {
+      display: block; font-family: var(--font-mono); font-style: normal;
+      font-size: 8px; font-weight: 700; letter-spacing: 0.1em;
+      color: var(--ink-500); margin-top: 3px;
+    }
+
+    .roles-table .asn-cell {
+      background: var(--paper-100);
+    }
+    .roles-table .asn-cell .name {
+      display: block; font-family: var(--font-display); font-style: italic;
+      font-weight: 600; font-size: 13px; line-height: 1.1; margin-bottom: 4px;
+    }
+    .roles-table .asn-cell .what {
+      display: block; font-size: 10px; line-height: 1.35; color: var(--ink-700);
+    }
+
+    .roles-table .pts-cell {
+      text-align: center; vertical-align: middle;
+      background: var(--paper-100);
+      font-family: var(--font-mono); font-weight: 700;
+      font-size: 11px; color: var(--crimson);
+    }
+
+    .roles-table .role-cell {
+      position: relative;
+      padding-left: 28px;
+    }
+    .roles-table .role-cell .mark {
+      position: absolute; left: 8px; top: 8px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-weight: 700; font-size: 9px;
+      color: #fff; line-height: 1;
+    }
+    .roles-table .role-cell.primary    { background: rgba(255,255,255,1); }
+    .roles-table .role-cell.supporting { background: rgba(232,232,228,0.5); }
+    .roles-table .role-cell.absent     { background: var(--paper-100); }
+    .roles-table .role-cell.absent .why { color: var(--ink-300); font-style: italic; }
+
+    /* tinted background by role on primary cells */
+    .roles-table .role-cell.primary.nav { background: rgba(47,90,161,0.10); }
+    .roles-table .role-cell.primary.int { background: rgba(47,122,74,0.10); }
+    .roles-table .role-cell.primary.des { background: rgba(194,91,46,0.10); }
+    .roles-table .role-cell.primary.inq { background: rgba(107,58,140,0.10); }
+
+    .roles-table .role-cell.nav .mark { background: var(--role-nav); }
+    .roles-table .role-cell.int .mark { background: var(--role-int); }
+    .roles-table .role-cell.des .mark { background: var(--role-des); }
+    .roles-table .role-cell.inq .mark { background: var(--role-inq); }
+    .roles-table .role-cell.absent .mark {
+      background: transparent;
+      border: 1.5px dashed var(--ink-300);
+      color: var(--ink-300);
+    }
+
+    .roles-table .role-cell .why {
+      display: block;
+      font-size: 9.5px; line-height: 1.35;
+    }
+
+    .table-foot {
+      margin-top: 12px;
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 14px;
+      font-size: 10.5px; line-height: 1.45;
+    }
+    .table-foot .note {
+      border-top: 3px solid var(--ink-900);
+      padding-top: 7px;
+    }
+    .table-foot .note h4 {
+      margin: 0 0 4px; font-family: var(--font-mono);
+      font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em;
+      color: var(--crimson);
+    }
+    .table-foot .note p { margin: 0; }
+    .table-foot .legend-inline {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .table-foot .legend-inline span {
+      font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.06em;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .table-foot .legend-inline .swatch {
+      width: 13px; height: 13px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: #fff; font-family: var(--font-mono); font-weight: 700; font-size: 8px;
+      background: var(--ink-900);
+    }
+    .table-foot .legend-inline .swatch.dashed {
+      background: transparent; border: 1.5px dashed var(--ink-300); color: var(--ink-300);
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to learner roles map</a>
+
+  <div class="toolbar no-print" role="toolbar" aria-label="Document actions">
+    <span><span class="label">LEARNER ROLES</span> &nbsp;·&nbsp; Unit 01 · Spawn Point arc · CSCI-Y100</span>
+    <button type="button" onclick="window.print()" aria-label="Print this learner roles map">PRINT / SAVE PDF</button>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ PAGE 1 — COVER + ROLE DEFINITIONS ============ -->
+    <article class="page portrait cover" aria-labelledby="cover-title">
+      <header class="cover-head">
+        <div class="cover-crest" aria-label="Indiana University">IU</div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · UNIT 01 · v2.0</div>
+      </header>
+
+      <div class="cover-stamp">LEARNER ROLES MAP — SERAFINI (2012)</div>
+      <h1 id="cover-title">Which roles<br />does <em>each assignment</em> ask for?</h1>
+      <p class="lede">For every Unit 1 assignment, we name the <em>learner role(s)</em> it actually invokes. Following the protocol: <strong>if a role doesn't honestly match — we don't add one.</strong> Empty cells are findings, not failures.</p>
+      <div class="attribution">SERAFINI, F. (2012). READING WORKSHOP 2.0. THE READING TEACHER, 66(4).</div>
+
+      <h2 style="margin-top: 20px;">The four roles, in plain language</h2>
+
+      <div class="roles" aria-label="The four learner roles">
+        <div class="role-card nav">
+          <div class="label">① NAVIGATOR</div>
+          <div class="name">Navigator</div>
+          <div class="ask">"How do I crack the disciplinary code?"</div>
+          <div class="body">Pattern recognition. Decoding new conventions, jargon, and graphic / textual signals specific to the domain. Using prior knowledge to predict unknown terms.</div>
+        </div>
+        <div class="role-card int">
+          <div class="label">② INTERPRETER</div>
+          <div class="name">Interpreter</div>
+          <div class="ask">"What does this mean to me?"</div>
+          <div class="body">Bringing personal experience and prior learning to bear. Connecting new content to one's own life, interests, and worldview. Drawing inferences across contexts.</div>
+        </div>
+        <div class="role-card des">
+          <div class="label">③ DESIGNER</div>
+          <div class="name">Designer</div>
+          <div class="ask">"What do I do with this information?"</div>
+          <div class="body">Creating a product that follows the form and conventions of the domain — diagrams, prototypes, presentations, journals — and that can be assessed against criteria.</div>
+        </div>
+        <div class="role-card inq">
+          <div class="label">④ INTERROGATOR</div>
+          <div class="name">Interrogator</div>
+          <div class="ask">"What does this content allow me to see?"</div>
+          <div class="body">Examining the values, biases, and intentions behind information. Recognizing whose interests are served, what's left unsaid, and how framing shapes meaning.</div>
+        </div>
+      </div>
+
+      <div class="glance" aria-label="Unit 1 coverage at a glance">
+        <h3>Unit 1 coverage at a glance</h3>
+        <div class="row header-row">
+          <span></span>
+          <span class="col nav">NAVIGATOR</span>
+          <span class="col int">INTERPRETER</span>
+          <span class="col des">DESIGNER</span>
+          <span class="col inq">INTERROGATOR</span>
+        </div>
+        <div class="row">
+          <span class="wkn">WK 01 <em>Spawn Point</em></span>
+          <span class="dot">●</span><span class="dot">●</span><span class="dot">●</span><span class="dot">○</span>
+        </div>
+        <div class="row">
+          <span class="wkn">WK 02 <em>Recon</em></span>
+          <span class="dot">●</span><span class="dot">●</span><span class="dot">◐</span><span class="dot">○</span>
+        </div>
+        <div class="row">
+          <span class="wkn">WK 03 <em>Setup Quest</em></span>
+          <span class="dot">●</span><span class="dot">◐</span><span class="dot">●</span><span class="dot">○</span>
+        </div>
+        <div class="row">
+          <span class="wkn">WK 04 <em>Project Seed v0.1</em></span>
+          <span class="dot">◐</span><span class="dot">●</span><span class="dot">●</span><span class="dot">◐</span>
+        </div>
+        <div class="legend-key" aria-label="Coverage marker legend">
+          <span><strong>●</strong> primary</span>
+          <span><strong>◐</strong> supporting</span>
+          <span><strong>○</strong> not currently supported</span>
+        </div>
+      </div>
+
+      <div class="pull">
+        <strong>WHAT THE EMPTY CELLS TELL US</strong>
+        Interrogator is the under-served role across the unit — and that's an honest finding. Unit 1 is about <em>installing the loop</em>, not yet critiquing it. The recommended fix lives in Unit 2 (a "Reading the Code" lesson where students interrogate AI outputs, README claims, and tutorial framings). We do not retrofit Interrogator into making activities just to fill the column.
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>SPAWN POINT · LEARNER ROLES · PG 1 / 2</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 2 — LANDSCAPE TABLE ============ -->
+    <article class="page landscape" aria-labelledby="table-h">
+      <header class="runhead">
+        <h1 id="table-h">Assignment-by-assignment. <em>Unit 01.</em></h1>
+        <div class="meta">
+          PER SERAFINI (2012)
+          <span class="total">11 assignments</span>
+        </div>
+      </header>
+
+      <table class="roles-table" role="table" aria-label="Learner role mapping for every Unit 1 assignment">
+        <thead>
+          <tr>
+            <th class="col-wk" scope="col">Wk</th>
+            <th class="col-asn" scope="col">Assignment</th>
+            <th class="col-pts" scope="col">Pts</th>
+            <th class="col-role nav" scope="col"><span class="role-name">Navigator</span><span class="role-q">"crack the code"</span></th>
+            <th class="col-role int" scope="col"><span class="role-name">Interpreter</span><span class="role-q">"what does this mean to me"</span></th>
+            <th class="col-role des" scope="col"><span class="role-name">Designer</span><span class="role-q">"what do I do with this"</span></th>
+            <th class="col-role inq" scope="col"><span class="role-name">Interrogator</span><span class="role-q">"what does this allow me to see"</span></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- ===== WEEK 1 — SPAWN POINT — 3 assignments ===== -->
+          <tr>
+            <td class="week-cell" rowspan="3">
+              <span class="num">1</span>
+              <span class="label">SPAWN<br/>POINT</span>
+            </td>
+            <td class="asn-cell">
+              <span class="name">Capability Map</span>
+              <span class="what">For each of 8 Creator-Commons verbs, write a real idea + must/maybe/no.</span>
+            </td>
+            <td class="pts-cell">30</td>
+            <td class="role-cell primary nav">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Eight verbs are the disciplinary metalanguage. Students are decoding what CUT vs. PRINT vs. CAST <em>means</em> as a capability — pattern-recognizing the makerspace.</span>
+            </td>
+            <td class="role-cell primary int">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Each verb gets translated through the student's own intended project. Pure interpreter move: "what does PRESS mean to <em>my</em> project?"</span>
+            </td>
+            <td class="role-cell supporting des">
+              <span class="mark" aria-label="Supporting role">◐</span>
+              <span class="why">A grid of must/maybe/no ratings is a small designed artifact, but the rubric grades the thinking, not the form.</span>
+            </td>
+            <td class="role-cell absent inq">
+              <span class="mark" aria-label="Not supported">○</span>
+              <span class="why">No critique of <em>which</em> capabilities the lab chose to stock or omit. (Open question for Unit 2.)</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="asn-cell">
+              <span class="name">Cardboard Prototype</span>
+              <span class="what">Pick a real annoyance from this week. Sketch → build → photograph → write worked / broke / next.</span>
+            </td>
+            <td class="pts-cell">40</td>
+            <td class="role-cell supporting nav">
+              <span class="mark" aria-label="Supporting role">◐</span>
+              <span class="why">Some pattern-spotting in materials (which tape holds, which fold creases) but the conventions are mostly intuitive.</span>
+            </td>
+            <td class="role-cell primary int">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Required to surface a problem from <em>their</em> week, not a stock prompt. "What does this annoy in my life?" is the entire entry point.</span>
+            </td>
+            <td class="role-cell primary des">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Quintessential designer assignment — a physical artifact assessed against a rubric, plus a multimodal reflection (photo + 3-line text). Right out of Serafini's designer skill list.</span>
+            </td>
+            <td class="role-cell absent inq">
+              <span class="mark" aria-label="Not supported">○</span>
+              <span class="why">No critique of consumer-product framing or whose problems get prototyped first.</span>
+            </td>
+          </tr>
+
+          <tr class="week-divider">
+            <td class="asn-cell">
+              <span class="name">Project Seed</span>
+              <span class="what">WHO + problem + object + 2–3 verbs + smallest v0.1 by Week 4.</span>
+            </td>
+            <td class="pts-cell">30</td>
+            <td class="role-cell supporting nav">
+              <span class="mark" aria-label="Supporting role">◐</span>
+              <span class="why">Uses the verb metalanguage from the Capability Map. Adds the convention of "WHO is one specific person."</span>
+            </td>
+            <td class="role-cell primary int">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Asks students to name a real human (often someone they know) and a real pain. Their interpretation of <em>"who is this for"</em> shapes everything downstream.</span>
+            </td>
+            <td class="role-cell primary des">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">A structured five-field design brief — explicit form and conventions of the domain. Becomes the README in Week 3.</span>
+            </td>
+            <td class="role-cell absent inq">
+              <span class="mark" aria-label="Not supported">○</span>
+              <span class="why">No examination of whose seeds get encouraged or how "specificity" framing favors certain backgrounds.</span>
+            </td>
+          </tr>
+
+          <!-- ===== WEEK 2 — RECON — 3 assignments ===== -->
+          <tr>
+            <td class="week-cell" rowspan="3">
+              <span class="num">2</span>
+              <span class="label">RECON</span>
+            </td>
+            <td class="asn-cell">
+              <span class="name">168-hr Time Audit</span>
+              <span class="what">Fill the 168-cell weekly grid with what actually happened (not aspirational).</span>
+            </td>
+            <td class="pts-cell">20</td>
+            <td class="role-cell primary nav">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Decoding the grid as a representational form. Recognizing fixed vs. discretionary blocks is a domain-specific reading move.</span>
+            </td>
+            <td class="role-cell primary int">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Audit is entirely first-person. "What does my week mean for the 6 hrs/wk this project needs?" is the whole point.</span>
+            </td>
+            <td class="role-cell supporting des">
+              <span class="mark" aria-label="Supporting role">◐</span>
+              <span class="why">The completed grid is a designed artifact, but the form is given — students fill, not design.</span>
+            </td>
+            <td class="role-cell absent inq">
+              <span class="mark" aria-label="Not supported">○</span>
+              <span class="why">No critique of productivity framing or which time uses get coded as "discretionary." Honest gap.</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="asn-cell">
+              <span class="name">Loadout Check</span>
+              <span class="what">Install + verify dev environment. Screenshot a first-command success.</span>
+            </td>
+            <td class="pts-cell">20</td>
+            <td class="role-cell primary nav">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Pure decoding. Terminal output, error messages, path conventions, file extensions — every artifact in this assignment is "learn the convention."</span>
+            </td>
+            <td class="role-cell absent int">
+              <span class="mark" aria-label="Not supported">○</span>
+              <span class="why">Setup is identical for everyone; no personal interpretation surface. Honest gap — and that's fine for a baseline check.</span>
+            </td>
+            <td class="role-cell supporting des">
+              <span class="mark" aria-label="Supporting role">◐</span>
+              <span class="why">Screenshot is a tiny designed artifact, but composition is incidental.</span>
+            </td>
+            <td class="role-cell absent inq">
+              <span class="mark" aria-label="Not supported">○</span>
+              <span class="why">No examination of why this stack vs. another. (Reasonable to defer to Week 7.)</span>
+            </td>
+          </tr>
+
+          <tr class="week-divider">
+            <td class="asn-cell">
+              <span class="name">Cohort Intro Post</span>
+              <span class="what">One intro in the channel: who you are, what you made before age 12, your seed.</span>
+            </td>
+            <td class="pts-cell">10</td>
+            <td class="role-cell supporting nav">
+              <span class="mark" aria-label="Supporting role">◐</span>
+              <span class="why">Learning channel etiquette and threading conventions counts as decoding the disciplinary norms of CS community spaces.</span>
+            </td>
+            <td class="role-cell primary int">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Entirely first-person. Reading peers' intros invites comparison: "where do my interests overlap with theirs?"</span>
+            </td>
+            <td class="role-cell absent des">
+              <span class="mark" aria-label="Not supported">○</span>
+              <span class="why">A 200-word post isn't a designed artifact in the rubric sense.</span>
+            </td>
+            <td class="role-cell absent inq">
+              <span class="mark" aria-label="Not supported">○</span>
+              <span class="why">No critique of who feels welcome in CS spaces, though peer reading sets the conditions for it later.</span>
+            </td>
+          </tr>
+
+          <!-- ===== WEEK 3 — SETUP QUEST — 2 assignments ===== -->
+          <tr>
+            <td class="week-cell" rowspan="2">
+              <span class="num">3</span>
+              <span class="label">SETUP<br/>QUEST</span>
+            </td>
+            <td class="asn-cell">
+              <span class="name">Project Repo + README</span>
+              <span class="what">Initialize the repo. README names WHO, problem, capabilities — lifted from the Project Seed.</span>
+            </td>
+            <td class="pts-cell">40</td>
+            <td class="role-cell primary nav">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Heaviest decoding load in the unit. Repo structure, README conventions, markdown syntax, branch naming — all domain conventions, all new.</span>
+            </td>
+            <td class="role-cell supporting int">
+              <span class="mark" aria-label="Supporting role">◐</span>
+              <span class="why">Translating personal seed text into README form requires real interpretation — but the heavy lifting was Week 1.</span>
+            </td>
+            <td class="role-cell primary des">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">README is the canonical multimodal designer artifact in software. Graded against form-and-convention criteria a stranger could parse.</span>
+            </td>
+            <td class="role-cell absent inq">
+              <span class="mark" aria-label="Not supported">○</span>
+              <span class="why">No examination of README rhetoric or whose voice gets coded as "professional." Defer to Unit 2's "Reading the Code" lesson.</span>
+            </td>
+          </tr>
+
+          <tr class="week-divider">
+            <td class="asn-cell">
+              <span class="name">First Commit (cardboard photos)</span>
+              <span class="what">Add Week-1 prototype photos to the repo. One green-checkmark commit on the right branch.</span>
+            </td>
+            <td class="pts-cell">10</td>
+            <td class="role-cell primary nav">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Git verbs (add / commit / push) are pure pattern + convention work. Branch names, commit message format, the green-checkmark visual cue — all decoding.</span>
+            </td>
+            <td class="role-cell absent int">
+              <span class="mark" aria-label="Not supported">○</span>
+              <span class="why">A commit is mechanical; no personal interpretation surface here. Honest absence.</span>
+            </td>
+            <td class="role-cell supporting des">
+              <span class="mark" aria-label="Supporting role">◐</span>
+              <span class="why">The commit message itself is a tiny designed artifact ("fix: …" / "feat: …"), but minor weight.</span>
+            </td>
+            <td class="role-cell absent inq">
+              <span class="mark" aria-label="Not supported">○</span>
+              <span class="why">Not yet — version-control politics is an Interrogator topic for a later unit.</span>
+            </td>
+          </tr>
+
+          <!-- ===== WEEK 4 — PROJECT SEED V0.1 — 3 assignments ===== -->
+          <tr>
+            <td class="week-cell" rowspan="3">
+              <span class="num">4</span>
+              <span class="label">SEED<br/>v0.1</span>
+            </td>
+            <td class="asn-cell">
+              <span class="name">v0.1 Build + Demo</span>
+              <span class="what">Build a v0.1 using a "must" verb. Hand it to a classmate. 30-second demo, unrehearsed.</span>
+            </td>
+            <td class="pts-cell">50</td>
+            <td class="role-cell supporting nav">
+              <span class="mark" aria-label="Supporting role">◐</span>
+              <span class="why">Domain conventions for what "demo-able" looks like — but most decoding moved to Weeks 1–3.</span>
+            </td>
+            <td class="role-cell primary int">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Watching a peer touch your object forces you to interpret <em>their</em> reaction — and re-interpret your own seed.</span>
+            </td>
+            <td class="role-cell primary des">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">The capstone designer move of Unit 1: a real product, real form, against criteria. Multimodal: object + spoken demo.</span>
+            </td>
+            <td class="role-cell supporting inq">
+              <span class="mark" aria-label="Supporting role">◐</span>
+              <span class="why">First time Interrogator surfaces in the unit: handing your work to a user invites questioning of assumptions you didn't know you'd made.</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="asn-cell">
+              <span class="name">Peer Critique Log</span>
+              <span class="what">Receive feedback from one classmate. Don't defend. Log: worked / broke / next.</span>
+            </td>
+            <td class="pts-cell">20</td>
+            <td class="role-cell absent nav">
+              <span class="mark" aria-label="Not supported">○</span>
+              <span class="why">Free-form notes; no new conventions to crack.</span>
+            </td>
+            <td class="role-cell primary int">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Receiving critique <em>is</em> interpretation work — translating someone else's reaction into actionable meaning for your project.</span>
+            </td>
+            <td class="role-cell supporting des">
+              <span class="mark" aria-label="Supporting role">◐</span>
+              <span class="why">A structured 3-field log is a small designed artifact — same form as the Cardboard reflection, building consistency.</span>
+            </td>
+            <td class="role-cell primary inq">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Strongest Interrogator moment in Unit 1. Asks: whose feedback do I weight? What did the peer not see? What did <em>I</em> hide in the demo?</span>
+            </td>
+          </tr>
+
+          <tr class="last">
+            <td class="asn-cell">
+              <span class="name">Revised Seed (v0.2)</span>
+              <span class="what">Rewrite the Project Seed in light of v0.1 + critique. Note one cut, one keep, one change.</span>
+            </td>
+            <td class="pts-cell">10</td>
+            <td class="role-cell absent nav">
+              <span class="mark" aria-label="Not supported">○</span>
+              <span class="why">Same form as v0.1 seed; conventions already decoded.</span>
+            </td>
+            <td class="role-cell primary int">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Revision is interpretation made visible — mapping new experience onto the original frame.</span>
+            </td>
+            <td class="role-cell primary des">
+              <span class="mark" aria-label="Primary role">●</span>
+              <span class="why">Producing a versioned brief — a domain-canonical designer artifact (v0.1 → v0.2 is itself a CS convention).</span>
+            </td>
+            <td class="role-cell supporting inq">
+              <span class="mark" aria-label="Supporting role">◐</span>
+              <span class="why">"What did I previously assume that turned out to be wrong?" — a beginner Interrogator move on one's own past work.</span>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <div class="table-foot">
+        <div class="note">
+          <h4>READING THE LEGEND</h4>
+          <div class="legend-inline">
+            <span><span class="swatch">●</span> primary — assignment can't be done without this role</span>
+            <span><span class="swatch">◐</span> supporting — present but not central</span>
+            <span><span class="swatch dashed">○</span> not currently supported — honest absence</span>
+          </div>
+        </div>
+        <div class="note">
+          <h4>UNIT 1 IS DESIGNER-HEAVY</h4>
+          <p>7 of 11 assignments are primary Designer moments. This is intentional — Unit 1 installs the make-notice-iterate loop. Interpreter is the close second (8 of 11), driven by the seed-to-v0.1 personal-project spine.</p>
+        </div>
+        <div class="note">
+          <h4>WHERE TO STRENGTHEN</h4>
+          <p><strong>Interrogator</strong> is under-served (1 primary, 3 supporting, 7 absent). The Peer Critique Log opens the door at Week 4. Unit 2's "Reading the Code" lesson should carry the load — not retrofit Unit 1.</p>
+        </div>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>SPAWN POINT · LEARNER ROLES · PG 2 / 2</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+  </main>
+</body>
+</html>

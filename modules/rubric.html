@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bug Report &amp; 7-Day Patch Test · TILT Assignment · CSCI-Y100</title>
+  <meta name="description" content="TILT-formatted rubric for the Bug Report and 7-Day Patch Test assignment in CSCI-Y100." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    html, body { margin: 0; padding: 0; background: var(--paper-50); color: var(--ink-900); font-family: var(--font-body); }
+    .page { max-width: 880px; margin: 0 auto; padding: 56px 56px 96px; }
+
+    /* --- Top bar --- */
+    .topbar { background: var(--ink-900); color: var(--paper-100); padding: 14px 56px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--crimson); }
+    .topbar .crumb { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--paper-300); }
+    .topbar .ttl { font-family: var(--font-display); font-size: 16px; font-style: italic; }
+    .topbar a { color: var(--paper-300); text-decoration: none; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; }
+    .topbar a:hover { color: var(--paper-50); }
+
+    /* --- Type --- */
+    .kicker { font-family: var(--font-mono); font-size: 11px; color: var(--crimson); letter-spacing: 0.18em; margin-bottom: 14px; }
+    h1 { font-family: var(--font-display); font-size: 56px; font-weight: 600; letter-spacing: -0.025em; margin: 0 0 18px; line-height: 1; }
+    h1 em { font-style: italic; color: var(--crimson); }
+    h2 { font-family: var(--font-display); font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 14px; }
+    .lede { font-size: 17px; line-height: 1.55; color: var(--ink-700); max-width: 700px; margin: 0 0 40px; }
+
+    /* --- Meta strip --- */
+    .meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 0 0 48px; padding: 18px 22px; background: var(--paper-100); border: 1px solid var(--paper-200); border-radius: 6px; }
+    .meta dt { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 4px; }
+    .meta dd { margin: 0; font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--ink-900); font-style: italic; }
+
+    /* --- TILT sections --- */
+    .tilt-section { margin: 0 0 48px; padding: 28px 32px 32px; background: var(--paper-100); border: 1px solid var(--paper-200); border-left: 5px solid; border-radius: 4px; }
+    .tilt-section.purpose { border-left-color: var(--signal-blue); }
+    .tilt-section.task { border-left-color: var(--signal-amber); }
+    .tilt-section.criteria { border-left-color: var(--signal-green); }
+    .tilt-tag { display: inline-block; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; padding: 4px 10px; border-radius: 2px; color: #fff; margin-bottom: 14px; }
+    .tilt-section.purpose .tilt-tag { background: var(--signal-blue); }
+    .tilt-section.task .tilt-tag { background: var(--signal-amber); color: var(--ink-900); }
+    .tilt-section.criteria .tilt-tag { background: var(--signal-green); }
+    .tilt-section h2 { margin-bottom: 16px; }
+    .tilt-section p { font-size: 15px; line-height: 1.6; color: var(--ink-700); margin: 0 0 14px; }
+    .tilt-section p:last-child { margin-bottom: 0; }
+    .tilt-section ul { padding-left: 20px; margin: 0 0 14px; }
+    .tilt-section li { font-size: 14.5px; line-height: 1.6; color: var(--ink-700); margin-bottom: 6px; }
+    .tilt-section li strong { color: var(--ink-900); }
+
+    /* --- Why-this-matters callout --- */
+    .why { padding: 16px 18px; margin: 16px 0 0; background: var(--paper-50); border: 1px dashed var(--paper-300); border-radius: 4px; }
+    .why-label { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 6px; }
+    .why-body { font-family: var(--font-display); font-size: 16px; font-style: italic; color: var(--ink-900); line-height: 1.4; }
+
+    /* --- Steps list --- */
+    ol.steps { list-style: none; padding: 0; margin: 0; counter-reset: step; }
+    ol.steps > li { counter-increment: step; display: grid; grid-template-columns: 38px 1fr; gap: 14px; padding: 14px 0; border-bottom: 1px dashed var(--paper-300); }
+    ol.steps > li:last-child { border-bottom: none; }
+    ol.steps > li::before { content: counter(step, decimal-leading-zero); font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--crimson); padding-top: 2px; }
+    ol.steps .step-head { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--ink-900); margin-bottom: 4px; }
+    ol.steps .step-body { font-size: 14px; color: var(--ink-700); line-height: 1.55; }
+    ol.steps .step-body code { font-family: var(--font-mono); font-size: 12.5px; background: var(--paper-50); padding: 1px 5px; border-radius: 2px; border: 1px solid var(--paper-200); }
+
+    /* --- Rubric table --- */
+    .rubric-wrap { margin: 24px 0 0; overflow-x: auto; border: 1px solid var(--ink-900); border-radius: 4px; }
+    table.rubric { width: 100%; border-collapse: collapse; background: var(--paper-50); }
+    table.rubric thead th { background: var(--ink-900); color: var(--paper-50); font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; padding: 12px 14px; text-align: left; vertical-align: bottom; }
+    table.rubric thead th:first-child { width: 24%; }
+    table.rubric tbody th { background: var(--paper-100); text-align: left; padding: 14px; font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--ink-900); border-bottom: 1px solid var(--paper-200); border-right: 1px solid var(--paper-200); vertical-align: top; }
+    table.rubric tbody th .crit-pts { display: block; font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--crimson); letter-spacing: 0.1em; margin-top: 4px; }
+    table.rubric tbody td { padding: 14px; font-size: 13px; line-height: 1.5; color: var(--ink-700); border-bottom: 1px solid var(--paper-200); border-right: 1px solid var(--paper-200); vertical-align: top; }
+    table.rubric tbody td:last-child, table.rubric tbody th:last-child { border-right: none; }
+    table.rubric tbody tr:last-child td, table.rubric tbody tr:last-child th { border-bottom: none; }
+    .lvl-pts { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; color: var(--ink-500); margin-bottom: 6px; }
+
+    /* Level color tints */
+    .lvl-meets { background: rgba(93, 187, 126, 0.06); }
+    .lvl-developing { background: rgba(232, 169, 59, 0.07); }
+    .lvl-incomplete { background: rgba(216, 85, 60, 0.05); }
+
+    .total-row td { background: var(--ink-900) !important; color: var(--paper-50) !important; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; padding: 12px 14px; font-weight: 700; }
+    .total-row td:first-child { text-align: left; }
+    .total-row td:not(:first-child) { text-align: center; }
+
+    /* --- Submission card --- */
+    .submit { margin-top: 48px; background: var(--terminal-900); color: var(--paper-100); padding: 28px 32px; border-radius: 6px; }
+    .submit h2 { color: var(--paper-50); margin-bottom: 12px; font-style: italic; }
+    .submit p { color: #C9B998; font-size: 14px; line-height: 1.6; margin: 0 0 12px; }
+    .submit code { font-family: var(--font-mono); color: var(--signal-green); }
+    .submit ul { padding-left: 20px; }
+    .submit li { color: #C9B998; font-size: 14px; line-height: 1.7; }
+
+    /* --- Help callout --- */
+    .help { margin-top: 28px; padding: 18px 22px; background: rgba(232, 169, 59, 0.12); border: 1px dashed var(--signal-amber); border-radius: 4px; }
+    .help-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-900); margin-bottom: 8px; }
+    .help-body { font-size: 14px; color: var(--ink-700); line-height: 1.55; }
+
+    /* --- Closing --- */
+    .closer { text-align: center; margin-top: 56px; padding: 40px 0 20px; border-top: 2px solid var(--ink-900); }
+    .closer .stamp { color: var(--crimson); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.2em; border: 2px solid var(--crimson); padding: 6px 12px; display: inline-block; transform: rotate(-2deg); }
+    .closer p { font-family: var(--font-display); font-size: 22px; font-style: italic; color: var(--ink-700); margin: 22px 0 0; }
+
+    /* --- Footnote --- */
+    .footnote { margin-top: 48px; padding-top: 20px; border-top: 1px dashed var(--paper-300); font-family: var(--font-mono); font-size: 10px; color: var(--ink-500); letter-spacing: 0.05em; line-height: 1.6; }
+
+    /* a11y */
+    .skip-link { position: absolute; top: -40px; left: 8px; background: var(--ink-900); color: var(--paper-50); padding: 10px 14px; font-family: var(--font-mono); font-size: 13px; font-weight: 600; z-index: 10000; border-radius: 4px; text-decoration: none; }
+    .skip-link:focus { top: 8px; outline: 3px solid var(--signal-amber); }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--signal-amber); outline-offset: 2px; border-radius: 3px; }
+
+    @media print {
+      .topbar { display: none; }
+      .page { padding: 0; max-width: none; }
+      .submit { background: var(--paper-100); color: var(--ink-900); }
+      .submit h2, .submit p, .submit li { color: var(--ink-900); }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="topbar">
+    <div>
+      <span class="crumb">CSCI-Y100 · WEEK 06 · ASSIGNMENT</span>
+    </div>
+    <div class="ttl">Bug Report &amp; 7-Day Patch Test</div>
+    <a href="debugging-mindset.html">← module</a>
+  </header>
+
+  <main id="main" class="page">
+    <div class="kicker">HOMEWORK · DUE NEXT CLASS · TILT-FORMATTED</div>
+    <h1>Bug Report &amp;<br /><em>7-Day Patch Test.</em></h1>
+    <p class="lede">
+      You diagnosed one of your study habits in class. This week, you ship the patch and
+      see if it holds. The whole assignment fits on this page.
+    </p>
+
+    <dl class="meta">
+      <div>
+        <dt>DUE</dt>
+        <dd>Wed, 11:59 PM</dd>
+      </div>
+      <div>
+        <dt>EFFORT</dt>
+        <dd>~90 sec/day · 7 days</dd>
+      </div>
+      <div>
+        <dt>POINTS</dt>
+        <dd>50 (of 100 wk)</dd>
+      </div>
+      <div>
+        <dt>FORMAT</dt>
+        <dd>1-page log + reflection</dd>
+      </div>
+    </dl>
+
+    <!-- ============ PURPOSE ============ -->
+    <section class="tilt-section purpose" aria-labelledby="purpose-h">
+      <span class="tilt-tag">① PURPOSE · WHY THIS</span>
+      <h2 id="purpose-h">Why I'm asking you to do this</h2>
+      <p>
+        In CS, you'll spend more time debugging than writing new code. The same skill
+        works on study habits — once you can name a bug, isolate where it shows up, and
+        test a small fix, you have a tool that outlasts this class.
+      </p>
+
+      <p><strong>By the end of this assignment you will be able to:</strong></p>
+      <ul>
+        <li><strong>Diagnose</strong> a study-habit problem with the same precision you'd use on broken code.</li>
+        <li><strong>Design</strong> the smallest possible fix and predict what would prove it works.</li>
+        <li><strong>Test</strong> that fix over 7 days using daily evidence, not vibes.</li>
+        <li><strong>Iterate</strong> — keep, tweak, or scrap the fix based on what the log actually says.</li>
+      </ul>
+
+      <div class="why">
+        <div class="why-label">CONNECTION TO YOUR MAJOR</div>
+        <div class="why-body">
+          This is the same loop you'll use in CS 200, in your first internship,
+          and on every group project: observe → hypothesize → test → revise.
+          We're just running it on you instead of code.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TASK ============ -->
+    <section class="tilt-section task" aria-labelledby="task-h">
+      <span class="tilt-tag">② TASK · WHAT TO DO</span>
+      <h2 id="task-h">What to do, exactly</h2>
+      <p>
+        Submit one document (Google Doc, Markdown, PDF — doesn't matter) with the
+        following four parts. Templates are linked in Canvas.
+      </p>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <div class="step-head">Finalize your bug report</div>
+            <div class="step-body">
+              Use the form from class. Five fields: <strong>Title</strong>,
+              <strong>Symptom</strong>, <strong>Repro Steps</strong> (when does it happen?),
+              <strong>Hypothesis</strong> (what's actually causing it?),
+              <strong>Patch</strong> (the smallest fix you'll try).
+              Patch must be doable in <code>≤ 5 minutes</code> per day.
+            </div>
+          </div>
+        </li>
+        <li>
+          <div>
+            <div class="step-head">Run the patch for 7 days</div>
+            <div class="step-body">
+              Each evening, log <strong>one line</strong>: did the fix happen today?
+              <code>Y / N / N/A</code> + a one-sentence note (why not, what helped, what
+              tripped you up). 90 seconds, no more. Skip-days are fine — log them as
+              <code>N/A</code> with the reason.
+            </div>
+          </div>
+        </li>
+        <li>
+          <div>
+            <div class="step-head">Write a 3-sentence reflection</div>
+            <div class="step-body">
+              On day 7, answer in 3 sentences total:
+              <strong>(a)</strong> What did the fix change? <strong>(b)</strong> Where did
+              it fail? <strong>(c)</strong> Will you keep it, tweak it, or scrap it — and why?
+            </div>
+          </div>
+        </li>
+        <li>
+          <div>
+            <div class="step-head">Submit on Canvas before next class</div>
+            <div class="step-body">
+              One file. Bring a printed or screenshot copy to class — we'll re-open or
+              close the issue together in groups of three.
+            </div>
+          </div>
+        </li>
+      </ol>
+
+      <div class="help">
+        <div class="help-label">⚠ COMMON TRAPS (READ THIS)</div>
+        <div class="help-body">
+          <strong>Trap 1: Patch too big.</strong> "Study 2 hrs every night" is not a fix,
+          it's a wish. A real patch is "open my notes app at 7 pm for 5 min."<br />
+          <strong>Trap 2: Lying to the log.</strong> An honest <code>N</code> is worth
+          more than a fake <code>Y</code>. The point is data, not performance.<br />
+          <strong>Trap 3: Calling failure a moral problem.</strong> If the patch flopped,
+          the patch was wrong — not you. Reopen the issue with a smaller patch.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CRITERIA ============ -->
+    <section class="tilt-section criteria" aria-labelledby="criteria-h">
+      <span class="tilt-tag">③ CRITERIA · HOW IT'S GRADED</span>
+      <h2 id="criteria-h">How I'll grade it</h2>
+      <p>
+        50 points total, four criteria. <strong>Honest engagement beats polish.</strong>
+        A messy log with real failures gets a higher grade than a sparkling log with
+        no learning in it.
+      </p>
+
+      <div class="rubric-wrap" role="region" aria-label="Grading rubric">
+        <table class="rubric">
+          <thead>
+            <tr>
+              <th scope="col">Criterion</th>
+              <th scope="col" class="lvl-meets">Meets &nbsp;<span class="lvl-pts">FULL CREDIT</span></th>
+              <th scope="col" class="lvl-developing">Developing &nbsp;<span class="lvl-pts">PARTIAL</span></th>
+              <th scope="col" class="lvl-incomplete">Incomplete &nbsp;<span class="lvl-pts">REVISE</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">
+                Bug report is <em>specific</em>
+                <span class="crit-pts">15 pts</span>
+              </th>
+              <td class="lvl-meets">
+                All five fields filled. Symptom is something I could observe (not "I'm lazy"). Repro Steps say <em>when</em>. Hypothesis is testable. Patch is ≤ 5 min/day.
+                <br /><span class="lvl-pts">15 pts</span>
+              </td>
+              <td class="lvl-developing">
+                Most fields are there but at least one is vague ("I procrastinate"). Patch is plausible but maybe too big.
+                <br /><span class="lvl-pts">10 pts</span>
+              </td>
+              <td class="lvl-incomplete">
+                Fields missing or generic. Patch is a wish ("I'll try harder"). Resubmit with revisions.
+                <br /><span class="lvl-pts">0–5 pts</span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                Daily log is <em>complete &amp; honest</em>
+                <span class="crit-pts">15 pts</span>
+              </th>
+              <td class="lvl-meets">
+                All 7 days logged. At least one <code>N</code> or <code>N/A</code> (real life happens). Notes are specific to that day, not copy-pasted.
+                <br /><span class="lvl-pts">15 pts</span>
+              </td>
+              <td class="lvl-developing">
+                5–6 days logged, or all-Y log that reads like template-fill. Some specifics, some filler.
+                <br /><span class="lvl-pts">10 pts</span>
+              </td>
+              <td class="lvl-incomplete">
+                Fewer than 5 days, or notes are identical/missing. Log shows nothing happened.
+                <br /><span class="lvl-pts">0–5 pts</span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                Reflection shows <em>real thinking</em>
+                <span class="crit-pts">15 pts</span>
+              </th>
+              <td class="lvl-meets">
+                Three sentences answer all three questions. References at least one specific day from the log. Names what surprised you.
+                <br /><span class="lvl-pts">15 pts</span>
+              </td>
+              <td class="lvl-developing">
+                Reflection is present but generic ("I learned a lot"). Doesn't cite the log.
+                <br /><span class="lvl-pts">10 pts</span>
+              </td>
+              <td class="lvl-incomplete">
+                Missing or one-line. No connection between log and reflection.
+                <br /><span class="lvl-pts">0–5 pts</span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                Decides what's <em>next</em>
+                <span class="crit-pts">5 pts</span>
+              </th>
+              <td class="lvl-meets">
+                Clear "keep / tweak / scrap" call with a reason from the log. If tweaking, names the smaller patch.
+                <br /><span class="lvl-pts">5 pts</span>
+              </td>
+              <td class="lvl-developing">
+                Decision present but reasoning is fuzzy. No next-patch named.
+                <br /><span class="lvl-pts">3 pts</span>
+              </td>
+              <td class="lvl-incomplete">
+                No decision or only "I'll keep working on it."
+                <br /><span class="lvl-pts">0–1 pts</span>
+              </td>
+            </tr>
+            <tr class="total-row">
+              <td>TOTAL</td>
+              <td class="lvl-meets">50 pts</td>
+              <td class="lvl-developing">~33 pts</td>
+              <td class="lvl-incomplete">≤ 16 pts · revise &amp; resubmit</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="why">
+        <div class="why-label">REVISE-AND-RESUBMIT POLICY</div>
+        <div class="why-body">
+          Anyone scoring &lt; 33 gets one free revision week, no penalty. The point of
+          this assignment is to <em>actually try the loop</em> — not to nail it on the
+          first attempt.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SUBMISSION ============ -->
+    <section class="submit" aria-labelledby="submit-h">
+      <h2 id="submit-h">How to submit</h2>
+      <p>One file (Doc, Markdown, or PDF) on Canvas → Week 6 → "Bug Report &amp; Patch Test."</p>
+      <ul>
+        <li><code>part_1</code> &nbsp;Bug report (5 fields)</li>
+        <li><code>part_2</code> &nbsp;7-day log (table or list, your call)</li>
+        <li><code>part_3</code> &nbsp;3-sentence reflection</li>
+        <li><code>part_4</code> &nbsp;Keep / tweak / scrap decision</li>
+      </ul>
+      <p style="margin-top: 14px; color: var(--signal-amber);">
+        Bring a copy (printed or on your laptop) to next class. We'll re-open the issue in groups of three.
+      </p>
+    </section>
+
+    <div class="closer">
+      <div class="stamp">THE ONLY RULE</div>
+      <p>
+        when the fix doesn't hold, you don't have a character flaw —<br />
+        <span style="color: var(--crimson);">you have a more interesting bug.</span>
+      </p>
+    </div>
+
+    <div class="footnote">
+      <strong>About this format:</strong> This assignment is written in TILT format
+      (Transparency in Learning &amp; Teaching) — you get the <em>purpose</em>,
+      the <em>task</em>, and the <em>criteria</em> up front. Research consistently
+      shows TILT-formatted assignments improve outcomes, especially for first-gen,
+      transfer, and historically underserved students. If anything is unclear, that's
+      a bug in the assignment — email me and I'll fix it.
+    </div>
+  </main>
+</body>
+</html>

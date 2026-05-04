@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Final Demo + Reckoning · Facilitator Guide · CSCI-Y100 Week 8</title>
+  <meta name="description" content="Facilitator guide for the 90-minute Final Demo + Reckoning module: roll call vault, three demo rounds, 5 Big Ideas reckoning, trajectory. Run-of-show for Week 8." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    @page { size: letter; margin: 0.6in 0.7in; }
+    :root { --signal-amber-text: #8a6920; --signal-green-text: #2f7a4a; --signal-red-text: #a02e1e; --signal-blue-text: #2f5aa1; --signal-purple-text: #5C418F; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    html { font-size: 14px; }
+    body { margin: 0; background: var(--paper-200); color: var(--ink-900); font-family: var(--font-body); font-size: 14px; line-height: 1.55; }
+    .page { background: var(--paper-50); width: 8.5in; min-height: 11in; box-sizing: border-box; padding: 0.7in 0.75in; margin: 24px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.12); page-break-after: always; position: relative; }
+    .page:last-of-type { page-break-after: auto; }
+    @media print { body { background: #fff; } .page { margin: 0; padding: 0; box-shadow: none; width: auto; min-height: auto; } .no-print { display: none !important; } }
+    .toolbar { position: sticky; top: 0; z-index: 100; background: var(--ink-900); color: var(--paper-50); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em; }
+    .toolbar .label { color: var(--signal-amber); }
+    .toolbar button { background: var(--signal-amber); color: var(--ink-900); border: 0; padding: 8px 18px; font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.1em; cursor: pointer; border-radius: 4px; }
+    .toolbar button:hover { background: #f7c46a; }
+    .toolbar button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .skip-link { position: absolute; left: -9999px; top: 0; background: var(--ink-900); color: #fff; padding: 8px 14px; }
+    .skip-link:focus { left: 12px; top: 12px; z-index: 999; }
+
+    h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; }
+    h1 { font-size: 64px; line-height: 0.95; letter-spacing: -0.025em; margin: 0 0 18px; font-style: italic; }
+    h1 em { color: var(--crimson); }
+    h2 { font-size: 28px; line-height: 1.1; margin: 28px 0 12px; letter-spacing: -0.015em; font-style: italic; padding-bottom: 8px; border-bottom: 2px solid var(--ink-900); }
+    h2 .num { font-family: var(--font-mono); font-style: normal; font-size: 16px; color: var(--crimson); margin-right: 14px; letter-spacing: 0.1em; vertical-align: 5px; }
+    h3 { font-size: 18px; margin: 22px 0 8px; font-style: italic; }
+    h4 { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-500); margin: 18px 0 6px; }
+    p { margin: 0 0 10px; }
+    .crumb { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--ink-500); }
+    .footer-strip { position: absolute; bottom: 0.4in; left: 0.75in; right: 0.75in; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--ink-300); padding-top: 8px; border-top: 1px solid var(--paper-200); }
+
+    .cover { background: var(--paper-50); background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0); background-size: 22px 22px; display: flex; flex-direction: column; justify-content: space-between; }
+    .cover-head { display: flex; justify-content: space-between; align-items: flex-start; }
+    .cover-crest { width: 56px; height: 56px; background: var(--crimson); color: #fff; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 28px; display: inline-flex; align-items: center; justify-content: center; }
+    .cover h1 { font-size: 84px; }
+    .cover .lede { font-size: 22px; line-height: 1.4; max-width: 640px; color: var(--ink-700); margin-top: 12px; font-family: var(--font-display); font-style: italic; }
+    .cover-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 36px; padding-top: 36px; border-top: 2px solid var(--ink-900); max-width: 700px; }
+    .cover-meta dt { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 4px; }
+    .cover-meta dd { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 22px; font-weight: 600; }
+    .cover-stamp { display: inline-block; border: 2.5px solid var(--crimson); color: var(--crimson); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.18em; padding: 8px 14px; transform: rotate(-3deg); margin-bottom: 16px; }
+    .tape-strip { position: absolute; top: 0.4in; right: 0.7in; transform: rotate(2deg); background: var(--signal-amber); padding: 4px 14px; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; }
+
+    .agenda { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .agenda li { display: grid; grid-template-columns: 64px 100px 1fr 60px; gap: 14px; align-items: baseline; padding: 10px 14px; background: var(--paper-100); border-left: 4px solid var(--ink-900); }
+    .agenda .step { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; color: var(--crimson); }
+    .agenda .clock { font-family: var(--font-mono); font-size: 12px; color: var(--ink-500); }
+    .agenda .title-cell { font-family: var(--font-display); font-style: italic; font-size: 18px; font-weight: 600; }
+    .agenda .dur { font-family: var(--font-mono); font-size: 12px; font-weight: 700; text-align: right; }
+
+    .section-row { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: baseline; margin: 26px 0 10px; }
+    .section-row .num { font-family: var(--font-mono); font-weight: 700; font-size: 14px; letter-spacing: 0.1em; color: var(--crimson); }
+    .section-row .ttl { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 26px; padding-bottom: 6px; border-bottom: 2px solid var(--ink-900); }
+    .section-row .meta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); letter-spacing: 0.1em; }
+
+    .runblock { page-break-inside: avoid; background: var(--paper-50); border: 1px solid var(--paper-200); padding: 16px 20px; margin: 16px 0; position: relative; }
+    .timestrip { display: flex; gap: 12px; align-items: center; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; color: var(--ink-500); margin-bottom: 4px; }
+    .timestrip .badge { background: var(--ink-900); color: var(--paper-50); padding: 3px 8px; border-radius: 3px; font-weight: 700; }
+    .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
+    .twocol h4 { margin-top: 0; }
+    .script { background: #fff; border-left: 3px solid var(--crimson); padding: 10px 14px; font-family: var(--font-display); font-style: italic; font-size: 14px; line-height: 1.5; color: var(--ink-900); margin: 6px 0; }
+    .script::before { content: '\201C'; font-size: 28px; line-height: 0; color: var(--crimson); margin-right: 4px; vertical-align: -8px; }
+    .doit { padding: 0; margin: 6px 0; list-style: none; }
+    .doit li { display: flex; align-items: baseline; gap: 10px; padding: 4px 0; border-bottom: 1px dashed var(--paper-200); }
+    .doit li:last-child { border-bottom: 0; }
+    .doit li::before { content: '\2610'; flex-shrink: 0; width: 22px; color: var(--ink-500); font-size: 18px; line-height: 1; }
+    .watchfor { background: var(--paper-100); border-top: 3px solid var(--signal-amber); padding: 10px 14px; margin-top: 10px; font-size: 13px; }
+    .watchfor h4 { margin-top: 0; color: var(--signal-amber-text); }
+    .materials { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 24px; margin: 10px 0; padding: 0; }
+    .materials li { list-style: none; padding-left: 22px; position: relative; font-size: 13px; }
+    .materials li::before { content: '\2713'; position: absolute; left: 0; top: 0; font-family: var(--font-mono); font-weight: 700; color: var(--signal-green-text); }
+    .trouble { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+    .trouble th, .trouble td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--paper-200); vertical-align: top; }
+    .trouble th { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; background: var(--paper-100); color: var(--ink-700); }
+    .trouble td:first-child { font-family: var(--font-display); font-style: italic; font-weight: 600; width: 38%; }
+    .rationale { border-top: 2px solid var(--ink-900); border-bottom: 2px solid var(--ink-900); padding: 14px 0; margin: 16px 0; font-family: var(--font-display); font-style: italic; font-size: 18px; line-height: 1.4; }
+    .rationale strong { font-style: normal; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; display: block; color: var(--crimson); margin-bottom: 6px; }
+    .checklist { padding: 0; list-style: none; margin: 8px 0; }
+    .checklist li { display: flex; align-items: baseline; gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--paper-200); font-size: 13.5px; }
+    .checklist li::before { content: '\2610'; color: var(--ink-500); font-size: 18px; line-height: 1; }
+    .pillbox { display: inline-block; background: var(--paper-100); border: 1px solid var(--paper-200); padding: 2px 8px; border-radius: 12px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--ink-700); margin-right: 4px; }
+    .ideas-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 8px 0; }
+    .ideas-grid .card { background: var(--paper-100); border-left: 4px solid var(--signal-purple); padding: 8px 10px; font-size: 11.5px; }
+    .ideas-grid .card .num { font-family: var(--font-mono); font-weight: 700; font-size: 11px; color: var(--signal-purple-text); display: block; margin-bottom: 4px; letter-spacing: 0.1em; }
+    .ideas-grid .card .stmt { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 12.5px; line-height: 1.25; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to facilitator guide</a>
+  <div class="toolbar no-print" role="toolbar" aria-label="Document actions">
+    <span><span class="label">FACILITATOR GUIDE</span> &nbsp;·&nbsp; Final Demo + Reckoning · 90 min · WEEK 08</span>
+    <button type="button" onclick="window.print()" aria-label="Print this facilitator guide">PRINT / SAVE PDF</button>
+  </div>
+
+  <main id="main">
+
+    <article class="page cover" aria-labelledby="cover-title">
+      <div class="tape-strip" aria-hidden="true">FACILITATOR · KEEP HANDY</div>
+      <header class="cover-head">
+        <div><div class="cover-crest" aria-label="Indiana University">IU</div></div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 08 · v2.0</div>
+      </header>
+      <div>
+        <div class="cover-stamp">FACILITATOR GUIDE — ONE COPY PER INSTRUCTOR</div>
+        <h1 id="cover-title">Final<br /><em>Demo</em> + Reckoning.</h1>
+        <p class="lede">A 90-minute capstone session in a studio-style room. Three demo rounds (pairs · table · open studio), a 5 Big Ideas reckoning against the vault, and a one-paragraph trajectory for what comes after the course. Bookend to Spawn Point — the Week-1 student is now you.</p>
+      </div>
+      <dl class="cover-meta">
+        <div><dt>DURATION</dt><dd>90 minutes</dd></div>
+        <div><dt>STUDENTS</dt><dd>15–25 first-year, any major</dd></div>
+        <div><dt>LOCATION</dt><dd>Studio-style room with movable desks. Optional: faculty observers for round 3 only.</dd></div>
+        <div><dt>DELIVERABLES</dt><dd>4 — v1 demo · reckoning · trajectory · final export</dd></div>
+        <div><dt>POSTURE</dt><dd>Capstone — students lead, facilitator stages</dd></div>
+        <div><dt>PREREQUISITES</dt><dd>All built lessons (W1–W7)</dd></div>
+      </dl>
+      <div class="footer-strip"><span>FINAL DEMO · 01 / 06</span><span>v2.0 · 2026</span></div>
+    </article>
+
+    <article class="page">
+      <div class="crumb">CSCI-Y100 · WEEK 08 · WHY THIS LESSON</div>
+      <h1 style="font-size:48px;">Why <em>now</em>, why <em>this way</em>.</h1>
+
+      <p style="font-size:16px;line-height:1.55;">Most "final demos" are last-day theater — students rehearse a polished pitch, deliver it once, then forget about it. Final Demo + Reckoning is built differently. The demo is layered (three rounds × increasing audience size) so the v1 gets stress-tested live. The reckoning anchors the experience to the 5 Big Ideas the whole course was built on, so students leave with portable lessons, not just a closed-out grade.</p>
+
+      <p style="font-size:16px;line-height:1.55;">The trajectory closes the loop. The Week-1 cold-open (a Week-14 student looking back) is now actually you, talking to the next cohort's W1. That framing matters — the strongest demos here become the recordings that shape next year's onboarding.</p>
+
+      <h2><span class="num">§ A</span> Outcomes — what every student leaves with</h2>
+      <ul class="materials" style="grid-template-columns:1fr;">
+        <li><strong>A v1 demo</strong> given live to at least 3 classmates and a TA. The TA records 30 seconds of the strongest moment.</li>
+        <li><strong>A 5 Big Ideas reckoning</strong> — five lines, one per Big Idea, referencing their own vault by note name.</li>
+        <li><strong>A trajectory paragraph</strong> — what they're going to ship next and what habit from this course gets them there.</li>
+        <li><strong>A final Export-your-work .txt</strong> dropped into Canvas. The .txt is the entire course's record of the student, externalized.</li>
+      </ul>
+
+      <h2><span class="num">§ B</span> The 5 Big Ideas (reference for the reckoning)</h2>
+      <div class="ideas-grid">
+        <div class="card"><span class="num">#1</span><div class="stmt">Making is iteration, not inspiration.</div></div>
+        <div class="card"><span class="num">#2</span><div class="stmt">Verbs over tools — capabilities precede equipment.</div></div>
+        <div class="card"><span class="num">#3</span><div class="stmt">Time is a system you instrument, not a virtue.</div></div>
+        <div class="card"><span class="num">#4</span><div class="stmt">Knowledge worth keeping must be externalized.</div></div>
+        <div class="card"><span class="num">#5</span><div class="stmt">Tools — including AI — are collaborators to interrogate.</div></div>
+      </div>
+
+      <h2><span class="num">§ C</span> Today's run-of-show</h2>
+      <ol class="agenda">
+        <li><span class="step">§ 00</span><span class="clock">+0 → +10</span><span class="title-cell">Roll call · what's in your vault</span><span class="dur">10 min</span></li>
+        <li><span class="step">§ 01</span><span class="clock">+10 → +15</span><span class="title-cell">Cold open · the Week-1 student is now you</span><span class="dur">5 min</span></li>
+        <li><span class="step">§ 02</span><span class="clock">+15 → +30</span><span class="title-cell">Demo round 1 · pairs</span><span class="dur">15 min</span></li>
+        <li><span class="step">§ 03</span><span class="clock">+30 → +50</span><span class="title-cell">Demo round 2 · table of 4</span><span class="dur">20 min</span></li>
+        <li><span class="step">§ 04</span><span class="clock">+50 → +65</span><span class="title-cell">Demo round 3 · open studio</span><span class="dur">15 min</span></li>
+        <li><span class="step">§ 05</span><span class="clock">+65 → +80</span><span class="title-cell">Reckoning · 5 Big Ideas pass-through</span><span class="dur">15 min</span></li>
+        <li><span class="step">§ 06</span><span class="clock">+80 → +90</span><span class="title-cell">Trajectory · what comes after</span><span class="dur">10 min</span></li>
+      </ol>
+
+      <div class="rationale">
+        <strong>Why this beats the usual final demo</strong>
+        Most capstones rehearse one performance. This one runs three demos with increasing audience size, so the v1 gets stress-tested live and students learn the difference between a demo to a partner, a table, and a room. The reckoning then forces the experience into the durable shape of the 5 Big Ideas — not "I had fun in this class," but "Big Idea #4 lives in my vault now."
+      </div>
+
+      <div class="footer-strip"><span>FINAL DEMO · 02 / 06</span><span>v2.0 · 2026</span></div>
+    </article>
+
+    <article class="page">
+      <div class="crumb">CSCI-Y100 · WEEK 08 · PRE-CLASS · 24 HOURS OUT</div>
+      <h1 style="font-size:48px;">Pre-class <em>checklist.</em></h1>
+
+      <p style="font-size:15px;line-height:1.55;">Final Demo runs on stagecraft. Hard stops, audience structure, and recording cadence are the load-bearing details.</p>
+
+      <h2><span class="num">§ D</span> Room + tech</h2>
+      <ul class="checklist">
+        <li>Room re-arrangement: studio mode for rounds 1–2, open-studio circulation for round 3. Confirm desks move.</li>
+        <li>Hard-stop signal: lights off-on, a bell, or a music change. Test it.</li>
+        <li>Each TA gets a phone or recorder. Aim for 30 sec per student of strongest demo moment.</li>
+        <li>Visible timer for each round (15 min · 20 min · 15 min).</li>
+        <li>Background music for round 3 only — open-studio energy needs ambient noise.</li>
+      </ul>
+
+      <h2><span class="num">§ E</span> Demo prep · the morning of</h2>
+      <ul class="checklist">
+        <li>Slack/Discord post: "Final demo is today. Bring v1 — whatever shape it's in. Bring your vault on your laptop."</li>
+        <li>Confirm with TAs the recording assignments. Each TA covers 5–8 students. Each demo gets 30 sec captured.</li>
+        <li>Optional: invite faculty observers for round 3 only. Round 1–2 needs cohort intimacy. Round 3 can take outsiders.</li>
+        <li>Prepare the "trust dial" prompt — the one from W6 AI Co-Pilot Camp. Students will re-rate it during the reckoning.</li>
+      </ul>
+
+      <h2><span class="num">§ F</span> Materials</h2>
+      <ul class="materials">
+        <li>Slides + speaker notes (`final-demo-slides.html`)</li>
+        <li>TILT rubric (`final-demo-tilt-rubric.html`)</li>
+        <li>5 Big Ideas reference card (printed, 1-pager, on every desk)</li>
+        <li>Trajectory worksheet (1-pager, printed — backup if vaults are flaky)</li>
+        <li>Hard-stop signal (bell or playlist)</li>
+        <li>TA recording phones/recorders + storage location for clips</li>
+      </ul>
+
+      <div class="footer-strip"><span>FINAL DEMO · 03 / 06</span><span>v2.0 · 2026</span></div>
+    </article>
+
+    <article class="page">
+      <div class="crumb">CSCI-Y100 · WEEK 08 · RUN OF SHOW · §§ 00–02</div>
+      <h1 style="font-size:48px;">Run of <em>show.</em> <span style="color:var(--ink-500);font-size:32px;">First half.</span></h1>
+
+      <div class="section-row">
+        <span class="num">§ 00</span>
+        <span class="ttl">Roll call · what's in your vault</span>
+        <span class="meta">10 MIN · OBSIDIAN OPEN · COUNT</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+0</span><span>OPEN — count the externalization</span></div>
+        <div class="script">Eight weeks ago you didn't have a vault. Today, you do. Open Obsidian. Count the notes in Weeks/. Count the bug logs. Count the sources. Count the reflections. Whatever the numbers are, those are real artifacts that you produced. The vault IS the warm-up — the externalization made visible.</div>
+        <h4>Do</h4>
+        <ul class="doit">
+          <li>Students open Obsidian. They count notes in each folder. They write the four numbers on the trajectory worksheet (or in their vault).</li>
+          <li>Spot-check three students aloud — read off their numbers. The point is not who has the most. The point is that the numbers exist at all.</li>
+        </ul>
+        <div class="watchfor">
+          <h4>Watch for</h4>
+          The student whose vault is mostly empty. They probably skipped the capture templates. Don't shame — sit with them, ask "what would you keep from the last 7 weeks if you had to pick three things?" Have them write three notes now. Better late than never.
+        </div>
+      </div>
+
+      <div class="section-row">
+        <span class="num">§ 01</span>
+        <span class="ttl">Cold open · the Week-1 student is now you</span>
+        <span class="meta">5 MIN · CLOSE THE LOOP</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+10</span><span>FRAME — bookend to Spawn Point</span></div>
+        <h4>Do</h4>
+        <ul class="doit">
+          <li>Slides 1–2: replay (or read aloud) the W1 cold open. The "Week-14 student in the back row" frame.</li>
+          <li>One question: "What would you tell the Week-1 you, sitting in this room eight weeks ago?" Wait. Let the silence work.</li>
+          <li>Hand to TAs: "We have three demo rounds in the next 50 minutes. Get ready to talk about what you made."</li>
+        </ul>
+      </div>
+
+      <div class="section-row">
+        <span class="num">§ 02</span>
+        <span class="ttl">Demo round 1 · pairs</span>
+        <span class="meta">15 MIN · 1:1 · LOWEST STAKES</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+15</span><span>SHOW — partner-to-partner, 5 min each direction</span></div>
+        <h4>Do</h4>
+        <ul class="doit">
+          <li>Pair up. Partner A demos for 5 min. Partner B asks one question, gives one observation. Switch.</li>
+          <li>Each demo narrates the trajectory in three sentences: seed (W1) → v0.1 (W4) → v1 (today).</li>
+          <li>TAs roam, recording 30 sec of each demo's strongest moment. Students don't need to know which moment.</li>
+        </ul>
+        <div class="watchfor">
+          <h4>Watch for</h4>
+          The student whose demo lives entirely on a slide deck. The constraint is "show the artifact." Slides are not the artifact. Open the actual code, the actual prototype, the actual document. If their v1 is broken, they show the broken state — that's still the artifact.
+        </div>
+      </div>
+
+      <div class="footer-strip"><span>FINAL DEMO · 04 / 06</span><span>v2.0 · 2026</span></div>
+    </article>
+
+    <article class="page">
+      <div class="crumb">CSCI-Y100 · WEEK 08 · RUN OF SHOW · §§ 03–06</div>
+      <h1 style="font-size:48px;">Run of <em>show.</em> <span style="color:var(--ink-500);font-size:32px;">Second half.</span></h1>
+
+      <div class="section-row">
+        <span class="num">§ 03</span>
+        <span class="ttl">Demo round 2 · table of 4</span>
+        <span class="meta">20 MIN · 4 STUDENTS · 3 MIN EACH</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+30</span><span>SCALE — same demo, bigger audience</span></div>
+        <h4>Do</h4>
+        <ul class="doit">
+          <li>Form tables of 4. Each student gets 3 min: 2 min demo, 1 min Q&amp;A.</li>
+          <li>Two observations from the table get written into each student's Bugs/ folder. Tables rotate the role of "scribe."</li>
+          <li>Hard-stop signal at 3 min. Use it. Without it, the round leaks 6 minutes per table and dies.</li>
+        </ul>
+        <div class="watchfor">
+          <h4>Watch for</h4>
+          The table where one student dominates and others recede. As facilitator, sit briefly at any table where this happens. The recede pattern is usually about confidence, not capacity — direct a question at the quiet student.
+        </div>
+      </div>
+
+      <div class="section-row">
+        <span class="num">§ 04</span>
+        <span class="ttl">Demo round 3 · open studio</span>
+        <span class="meta">15 MIN · ANYONE-CAN-VISIT · MUSIC ON</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+50</span><span>WALK — circulation, not performance</span></div>
+        <h4>Do</h4>
+        <ul class="doit">
+          <li>Music on. Students stand or sit at their stations. Anyone can visit anyone else's desk.</li>
+          <li>The strongest projects pull crowds. The quietest projects get focused attention from a TA. Both are correct outcomes.</li>
+          <li>If faculty observers are present, this is their round. Brief them: "Walk around, ask questions, no judgment delivered out loud."</li>
+        </ul>
+        <div class="watchfor">
+          <h4>Watch for</h4>
+          The student standing alone with no visitors after 5 min. Walk over. Bring two other students with you. Don't perform pity — ask a real question and let conversation start.
+        </div>
+      </div>
+
+      <div class="section-row">
+        <span class="num">§ 05</span>
+        <span class="ttl">Reckoning · 5 Big Ideas pass-through</span>
+        <span class="meta">15 MIN · SOLO · TO VAULT</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+65</span><span>WRITE — five lines, one per Big Idea</span></div>
+        <h4>Do</h4>
+        <ul class="doit">
+          <li>Slides 9–10: surface the 5 Big Ideas. Read each aloud.</li>
+          <li>Solo writing: one line per Big Idea, in Reflections/W08-reckoning.md. Each line references at least one note in their own vault by name (e.g., "[[Bugs/W05-bug-report]]").</li>
+          <li>Inside this section: re-record the W6 trust dial. The number probably moved. Why? One sentence in the AI Big Idea line.</li>
+        </ul>
+        <div class="watchfor">
+          <h4>Watch for</h4>
+          The student writing generic praise ("this class was great"). The reckoning is not a Yelp review. Redirect: "What specifically lives in your vault that wasn't there in W1?" Real lines reference real artifacts.
+        </div>
+      </div>
+
+      <div class="section-row">
+        <span class="num">§ 06</span>
+        <span class="ttl">Trajectory · what comes after</span>
+        <span class="meta">10 MIN · ONE PARAGRAPH · OPTIONAL POST</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+80</span><span>SHIP — what's the next thing</span></div>
+        <h4>Do</h4>
+        <ul class="doit">
+          <li>One paragraph: what's the next thing you're going to ship, and what habit from this course will get you there?</li>
+          <li>Save to Reflections/W08-trajectory.md.</li>
+          <li>Optional but encouraged: post to the cohort Discord/Slack. The trajectory is a public commitment when shared.</li>
+          <li>Run the final Export-your-work .txt. Drop into Canvas as the closing artifact.</li>
+        </ul>
+      </div>
+
+      <div class="footer-strip"><span>FINAL DEMO · 05 / 06</span><span>v2.0 · 2026</span></div>
+    </article>
+
+    <article class="page">
+      <div class="crumb">CSCI-Y100 · WEEK 08 · TROUBLESHOOTING + STUDENT HANDOUT</div>
+      <h1 style="font-size:48px;">When things <em>break.</em></h1>
+
+      <table class="trouble">
+        <thead>
+          <tr><th>Symptom</th><th>Most likely fix</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Student's v1 didn't ship — they're embarrassed</td>
+            <td>The reckoning works on a non-shipped project too. Sit with them: "What did your vault learn that your code didn't?" The non-shipped project still has externalization to show.</td>
+          </tr>
+          <tr>
+            <td>Student's vault is mostly empty</td>
+            <td>Don't shame. Ask "what would you keep from the last 7 weeks if you had to pick three things?" Write three notes now. Better late than never. Grade them on the reckoning's quality, not the vault's pre-existing depth.</td>
+          </tr>
+          <tr>
+            <td>Demo round 2 leaks 8 minutes</td>
+            <td>Without the hard-stop signal, every round dies. If you forgot the bell, use a sharp clap and a verbal "switch" cue. The signal matters more than the device.</td>
+          </tr>
+          <tr>
+            <td>One student is hogging the round 2 table</td>
+            <td>Sit at that table briefly. Direct a question at the quietest member. The shift is usually visible in 30 seconds.</td>
+          </tr>
+          <tr>
+            <td>Student's reckoning is generic Yelp-style praise</td>
+            <td>"This class was great" is not a reckoning. Redirect: "What specifically lives in your vault that wasn't there in W1?" If they can't answer, sit with them and walk through one Big Idea slowly.</td>
+          </tr>
+          <tr>
+            <td>Faculty observer asks aloud "is that all you built?"</td>
+            <td>Intercept gently. Round 3 is not a critique forum. Brief observers in advance — questions are welcome, judgment delivered out loud is not.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2><span class="num">§ G</span> Student handout · post on Canvas</h2>
+      <p style="font-size:15px;line-height:1.55;">A 1-page reference for after class. Suggested format below.</p>
+      <div class="runblock" style="background:var(--paper-100);">
+        <h3 style="margin-top:0;">Final Demo + Reckoning — what you walked out with</h3>
+        <ul class="materials" style="grid-template-columns:1fr;font-size:13.5px;">
+          <li><strong>v1 demo:</strong> recorded by ___ (TA) · clip stored at ___</li>
+          <li><strong>5 Big Ideas reckoning:</strong> Reflections/W08-reckoning.md · references ___ vault notes</li>
+          <li><strong>Trust dial:</strong> W6 score ___ · W8 score ___ · moved because ___</li>
+          <li><strong>Trajectory:</strong> the next thing I'm going to ship is ___ · the habit that will get me there is ___</li>
+          <li><strong>Final export .txt:</strong> dropped into Canvas at ___</li>
+        </ul>
+      </div>
+
+      <p style="margin-top:20px;font-size:13px;color:var(--ink-500);"><span class="pillbox">REMEMBER</span>The vault, the reckoning, and the trajectory are yours. They outlast the course. The most useful thing you can do in the next month is open the vault one more time and add a note about how W8 felt — because the gap between "what I thought I'd do" and "what I actually did" is the data your future self will need.</p>
+
+      <div class="footer-strip"><span>FINAL DEMO · 06 / 06</span><span>v2.0 · 2026</span></div>
+    </article>
+
+  </main>
+</body>
+</html>

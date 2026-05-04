@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spawn Point · Facilitator Guide · CSCI-Y100 Week 1</title>
+  <meta name="description" content="Facilitator guide for the 90-minute Spawn Point module: roll call, capability map, scavenger, prototype sprint. Run-of-show for Week 1." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    @page { size: letter; margin: 0.6in 0.7in; }
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+      --signal-purple-text: #5C418F;
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    html { font-size: 14px; }
+    body { margin: 0; background: var(--paper-200); color: var(--ink-900); font-family: var(--font-body); font-size: 14px; line-height: 1.55; }
+    .page { background: var(--paper-50); width: 8.5in; min-height: 11in; box-sizing: border-box; padding: 0.7in 0.75in; margin: 24px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.12); page-break-after: always; position: relative; }
+    .page:last-of-type { page-break-after: auto; }
+    @media print { body { background: #fff; } .page { margin: 0; padding: 0; box-shadow: none; width: auto; min-height: auto; } .no-print { display: none !important; } }
+    .toolbar { position: sticky; top: 0; z-index: 100; background: var(--ink-900); color: var(--paper-50); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em; }
+    .toolbar .label { color: var(--signal-amber); }
+    .toolbar button { background: var(--signal-amber); color: var(--ink-900); border: 0; padding: 8px 18px; font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.1em; cursor: pointer; border-radius: 4px; }
+    .toolbar button:hover { background: #f7c46a; }
+    .toolbar button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .skip-link { position: absolute; left: -9999px; top: 0; background: var(--ink-900); color: #fff; padding: 8px 14px; }
+    .skip-link:focus { left: 12px; top: 12px; z-index: 999; }
+
+    h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; }
+    h1 { font-size: 64px; line-height: 0.95; letter-spacing: -0.025em; margin: 0 0 18px; font-style: italic; }
+    h1 em { color: var(--crimson); }
+    h2 { font-size: 28px; line-height: 1.1; margin: 28px 0 12px; letter-spacing: -0.015em; font-style: italic; padding-bottom: 8px; border-bottom: 2px solid var(--ink-900); }
+    h2 .num { font-family: var(--font-mono); font-style: normal; font-size: 16px; color: var(--crimson); margin-right: 14px; letter-spacing: 0.1em; vertical-align: 5px; }
+    h3 { font-size: 18px; margin: 22px 0 8px; font-style: italic; }
+    h4 { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-500); margin: 18px 0 6px; }
+    p { margin: 0 0 10px; }
+    .crumb { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--ink-500); }
+    .footer-strip { position: absolute; bottom: 0.4in; left: 0.75in; right: 0.75in; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--ink-300); padding-top: 8px; border-top: 1px solid var(--paper-200); }
+
+    .cover { background: var(--paper-50); background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0); background-size: 22px 22px; display: flex; flex-direction: column; justify-content: space-between; }
+    .cover-head { display: flex; justify-content: space-between; align-items: flex-start; }
+    .cover-crest { width: 56px; height: 56px; background: var(--crimson); color: #fff; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 28px; display: inline-flex; align-items: center; justify-content: center; }
+    .cover h1 { font-size: 96px; }
+    .cover .lede { font-size: 22px; line-height: 1.4; max-width: 620px; color: var(--ink-700); margin-top: 12px; font-family: var(--font-display); font-style: italic; }
+    .cover-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 36px; padding-top: 36px; border-top: 2px solid var(--ink-900); max-width: 700px; }
+    .cover-meta dt { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 4px; }
+    .cover-meta dd { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 22px; font-weight: 600; }
+    .cover-stamp { display: inline-block; border: 2.5px solid var(--crimson); color: var(--crimson); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.18em; padding: 8px 14px; transform: rotate(-3deg); margin-bottom: 16px; }
+
+    .agenda { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .agenda li { display: grid; grid-template-columns: 64px 100px 1fr 60px; gap: 14px; align-items: baseline; padding: 10px 14px; background: var(--paper-100); border-left: 4px solid var(--ink-900); }
+    .agenda .step { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; color: var(--crimson); }
+    .agenda .clock { font-family: var(--font-mono); font-size: 12px; color: var(--ink-500); }
+    .agenda .title-cell { font-family: var(--font-display); font-style: italic; font-size: 18px; font-weight: 600; }
+    .agenda .dur { font-family: var(--font-mono); font-size: 12px; font-weight: 700; text-align: right; }
+
+    .runblock { page-break-inside: avoid; background: var(--paper-50); border: 1px solid var(--paper-200); padding: 16px 20px; margin: 16px 0; position: relative; }
+    .timestrip { display: flex; gap: 12px; align-items: center; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; color: var(--ink-500); margin-bottom: 4px; }
+    .timestrip .badge { background: var(--ink-900); color: var(--paper-50); padding: 3px 8px; border-radius: 3px; font-weight: 700; }
+    .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
+    .twocol h4 { margin-top: 0; }
+    .script { background: #fff; border-left: 3px solid var(--crimson); padding: 10px 14px; font-family: var(--font-display); font-style: italic; font-size: 14px; line-height: 1.5; color: var(--ink-900); margin: 6px 0; }
+    .script::before { content: '\201C'; font-size: 28px; line-height: 0; color: var(--crimson); margin-right: 4px; vertical-align: -8px; }
+    .doit { padding: 0; margin: 6px 0; list-style: none; }
+    .doit li { display: flex; align-items: baseline; gap: 10px; padding: 4px 0; border-bottom: 1px dashed var(--paper-200); }
+    .doit li:last-child { border-bottom: 0; }
+    .doit li::before { content: '\2610'; flex-shrink: 0; width: 22px; color: var(--ink-500); font-size: 18px; line-height: 1; }
+    .watchfor { background: var(--paper-100); border-top: 3px solid var(--signal-amber); padding: 10px 14px; margin-top: 10px; font-size: 13px; }
+    .watchfor h4 { margin-top: 0; color: var(--signal-amber-text); }
+    .materials { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 24px; margin: 10px 0; }
+    .materials li { list-style: none; padding-left: 22px; position: relative; font-size: 13px; }
+    .materials li::before { content: '\2713'; position: absolute; left: 0; top: 0; font-family: var(--font-mono); font-weight: 700; color: var(--signal-green-text); }
+    .trouble { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+    .trouble th, .trouble td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--paper-200); vertical-align: top; }
+    .trouble th { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; background: var(--paper-100); color: var(--ink-700); }
+    .trouble td:first-child { font-family: var(--font-display); font-style: italic; font-weight: 600; width: 38%; }
+    .rationale { border-top: 2px solid var(--ink-900); border-bottom: 2px solid var(--ink-900); padding: 14px 0; margin: 16px 0; font-family: var(--font-display); font-style: italic; font-size: 18px; line-height: 1.4; }
+    .rationale strong { font-style: normal; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; display: block; color: var(--crimson); margin-bottom: 6px; }
+    .tape-strip { position: absolute; top: 0.4in; right: 0.7in; transform: rotate(2deg); background: var(--signal-amber); padding: 4px 14px; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; }
+    .section-row { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: baseline; margin: 26px 0 10px; }
+    .section-row .num { font-family: var(--font-mono); font-weight: 700; font-size: 14px; letter-spacing: 0.1em; color: var(--crimson); }
+    .section-row .ttl { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 28px; padding-bottom: 6px; border-bottom: 2px solid var(--ink-900); }
+    .section-row .meta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); letter-spacing: 0.1em; }
+    .verb-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 10px 0; }
+    .verb-card { border: 2px solid var(--ink-900); padding: 8px 10px; }
+    .verb-card .vn { font-family: var(--font-mono); font-size: 9.5px; font-weight: 700; color: var(--ink-500); letter-spacing: 0.12em; }
+    .verb-card .vv { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 22px; line-height: 1; margin: 2px 0 4px; }
+    .verb-card .vt { font-size: 11px; line-height: 1.4; color: var(--ink-700); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to facilitator guide</a>
+  <div class="toolbar no-print" role="toolbar" aria-label="Document actions">
+    <span><span class="label">FACILITATOR GUIDE</span> &nbsp;·&nbsp; Spawn Point · 90 min</span>
+    <button type="button" onclick="window.print()" aria-label="Print this facilitator guide">PRINT / SAVE PDF</button>
+  </div>
+
+  <main id="main">
+
+    <article class="page cover" aria-labelledby="cover-title">
+      <div class="tape-strip" aria-hidden="true">FACILITATOR · KEEP HANDY</div>
+      <header class="cover-head">
+        <div><div class="cover-crest" aria-label="Indiana University">IU</div></div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 01 · v2.0</div>
+      </header>
+      <div>
+        <div class="cover-stamp">FACILITATOR GUIDE — ONE COPY PER INSTRUCTOR</div>
+        <h1 id="cover-title">Spawn<br /><em>Point.</em></h1>
+        <p class="lede">A 90-minute first-class session in the Creator Commons. Reframes "shop tour" as "capability map for your Week-14 project." Every student leaves with three artifacts and a rough seed for what they'll ship.</p>
+      </div>
+      <dl class="cover-meta">
+        <div><dt>DURATION</dt><dd>90 minutes (one class period)</dd></div>
+        <div><dt>STUDENTS</dt><dd>15–25 first-year, any major</dd></div>
+        <div><dt>LOCATION</dt><dd>Wells Library Creator Commons</dd></div>
+        <div><dt>DELIVERABLE #1</dt><dd>Capability map (30 pts)</dd></div>
+        <div><dt>DELIVERABLE #2</dt><dd>Cardboard prototype (40 pts)</dd></div>
+        <div><dt>DELIVERABLE #3</dt><dd>Project seed (30 pts)</dd></div>
+        <div><dt>POSTURE</dt><dd>"Verbs over tools."</dd></div>
+        <div><dt>PREREQUISITES</dt><dd>None. Bring a laptop.</dd></div>
+      </dl>
+      <footer class="footer-strip" aria-hidden="true"><span>SPAWN POINT · PG 1 / 6</span><span>FACILITATOR GUIDE · v2.0 · 2026</span></footer>
+    </article>
+
+    <article class="page" aria-labelledby="rat-h">
+      <p class="crumb">PAGE 2 · WHY &amp; WHEN</p>
+      <h2 id="rat-h"><span class="num">§ 01</span>Why this module exists</h2>
+      <p>The default Week 1 of an intro college course is a syllabus walk and a lecture about expectations. Students leave with anxiety, not capability. In a Luddy maker-rich environment, that's a particular waste — the room <em>itself</em> is the curriculum, and most students never figure that out until Week 8.</p>
+      <p>Spawn Point inverts this. Class meets in the Creator Commons. The first thing students do is post something they made before age 12 — proof that they're already makers. Then they meet 8 capabilities (not 8 machines), pick which ones their final project will need, and physically build a cardboard prototype before they leave. By the 90-minute mark, every student has used their hands, has an opinion about what they'll ship, and has booked time with one piece of equipment for the week.</p>
+      <div class="rationale">
+        <strong>THE ANCHOR CONCEPT</strong>
+        <em>Don't learn the tools. Learn the verbs.</em> Cut, print, stitch, press, cast, protect, capture, design. The verb is portable; the specific machine model isn't. A student who knows the 8 verbs can walk into any maker-space on the planet and find the equivalent tool.
+      </div>
+
+      <h2><span class="num">§ 02</span>Outcomes</h2>
+      <p>By the end of class, students will be able to:</p>
+      <ul style="font-size: 13px; line-height: 1.6;">
+        <li><strong>Name</strong> the 8 capabilities of the Creator Commons in their own words.</li>
+        <li><strong>Match</strong> at least three capabilities to a specific final-project idea of their own.</li>
+        <li><strong>Build</strong> a working cardboard prototype that solves a real problem they had this week.</li>
+        <li><strong>Reflect</strong> on what worked, what broke, and what they'd change with 30 more minutes.</li>
+        <li><strong>Commit</strong> to one piece of equipment they'll have hands on by the end of the week.</li>
+      </ul>
+
+      <h2><span class="num">§ 03</span>The 90-minute agenda</h2>
+      <ol class="agenda" aria-label="Class agenda">
+        <li><span class="step">00</span><span class="clock">00:00 — 00:12</span><span class="title-cell">Roll call — anonymous maker wall</span><span class="dur">12 min</span></li>
+        <li><span class="step">01</span><span class="clock">00:12 — 00:18</span><span class="title-cell">Cold open — Marcus, Priya, Jordan @ Week 14</span><span class="dur">6 min</span></li>
+        <li><span class="step">02</span><span class="clock">00:18 — 00:26</span><span class="title-cell">Capability map — the 8 verbs (anchor)</span><span class="dur">8 min</span></li>
+        <li><span class="step">03</span><span class="clock">00:26 — 00:46</span><span class="title-cell">Equipment scavenger — Deliverable #1</span><span class="dur">20 min</span></li>
+        <li><span class="step">04</span><span class="clock">00:46 — 01:16</span><span class="title-cell">Cardboard prototype sprint — Deliverable #2</span><span class="dur">30 min</span></li>
+        <li><span class="step">05</span><span class="clock">01:16 — 01:26</span><span class="title-cell">Project seed — Deliverable #3</span><span class="dur">10 min</span></li>
+        <li><span class="step">06</span><span class="clock">01:26 — 01:30</span><span class="title-cell">Take-home + closer</span><span class="dur">4 min</span></li>
+      </ol>
+      <footer class="footer-strip" aria-hidden="true"><span>SPAWN POINT · PG 2 / 6</span><span>FACILITATOR GUIDE · v2.0 · 2026</span></footer>
+    </article>
+
+    <article class="page" aria-labelledby="prep-h">
+      <p class="crumb">PAGE 3 · PREP &amp; OPENING</p>
+      <h2 id="prep-h"><span class="num">§ 04</span>Pre-class checklist (24 hrs out)</h2>
+      <ul class="materials" aria-label="Pre-class checklist">
+        <li>Confirm Creator Commons reservation. Class meets <em>in</em> the room, not a lecture hall.</li>
+        <li>Pre-cut cardboard stock — ~3 medium boxes' worth, broken flat. Stack on materials table.</li>
+        <li>Materials: scissors (10+), masking tape (4 rolls), hot-glue guns (3, plus glue sticks), Sharpies, rulers.</li>
+        <li>Walk the floor with the Commons staff lead. Confirm which equipment students may approach today (look-only OK).</li>
+        <li>Open the module page on the projector. Test the timer in §4.</li>
+        <li>Print 1× Capability Reference card per student (page 6 of this guide).</li>
+        <li>Have ONE personal "thing I made before 12" ready to share — yours, embarrassing, fine.</li>
+        <li>Glance at the equipment-booking page (iub.libcal.com/equipment?lid=8812) — confirm the URL still works.</li>
+      </ul>
+
+      <div class="section-row">
+        <div class="num">§ 05</div>
+        <div class="ttl">00 · Roll call — Maker Wall</div>
+        <div class="meta">12 MIN · 00:00 — 00:12 · SLIDES 02–03</div>
+      </div>
+
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">PHASE 1</span> 0:00 — 0:04 &nbsp;·&nbsp; SETUP + YOU GO FIRST</div>
+        <p class="script">You're in this room because someone decided you're a maker. You might be skeptical of that. Fair. So before we do anything else — let's prove it. Think back to before you turned 12. What did you make? Cardboard fort, friendship bracelet, slime, a Lego thing you ignored the instructions on. Anything physical. Type it in. Anonymous. The wall fills up.</p>
+        <ul class="doit">
+          <li>Project the Maker Wall. Type <em>your</em> answer first — model the embarrassment level.</li>
+          <li>Wait 2 minutes. Don't fill silence. Notes will start appearing.</li>
+          <li>If the wall stalls under 8 entries, click <em>+ examples</em> to seed it.</li>
+        </ul>
+      </div>
+
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">PHASE 2</span> 0:04 — 0:12 &nbsp;·&nbsp; READ + LAND</div>
+        <ul class="doit">
+          <li>Read 6–8 entries aloud. Don't editorialize. Let the room laugh.</li>
+          <li>Ask: <em>"Anyone surprised what showed up here?"</em> Take 1–2 reactions.</li>
+          <li>Land on the green callout: every entry on the wall = proof of making.</li>
+        </ul>
+        <p class="script">You're not learning to make. You already make. This semester just sharpens the toolkit. The cardboard you'll touch in 45 minutes is the same impulse — just with better glue.</p>
+        <div class="watchfor">
+          <h4>WATCH FOR · THE STUDENT WHO CAN'T THINK OF ANYTHING</h4>
+          <p style="margin: 0;">Almost always means they're filtering for "good enough to share." Whisper: <em>"Worst thing you ever made counts. Slime that ruined the carpet counts."</em> Reframe lowers the bar.</p>
+        </div>
+      </div>
+
+      <div class="section-row">
+        <div class="num">§ 06</div>
+        <div class="ttl">01 · Cold open</div>
+        <div class="meta">6 MIN · 00:12 — 00:18 · SLIDE 04</div>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">FULL 6 MIN</span> 0:12 — 0:18</div>
+        <ul class="doit">
+          <li>Click through Marcus → Priya → Jordan. Read each card aloud.</li>
+          <li>For Marcus: linger on "never set foot in the Creator Commons." That's the whole module.</li>
+          <li>For Priya and Jordan: name the verbs they used (3 each). Point to the room.</li>
+          <li>Land the punchline at the bottom of the section.</li>
+        </ul>
+        <p class="script">All three of these students are smart. None of them are unusual. The only thing that separates Marcus from the other two is when he figured out what this room could DO. He figured it out in Week 12. Priya and Jordan figured it out today. That's the only difference.</p>
+      </div>
+      <footer class="footer-strip" aria-hidden="true"><span>SPAWN POINT · PG 3 / 6</span><span>FACILITATOR GUIDE · v2.0 · 2026</span></footer>
+    </article>
+
+    <article class="page">
+      <p class="crumb">PAGE 4 · ANCHOR + DELIVERABLE 1</p>
+
+      <div class="section-row">
+        <div class="num">§ 07</div>
+        <div class="ttl">02 · Capability map — the 8 verbs</div>
+        <div class="meta">8 MIN · 00:18 — 00:26 · SLIDE 05 · ANCHOR</div>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">ANCHOR</span> 0:18 — 0:26 &nbsp;·&nbsp; THE SPINE OF THE MODULE</div>
+        <p>Don't list all 8 in a row — that becomes a tour. Walk the room as you go. Point at each tool while you say its verb.</p>
+        <div class="verb-grid">
+          <div class="verb-card"><div class="vn">01 · CUT</div><div class="vv">CUT</div><div class="vt">Vinyl, cardboard, paper into shapes from a digital file.</div></div>
+          <div class="verb-card"><div class="vn">02 · 3DP</div><div class="vv">PRINT</div><div class="vt">Solid plastic objects, layer-by-layer, from a 3D model.</div></div>
+          <div class="verb-card"><div class="vn">03 · SEW</div><div class="vv">STITCH</div><div class="vt">Soft goods. Sewing machine + serger.</div></div>
+          <div class="verb-card"><div class="vn">04 · PRSS</div><div class="vv">PRESS</div><div class="vt">Heat-bond vinyl/sublimation onto fabric or hard surfaces.</div></div>
+          <div class="verb-card"><div class="vn">05 · RES</div><div class="vv">CAST</div><div class="vt">High-detail resin parts. Smaller, smoother, harder.</div></div>
+          <div class="verb-card"><div class="vn">06 · LAM</div><div class="vv">PROTECT</div><div class="vt">Laminator. Demo prototypes that survive a backpack.</div></div>
+          <div class="verb-card"><div class="vn">07 · CAM</div><div class="vv">CAPTURE</div><div class="vt">~40 cameras. Photo, video, 3D-scan equipment.</div></div>
+          <div class="verb-card"><div class="vn">08 · SW</div><div class="vv">SOFTWARE</div><div class="vt">Tinkercad, Silhouette Studio, Adobe (free for IU).</div></div>
+        </div>
+        <p class="script">Pick the verb first, then the tool follows. If you walk in saying "I want to use the 3D printer," you'll force a project around the printer. If you walk in saying "I want to PRINT something" — well, now you have options. Including "this isn't a printing problem; it's a stitching one."</p>
+        <div class="watchfor">
+          <h4>WRITE ON THE BOARD</h4>
+          <p style="margin: 0;"><em>"Verbs over tools."</em> Repeat this phrase every time a student names a machine in the next 90 minutes.</p>
+        </div>
+      </div>
+
+      <div class="section-row">
+        <div class="num">§ 08</div>
+        <div class="ttl">03 · Equipment scavenger — Deliverable #1</div>
+        <div class="meta">20 MIN · 00:26 — 00:46 · SLIDE 06 · 30 PTS</div>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">QUIET WORK</span> 0:26 — 0:46 &nbsp;·&nbsp; WALK THE ROOM</div>
+        <div class="twocol">
+          <div>
+            <h4>SETUP (FIRST 3 MIN)</h4>
+            <ul class="doit">
+              <li>Have everyone open the module page on their laptop. Confirm the Scavenger section auto-saves.</li>
+              <li>Read the brief: <em>"For each tool, name a real object you'd make for your final project."</em></li>
+              <li>Stress: <em>specific</em> beats clever. "A phone stand" beats "something cool."</li>
+            </ul>
+          </div>
+          <div>
+            <h4>WHILE THEY WORK (17 MIN)</h4>
+            <ul class="doit">
+              <li>Walk a slow loop. Point at each piece of physical equipment as students reach it.</li>
+              <li>Stuck student? Ask: <em>"What thing has annoyed you in the last 7 days?"</em> That's the seed.</li>
+              <li>Encourage students to walk over and touch the equipment as they fill it in.</li>
+              <li>At 0:42 — 4-min warning, encourage rating each tool (must / maybe / no).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="watchfor">
+          <h4>COMMON STUCK POINT · "I CAN'T THINK OF ANYTHING FOR THIS TOOL"</h4>
+          <p style="margin: 0;">That's a valid answer — rate it "no." The point is not to use everything; it's to know what's <em>possible</em>. A student with 3 must-haves and 5 nos has done excellent thinking.</p>
+        </div>
+      </div>
+      <footer class="footer-strip" aria-hidden="true"><span>SPAWN POINT · PG 4 / 6</span><span>FACILITATOR GUIDE · v2.0 · 2026</span></footer>
+    </article>
+
+    <article class="page">
+      <p class="crumb">PAGE 5 · BUILD + SEED + CLOSE</p>
+
+      <div class="section-row">
+        <div class="num">§ 09</div>
+        <div class="ttl">04 · Cardboard prototype sprint — Deliverable #2</div>
+        <div class="meta">30 MIN · 00:46 — 01:16 · SLIDE 07 · 40 PTS</div>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">HANDS ON</span> 0:46 — 1:16 &nbsp;·&nbsp; THIS IS THE WHOLE MODULE</div>
+        <p>Four phases: Pick (3) → Sketch (5) → Build (18) → Photo + Reflect (4). The in-page timer enforces this. Don't let the build phase eat the photo phase — the reflection IS the deliverable.</p>
+        <div class="twocol">
+          <div>
+            <h4>PHASE 1 · PICK (3 min)</h4>
+            <ul class="doit">
+              <li>Read the prompt aloud. Stress: tiny problems are better than big ones.</li>
+              <li>If 30%+ of the room is staring blank at 1:30 in, click "Stuck? Pick one of these" and read 3 seed problems aloud.</li>
+            </ul>
+            <h4>PHASE 2 · SKETCH (5 min)</h4>
+            <ul class="doit">
+              <li>Paper is fine. Tinkercad is fine. Whatever's faster.</li>
+              <li>Don't let students spend 4 of these 5 minutes "perfecting" the sketch.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>PHASE 3 · BUILD (18 min)</h4>
+            <ul class="doit">
+              <li>Get them up. "Stand up, walk to the materials table, grab cardboard."</li>
+              <li>Move physically — body language tells students it's OK to leave the chair.</li>
+              <li>If a student stalls 5 min in: <em>"What's the worst possible version of this? Make that. We'll iterate."</em></li>
+              <li>At 1:11 — 5-min warning. Stop building, take photos.</li>
+            </ul>
+            <h4>PHASE 4 · PHOTO + REFLECT (4 min)</h4>
+            <ul class="doit">
+              <li>Phone photos to themselves. The reflection (worked / broke / next) is the graded part.</li>
+              <li>Ask 1–2 students to hold up their thing as they read their reflection.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="script">Senior designers prototype in cardboard their entire careers. Not because they can't afford 3D printers — because cardboard is the fastest way to find out if your idea is dumb. Better to find out in 18 minutes than after a 6-hour Bambu print.</p>
+        <div class="watchfor">
+          <h4>SAFETY · CARDBOARD ONLY TODAY</h4>
+          <p style="margin: 0;">Today is cardboard, scissors, tape, hot glue. Students should NOT touch the powered cutters, presses, or printers in this session — even if their idea "needs" the ChompSaw. The point is fast iteration, not the final material. Wait until Week 2 (powered-tool orientation).</p>
+        </div>
+      </div>
+
+      <div class="section-row">
+        <div class="num">§ 10</div>
+        <div class="ttl">05 · Project seed — Deliverable #3</div>
+        <div class="meta">10 MIN · 01:16 — 01:26 · SLIDE 08 · 30 PTS</div>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">QUIET WORK</span> 1:16 — 1:26</div>
+        <ul class="doit">
+          <li>Section auto-pulls students' "must-have" capabilities from §3 — point that out.</li>
+          <li>Read the 4 prompts: WHO / WHAT problem / WHICH 2–3 capabilities / WHAT'S THE ROUGH SHAPE.</li>
+          <li>Stress: this is a <em>seed</em>, not an answer. They'll iterate it for 14 weeks.</li>
+          <li>Last 2 min: ask 2–3 students to read their seed aloud. Celebrate specificity.</li>
+        </ul>
+        <p class="script">If you can't answer 'who is it for' with a real human in mind, your project will drift. 'College students' isn't a who. 'My roommate Devon' is.</p>
+      </div>
+
+      <div class="section-row">
+        <div class="num">§ 11</div>
+        <div class="ttl">06 · Take-home + closer</div>
+        <div class="meta">4 MIN · 01:26 — 01:30 · SLIDE 09</div>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">CLOSE</span> 1:26 — 1:30</div>
+        <ul class="doit">
+          <li>Show the 3 take-homes: install software · book one piece of equipment · post photo + reflection.</li>
+          <li>The booking is the heart of it — physical commitment beats abstract intention.</li>
+          <li>Read the closer aloud. Don't soften it.</li>
+        </ul>
+        <p class="script">Welcome to Luddy. The toolbox is open. You know what the verbs are. By Friday you'll have used at least one. By Week 14, you'll have shipped something nobody else has ever made.</p>
+        <h4>COMMON Q&amp;A — BE READY</h4>
+        <table class="trouble">
+          <thead><tr><th>Question</th><th>Honest answer</th></tr></thead>
+          <tbody>
+            <tr><td>"What if I'm not a CS major?"</td><td>Even better. The toolbox doesn't care. Half of last year's standout final projects came from students who picked up CS as a minor.</td></tr>
+            <tr><td>"Do I have to use 3D printing?"</td><td>No. Jordan's board game didn't. Knowing what NOT to use is the same skill.</td></tr>
+            <tr><td>"My idea is dumb."</td><td>Right now, every idea is. That's why it's a seed. By Week 6 it'll be your fifth one and you'll know which one's real.</td></tr>
+            <tr><td>"What if I don't have a problem to prototype today?"</td><td>You do. Look around your dorm. Something annoyed you yesterday. Pick that.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <footer class="footer-strip" aria-hidden="true"><span>SPAWN POINT · PG 5 / 6</span><span>FACILITATOR GUIDE · v2.0 · 2026</span></footer>
+    </article>
+
+    <article class="page" aria-labelledby="handout-h">
+      <p class="crumb">PAGE 6 · STUDENT HANDOUT — PRINT 1 PER STUDENT</p>
+      <h1 id="handout-h" style="font-size: 48px; margin-bottom: 6px;">Capability <em>Reference.</em></h1>
+      <p style="font-size: 14px; color: var(--ink-700); margin-bottom: 18px;">Pin this above your desk. Carry it in your laptop sleeve. Every time you walk into the Creator Commons, ask which <em>verb</em> you came for — not which machine.</p>
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 14px 0;">
+        <div style="border: 2px solid var(--signal-red-text); padding: 10px 12px;">
+          <div style="font-family: var(--font-mono); font-size: 10px; color: var(--signal-red-text); letter-spacing: 0.12em; font-weight: 700;">01 · CUT</div>
+          <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; font-style: italic; line-height: 1; margin: 2px 0 6px;">CUT</div>
+          <div style="font-family: var(--font-mono); font-size: 10.5px; line-height: 1.5;"><strong>Tools:</strong> Silhouette Cameo 5 · ChompSaw<br /><strong>Verbs it gives you:</strong> stickers, stencils, packaging, cardboard models, signage</div>
+        </div>
+        <div style="border: 2px solid var(--signal-amber-text); padding: 10px 12px;">
+          <div style="font-family: var(--font-mono); font-size: 10px; color: var(--signal-amber-text); letter-spacing: 0.12em; font-weight: 700;">02 · 3DP</div>
+          <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; font-style: italic; line-height: 1; margin: 2px 0 6px;">PRINT</div>
+          <div style="font-family: var(--font-mono); font-size: 10.5px; line-height: 1.5;"><strong>Tools:</strong> Bambu Lab X1E (FDM) · Elegoo Saturn (resin)<br /><strong>Verbs it gives you:</strong> mounts, brackets, tactile prototypes, enclosures, jewelry</div>
+        </div>
+        <div style="border: 2px solid var(--signal-green-text); padding: 10px 12px;">
+          <div style="font-family: var(--font-mono); font-size: 10px; color: var(--signal-green-text); letter-spacing: 0.12em; font-weight: 700;">03 · SEW</div>
+          <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; font-style: italic; line-height: 1; margin: 2px 0 6px;">STITCH</div>
+          <div style="font-family: var(--font-mono); font-size: 10.5px; line-height: 1.5;"><strong>Tools:</strong> Bernina B325 · L450 Serger<br /><strong>Verbs it gives you:</strong> wearables, cushioning, fabric enclosures, soft prototypes</div>
+        </div>
+        <div style="border: 2px solid var(--signal-blue-text); padding: 10px 12px;">
+          <div style="font-family: var(--font-mono); font-size: 10px; color: var(--signal-blue-text); letter-spacing: 0.12em; font-weight: 700;">04 · PRSS</div>
+          <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; font-style: italic; line-height: 1; margin: 2px 0 6px;">PRESS</div>
+          <div style="font-family: var(--font-mono); font-size: 10.5px; line-height: 1.5;"><strong>Tools:</strong> HTVRONT Heat Press<br /><strong>Verbs it gives you:</strong> branded apparel, custom signage, demo-day team merch</div>
+        </div>
+        <div style="border: 2px solid var(--signal-purple-text); padding: 10px 12px;">
+          <div style="font-family: var(--font-mono); font-size: 10px; color: var(--signal-purple-text); letter-spacing: 0.12em; font-weight: 700;">05 · RES</div>
+          <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; font-style: italic; line-height: 1; margin: 2px 0 6px;">CAST</div>
+          <div style="font-family: var(--font-mono); font-size: 10.5px; line-height: 1.5;"><strong>Tools:</strong> Elegoo Saturn 4 (resin) · mold-making<br /><strong>Verbs it gives you:</strong> figurines, jewelry, ultra-detailed prototypes</div>
+        </div>
+        <div style="border: 2px solid #3F7EA8; padding: 10px 12px;">
+          <div style="font-family: var(--font-mono); font-size: 10px; color: #3F7EA8; letter-spacing: 0.12em; font-weight: 700;">06 · LAM</div>
+          <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; font-style: italic; line-height: 1; margin: 2px 0 6px;">PROTECT</div>
+          <div style="font-family: var(--font-mono); font-size: 10.5px; line-height: 1.5;"><strong>Tools:</strong> Laminator<br /><strong>Verbs it gives you:</strong> field-test cards, game pieces, demo signage that survives a backpack</div>
+        </div>
+        <div style="border: 2px solid #C44C7E; padding: 10px 12px;">
+          <div style="font-family: var(--font-mono); font-size: 10px; color: #C44C7E; letter-spacing: 0.12em; font-weight: 700;">07 · CAM</div>
+          <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; font-style: italic; line-height: 1; margin: 2px 0 6px;">CAPTURE</div>
+          <div style="font-family: var(--font-mono); font-size: 10.5px; line-height: 1.5;"><strong>Tools:</strong> ~40 cameras · VR/3D-scan rig<br /><strong>Verbs it gives you:</strong> demo videos, user-test footage, scan-to-print pipelines</div>
+        </div>
+        <div style="border: 2px solid var(--ink-900); padding: 10px 12px;">
+          <div style="font-family: var(--font-mono); font-size: 10px; color: var(--ink-900); letter-spacing: 0.12em; font-weight: 700;">08 · SW</div>
+          <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; font-style: italic; line-height: 1; margin: 2px 0 6px;">DESIGN</div>
+          <div style="font-family: var(--font-mono); font-size: 10.5px; line-height: 1.5;"><strong>Tools:</strong> Tinkercad · Silhouette Studio · Adobe (IU SSO)<br /><strong>Verbs it gives you:</strong> drives every other tool. Install all three this week.</div>
+        </div>
+      </div>
+
+      <h4>BOOKING URL · BOOKMARK NOW</h4>
+      <p style="font-family: var(--font-mono); font-size: 13px; padding: 8px 12px; background: var(--paper-100); border: 1px dashed var(--ink-900); margin: 4px 0 14px;">iub.libcal.com/equipment?lid=8812</p>
+
+      <h4>3 THINGS DUE BY SUNDAY NIGHT</h4>
+      <ol style="font-size: 13px; line-height: 1.7; padding-left: 22px; margin: 6px 0 14px;">
+        <li>Free accounts: Tinkercad · Silhouette Studio · Adobe (via IU SSO).</li>
+        <li>Book one 30-min equipment slot. The reservation is the deliverable.</li>
+        <li>Post your cardboard prototype photo + 3-line reflection (worked / broke / next) to Canvas.</li>
+      </ol>
+
+      <p style="font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--ink-700); border-top: 2px solid var(--ink-900); padding-top: 12px; margin-top: 8px;">Verbs over tools. The toolbox is open. By Week 14 you'll have shipped something nobody else has ever made.</p>
+
+      <footer class="footer-strip" aria-hidden="true"><span>SPAWN POINT · PG 6 / 6 · STUDENT HANDOUT</span><span>FACILITATOR GUIDE · v2.0 · 2026</span></footer>
+    </article>
+
+  </main>
+</body>
+</html>

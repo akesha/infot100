@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Honest Start · Facilitator Guide · CSCI-Y100 Week 7</title>
+  <meta name="description" content="Facilitator guide for the 90-minute Honest Start module on procrastination: triggers, start-bad runs, autopsy. Run-of-show for Week 7." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    @page { size: letter; margin: 0.6in 0.7in; }
+
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    html { font-size: 14px; }
+    body { margin: 0; background: var(--paper-200); color: var(--ink-900); font-family: var(--font-body); font-size: 14px; line-height: 1.55; }
+
+    .page {
+      background: var(--paper-50); width: 8.5in; min-height: 11in;
+      box-sizing: border-box; padding: 0.7in 0.75in;
+      margin: 24px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      page-break-after: always; position: relative;
+    }
+    .page:last-of-type { page-break-after: auto; }
+
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; padding: 0; box-shadow: none; width: auto; min-height: auto; }
+      .no-print { display: none !important; }
+    }
+
+    .toolbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink-900); color: var(--paper-50);
+      padding: 12px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em;
+    }
+    .toolbar .label { color: var(--signal-amber); }
+    .toolbar button {
+      background: var(--signal-amber); color: var(--ink-900);
+      border: 0; padding: 8px 18px;
+      font-family: var(--font-mono); font-weight: 700;
+      letter-spacing: 0.1em; cursor: pointer; border-radius: 4px;
+    }
+    .toolbar button:hover { background: #f7c46a; }
+    .toolbar button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .skip-link { position: absolute; left: -9999px; top: 0; background: var(--ink-900); color: #fff; padding: 8px 14px; }
+    .skip-link:focus { left: 12px; top: 12px; z-index: 999; }
+
+    h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; }
+    h1 { font-size: 64px; line-height: 0.95; letter-spacing: -0.025em; margin: 0 0 18px; font-style: italic; }
+    h1 em { color: var(--crimson); }
+    h2 {
+      font-size: 28px; line-height: 1.1; margin: 28px 0 12px;
+      letter-spacing: -0.015em; font-style: italic;
+      padding-bottom: 8px; border-bottom: 2px solid var(--ink-900);
+    }
+    h2 .num { font-family: var(--font-mono); font-style: normal; font-size: 16px; color: var(--crimson); margin-right: 14px; letter-spacing: 0.1em; vertical-align: 5px; }
+    h3 { font-size: 18px; margin: 22px 0 8px; font-style: italic; }
+    h4 { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-500); margin: 18px 0 6px; }
+    p { margin: 0 0 10px; }
+
+    .crumb { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--ink-500); }
+    .footer-strip {
+      position: absolute; bottom: 0.4in; left: 0.75in; right: 0.75in;
+      display: flex; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--ink-300);
+      padding-top: 8px; border-top: 1px solid var(--paper-200);
+    }
+
+    .cover {
+      background: var(--paper-50);
+      background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0);
+      background-size: 22px 22px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .cover-head { display: flex; justify-content: space-between; align-items: flex-start; }
+    .cover-crest {
+      width: 56px; height: 56px; background: var(--crimson); color: #fff;
+      font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 28px;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .cover h1 { font-size: 96px; }
+    .cover .lede { font-size: 22px; line-height: 1.4; max-width: 620px; color: var(--ink-700); margin-top: 12px; font-family: var(--font-display); font-style: italic; }
+    .cover-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 36px; padding-top: 36px; border-top: 2px solid var(--ink-900); max-width: 700px; }
+    .cover-meta dt { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 4px; }
+    .cover-meta dd { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 22px; font-weight: 600; }
+    .cover-stamp {
+      display: inline-block; border: 2.5px solid var(--crimson);
+      color: var(--crimson); font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      padding: 8px 14px; transform: rotate(-3deg); margin-bottom: 16px;
+    }
+
+    .agenda { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .agenda li { display: grid; grid-template-columns: 64px 100px 1fr 60px; gap: 14px; align-items: baseline; padding: 10px 14px; background: var(--paper-100); border-left: 4px solid var(--ink-900); }
+    .agenda li.break { background: var(--terminal-900); color: var(--paper-50); border-left-color: var(--signal-amber); }
+    .agenda .step { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; color: var(--crimson); }
+    .agenda li.break .step { color: var(--signal-amber); }
+    .agenda .clock { font-family: var(--font-mono); font-size: 12px; color: var(--ink-500); }
+    .agenda li.break .clock { color: var(--paper-300); }
+    .agenda .title-cell { font-family: var(--font-display); font-style: italic; font-size: 18px; font-weight: 600; }
+    .agenda .dur { font-family: var(--font-mono); font-size: 12px; font-weight: 700; text-align: right; }
+
+    .runblock { page-break-inside: avoid; background: var(--paper-50); border: 1px solid var(--paper-200); padding: 16px 20px; margin: 16px 0; position: relative; }
+    .runblock.break { background: var(--terminal-900); color: var(--paper-50); border-color: var(--terminal-500); }
+    .runblock.break h3 { color: var(--paper-50); }
+    .runblock.break h4 { color: var(--signal-amber); }
+
+    .timestrip { display: flex; gap: 12px; align-items: center; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; color: var(--ink-500); margin-bottom: 4px; }
+    .timestrip .badge { background: var(--ink-900); color: var(--paper-50); padding: 3px 8px; border-radius: 3px; font-weight: 700; }
+    .runblock.break .timestrip { color: var(--paper-300); }
+    .runblock.break .timestrip .badge { background: var(--signal-amber); color: var(--ink-900); }
+
+    .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
+    .twocol h4 { margin-top: 0; }
+
+    .script {
+      background: #fff; border-left: 3px solid var(--crimson);
+      padding: 10px 14px; font-family: var(--font-display);
+      font-style: italic; font-size: 14px; line-height: 1.5;
+      color: var(--ink-900); margin: 6px 0;
+    }
+    .runblock.break .script { background: rgba(255,255,255,0.05); border-left-color: var(--signal-amber); color: var(--paper-50); }
+    .script::before { content: '\201C'; font-size: 28px; line-height: 0; color: var(--crimson); margin-right: 4px; vertical-align: -8px; }
+
+    .doit { padding: 0; margin: 6px 0; list-style: none; }
+    .doit li { display: flex; align-items: baseline; gap: 10px; padding: 4px 0; border-bottom: 1px dashed var(--paper-200); }
+    .doit li:last-child { border-bottom: 0; }
+    .doit li::before { content: '\2610'; flex-shrink: 0; width: 22px; color: var(--ink-500); font-size: 18px; line-height: 1; }
+    .runblock.break .doit li { border-bottom-color: var(--terminal-500); }
+    .runblock.break .doit li::before { color: var(--signal-amber); }
+
+    .watchfor { background: var(--paper-100); border-top: 3px solid var(--signal-amber); padding: 10px 14px; margin-top: 10px; font-size: 13px; }
+    .watchfor h4 { margin-top: 0; color: var(--signal-amber-text); }
+    .runblock.break .watchfor { background: rgba(232,169,59,0.10); border-top-color: var(--signal-amber); }
+
+    .materials { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 24px; margin: 10px 0; }
+    .materials li { list-style: none; padding-left: 22px; position: relative; font-size: 13px; }
+    .materials li::before { content: '\2713'; position: absolute; left: 0; top: 0; font-family: var(--font-mono); font-weight: 700; color: var(--signal-green-text); }
+
+    .trouble { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+    .trouble th, .trouble td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--paper-200); vertical-align: top; }
+    .trouble th { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; background: var(--paper-100); color: var(--ink-700); }
+    .trouble td:first-child { font-family: var(--font-display); font-style: italic; font-weight: 600; width: 38%; }
+
+    .rationale {
+      border-top: 2px solid var(--ink-900); border-bottom: 2px solid var(--ink-900);
+      padding: 14px 0; margin: 16px 0;
+      font-family: var(--font-display); font-style: italic; font-size: 18px; line-height: 1.4;
+    }
+    .rationale strong { font-style: normal; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; display: block; color: var(--crimson); margin-bottom: 6px; }
+
+    .tape-strip { position: absolute; top: 0.4in; right: 0.7in; transform: rotate(2deg); background: var(--signal-amber); padding: 4px 14px; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; }
+
+    .handout-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 14px 0; }
+    .axis-card { border: 2px solid var(--ink-900); padding: 12px 14px; }
+    .axis-card .axis-name { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 24px; line-height: 1; margin-bottom: 4px; }
+    .axis-card .axis-q { font-size: 13px; line-height: 1.4; margin-bottom: 12px; }
+    .axis-card .lever-fix { font-family: var(--font-mono); font-size: 11px; line-height: 1.55; color: var(--ink-700); }
+    .axis-card .lever-fix strong { color: var(--ink-900); }
+
+    .section-row { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: baseline; margin: 26px 0 10px; }
+    .section-row .num { font-family: var(--font-mono); font-weight: 700; font-size: 14px; letter-spacing: 0.1em; color: var(--crimson); }
+    .section-row .ttl { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 28px; padding-bottom: 6px; border-bottom: 2px solid var(--ink-900); }
+    .section-row .meta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); letter-spacing: 0.1em; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to facilitator guide</a>
+
+  <div class="toolbar no-print" role="toolbar" aria-label="Document actions">
+    <span><span class="label">FACILITATOR GUIDE</span> &nbsp;·&nbsp; The Honest Start · 90 min</span>
+    <button type="button" onclick="window.print()" aria-label="Print this facilitator guide">PRINT / SAVE PDF</button>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ PAGE 1 — COVER ============ -->
+    <article class="page cover" aria-labelledby="cover-title">
+      <div class="tape-strip" aria-hidden="true">FACILITATOR · KEEP HANDY</div>
+
+      <header class="cover-head">
+        <div><div class="cover-crest" aria-label="Indiana University">IU</div></div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 07 · v2.0</div>
+      </header>
+
+      <div>
+        <div class="cover-stamp">FACILITATOR GUIDE — ONE COPY PER INSTRUCTOR</div>
+        <h1 id="cover-title">The Honest<br /><em>Start.</em></h1>
+        <p class="lede">A 90-minute working session on motivation and procrastination. Names the four triggers (ambiguity, fear, boredom, exhaustion) and gives every student a written diagnosis and a 25-min ritual they'll actually run.</p>
+      </div>
+
+      <dl class="cover-meta">
+        <div><dt>DURATION</dt><dd>90 minutes (one class period)</dd></div>
+        <div><dt>STUDENTS</dt><dd>15–25 first-year, any major</dd></div>
+        <div><dt>DELIVERABLE #1</dt><dd>Procrastination Autopsy (40 pts)</dd></div>
+        <div><dt>DELIVERABLE #2</dt><dd>Motivation Stack (40 pts)</dd></div>
+        <div><dt>POSTURE</dt><dd>"Compassion in. Action out."</dd></div>
+        <div><dt>PREREQUISITES</dt><dd>None. Bring a real moment from the last 7 days.</dd></div>
+      </dl>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>THE HONEST START · PG 1 / 6</span>
+        <span>FACILITATOR GUIDE · v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 2 — RATIONALE + AGENDA ============ -->
+    <article class="page" aria-labelledby="rat-h">
+      <p class="crumb">PAGE 2 · WHY &amp; WHEN</p>
+
+      <h2 id="rat-h"><span class="num">§ 01</span>Why this module exists</h2>
+      <p>Procrastination is the single most common reason first-years tank a course they're capable of acing. The standard advice — "just start," "use a planner," "Pomodoro" — fails because it treats <em>all</em> procrastination as one thing. It isn't. Avoiding a paper because you don't have a thesis is not the same problem as avoiding it because you're terrified of being judged. The fixes are different. Conflating them is why students keep failing the same advice.</p>
+
+      <p>This module separates the four triggers, gives students a forensic tool to diagnose their own moment, and pairs the diagnosis with the only universal cure: a deliberately bad first attempt. They leave with two artifacts and an accountability partner.</p>
+
+      <div class="rationale">
+        <strong>THE ANCHOR CONCEPT</strong>
+        <em>Procrastination is data.</em> The trigger tells you the fix. Ambiguity → make it tiny. Fear → lower the stakes of step one. Boredom → add structure or stakes. Exhaustion → stop and rest. Same surface, different fuel.
+      </div>
+
+      <h2><span class="num">§ 02</span>Outcomes</h2>
+      <p>By the end of class, students will be able to:</p>
+      <ul style="font-size: 13px; line-height: 1.6;">
+        <li><strong>Name</strong> the four triggers in their own words and recognize each one in a real example.</li>
+        <li><strong>Diagnose</strong> a specific recent moment of avoidance — not generalize ("I procrastinate") but locate it in time and underneath.</li>
+        <li><strong>Practice</strong> the bad-first-attempt technique on a real assignment, in 90 seconds, in class.</li>
+        <li><strong>Identify</strong> their personal autonomy / mastery / purpose levers and design one 25-min ritual that uses all three.</li>
+        <li><strong>Commit</strong> to a tiny step due tonight, with a partner who will text them.</li>
+      </ul>
+
+      <h2><span class="num">§ 03</span>The 90-minute agenda</h2>
+      <ol class="agenda" aria-label="Class agenda">
+        <li><span class="step">00</span><span class="clock">00:00 — 00:10</span><span class="title-cell">Avoidance Wall — anonymous live tally</span><span class="dur">10 min</span></li>
+        <li><span class="step">01</span><span class="clock">00:10 — 00:15</span><span class="title-cell">Cold open — Maya, Devon, Priya</span><span class="dur">5 min</span></li>
+        <li><span class="step">02</span><span class="clock">00:15 — 00:23</span><span class="title-cell">The 4 Triggers (anchor concept)</span><span class="dur">8 min</span></li>
+        <li><span class="step">03</span><span class="clock">00:23 — 00:35</span><span class="title-cell">Start Bad on Purpose — 90-second live drill</span><span class="dur">12 min</span></li>
+        <li class="break"><span class="step">↓</span><span class="clock">00:35 — 00:37</span><span class="title-cell">Transition · pick a real recent moment</span><span class="dur">2 min</span></li>
+        <li><span class="step">04</span><span class="clock">00:37 — 01:02</span><span class="title-cell">Procrastination Autopsy — deliverable #1</span><span class="dur">25 min</span></li>
+        <li><span class="step">05</span><span class="clock">01:02 — 01:22</span><span class="title-cell">Motivation Stack — deliverable #2</span><span class="dur">20 min</span></li>
+        <li><span class="step">06</span><span class="clock">01:22 — 01:30</span><span class="title-cell">Pair-up + take-home + closer</span><span class="dur">8 min</span></li>
+      </ol>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>THE HONEST START · PG 2 / 6</span>
+        <span>FACILITATOR GUIDE · v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 3 — PRE-CLASS + 00 + 01 ============ -->
+    <article class="page" aria-labelledby="prep-h">
+      <p class="crumb">PAGE 3 · PREP &amp; OPENING</p>
+
+      <h2 id="prep-h"><span class="num">§ 04</span>Pre-class checklist (24 hrs out)</h2>
+      <ul class="materials" aria-label="Pre-class checklist">
+        <li>Open the module page on the projector — confirm internet, screen, audio.</li>
+        <li>Have <strong>one personal procrastination moment</strong> ready — yours, recent, specific.</li>
+        <li>Print 1× Pair-Up handout per student (page 6 of this guide).</li>
+        <li>Whiteboard markers ready — you'll do a quick tally during 00.</li>
+        <li>Post the slide deck link in Canvas.</li>
+        <li>Glance at last week's reflections — note any students who flagged "stuck."</li>
+        <li>Glass of water within reach. The room runs warm during the Autopsy.</li>
+        <li>Confirm the speaker notes show in your presenter view.</li>
+      </ul>
+
+      <!-- ============ 00 AVOIDANCE WALL ============ -->
+      <div class="section-row">
+        <div class="num">§ 05</div>
+        <div class="ttl">00 · Avoidance Wall</div>
+        <div class="meta">10 MIN · 00:00 — 00:10 · SLIDES 02–03</div>
+      </div>
+
+      <div class="runblock">
+        <div class="timestrip">
+          <span class="badge">PHASE 1</span> 0:00 — 0:04 &nbsp;·&nbsp; SETUP + TALLY
+        </div>
+        <p class="script">There's a thing on your to-do list right now that you're avoiding. I know there is. You know there is. We're going to put it on the wall — anonymously — and watch the wall fill up.</p>
+        <ul class="doit">
+          <li>Show the live tally on the projector. Walk through the 10 categories aloud.</li>
+          <li>Tell students: <em>"Pick the one that fits best. One click. The bars move."</em></li>
+          <li>Wait until everyone has clicked. Don't rush. Let the silence do work.</li>
+        </ul>
+      </div>
+
+      <div class="runblock">
+        <div class="timestrip">
+          <span class="badge">PHASE 2</span> 0:04 — 0:10 &nbsp;·&nbsp; LET IT LAND
+        </div>
+        <ul class="doit">
+          <li>Read the top three categories aloud. Don't editorialize.</li>
+          <li>Ask: <em>"Anyone surprised by what's on top?"</em> Take 1–2 reactions.</li>
+          <li>Ask: <em>"Anyone here clicked something and was relieved to see other people clicked it too?"</em></li>
+          <li>Land on the takeaway box.</li>
+        </ul>
+        <p class="script">You're not weird. You're not lazy. You're avoiding something specific, for a specific reason. Today we name the reason — because the reason tells you the fix.</p>
+        <div class="watchfor">
+          <h4>WATCH FOR · DON'T MORALIZE</h4>
+          <p style="margin: 0;">If a student tries to confess publicly ("I haven't started anything in 3 weeks"), affirm it briefly — <em>"Good. That's data. We'll work with it."</em> — and move on. This is not the moment for advice.</p>
+        </div>
+      </div>
+
+      <!-- ============ 01 COLD OPEN ============ -->
+      <div class="section-row">
+        <div class="num">§ 06</div>
+        <div class="ttl">01 · Cold open</div>
+        <div class="meta">5 MIN · 00:10 — 00:15 · SLIDE 04</div>
+      </div>
+
+      <div class="runblock">
+        <div class="timestrip">
+          <span class="badge">FULL 5 MIN</span> 0:10 — 0:15
+        </div>
+        <ul class="doit">
+          <li>Click through Maya, then Devon, then Priya. Read each card aloud — including "what's underneath."</li>
+          <li>Pause after each: <em>"Show of hands — who's been Maya / Devon / Priya?"</em></li>
+          <li>End with the handoff: same surface, different fuel.</li>
+        </ul>
+        <p class="script">If you call all three of these students "lazy," you'll prescribe the wrong fix to two of them. The fix has to match the fuel.</p>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>THE HONEST START · PG 3 / 6</span>
+        <span>FACILITATOR GUIDE · v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 4 — 02 TRIGGERS + 03 START BAD + transition ============ -->
+    <article class="page">
+      <p class="crumb">PAGE 4 · ANCHOR + DRILL</p>
+
+      <!-- 02 TRIGGERS -->
+      <div class="section-row">
+        <div class="num">§ 07</div>
+        <div class="ttl">02 · The 4 Triggers</div>
+        <div class="meta">8 MIN · 00:15 — 00:23 · SLIDE 05</div>
+      </div>
+
+      <div class="runblock">
+        <div class="timestrip">
+          <span class="badge">ANCHOR</span> 0:15 — 0:23 &nbsp;·&nbsp; HOLD THIS SLIDE
+        </div>
+        <p>This is the spine of the whole module. Don't rush it. Hold the slide for the full 8 minutes.</p>
+
+        <div class="twocol">
+          <div>
+            <h4>DO THIS</h4>
+            <ul class="doit">
+              <li>Walk through each trigger — about 90 seconds each.</li>
+              <li>For each, ask: <em>"What does this sound like in your head when it's happening?"</em> Take 1 student answer.</li>
+              <li>Then read the prescribed fix. Notice it's <em>different every time</em>.</li>
+              <li>End on the "two triggers stacked" tape strip.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>SAY THIS</h4>
+            <p class="script">AMBIGUITY: I don't know what 'done' looks like. Fix: make it tiny.</p>
+            <p class="script">FEAR: starting will confirm something I'm scared of. Fix: lower the stakes of step one.</p>
+            <p class="script">BOREDOM: my brain refuses to engage. Fix: add structure or stakes.</p>
+            <p class="script">EXHAUSTION: I'm running on fumes. Fix: stop and rest. Then a tiny start.</p>
+          </div>
+        </div>
+
+        <div class="watchfor">
+          <h4>KEY PHRASE TO WRITE ON THE BOARD</h4>
+          <p style="margin: 0;">"Procrastination is data — the trigger tells you the fix." This sentence will do more lifting than any other in the module.</p>
+        </div>
+      </div>
+
+      <!-- 03 START BAD -->
+      <div class="section-row">
+        <div class="num">§ 08</div>
+        <div class="ttl">03 · Start Bad on Purpose</div>
+        <div class="meta">12 MIN · 00:23 — 00:35 · SLIDE 06 · LIVE DRILL</div>
+      </div>
+
+      <div class="runblock">
+        <div class="timestrip">
+          <span class="badge">LIVE</span> 0:23 — 0:35 &nbsp;·&nbsp; ALL STUDENTS WRITING
+        </div>
+        <ul class="doit">
+          <li>Read the 4 rules aloud. Linger on rule 4 — <em>nobody will see this.</em></li>
+          <li>Have everyone open the in-page tool. Type a real assignment they're avoiding.</li>
+          <li>Hit start together. 90 seconds. <em>You</em> write too — model it.</li>
+          <li>When time hits zero, ask: <em>"How many words did you have 90 seconds ago? How many do you have now?"</em></li>
+          <li>Ask 1–2 students to share <em>not</em> their writing — only the word count and how it felt.</li>
+        </ul>
+        <p class="script">Motivation comes after the first sentence. You've been told it's the other way around. It isn't. The blank page is the boss fight, and you just beat it.</p>
+
+        <div class="watchfor">
+          <h4>IF A STUDENT FREEZES</h4>
+          <p style="margin: 0;">Some students will sit and not type. Don't pressure. Whisper one prompt: <em>"What's the worst possible first sentence?"</em> — that often unlocks. If still nothing, that's also data — they may be in fear/exhaustion territory; flag for the Autopsy.</p>
+        </div>
+      </div>
+
+      <!-- TRANSITION -->
+      <div class="runblock break">
+        <div class="timestrip">
+          <span class="badge">↓</span> 0:35 — 0:37 &nbsp;·&nbsp; TRANSITION TO AUTOPSY · SLIDE 07
+        </div>
+        <p class="script">In a minute you're going to do something forensic. Pick ONE specific time in the last 7 days you avoided something. Not "I always procrastinate" — Tuesday 9:47pm, paper open, you instead reorganized your desk. That moment.</p>
+        <ul class="doit">
+          <li>Walk the room while they think.</li>
+          <li>Anyone who can't think of a moment? They're picking too big a thing — prompt them: "what about a 5-minute thing you avoided yesterday?"</li>
+        </ul>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>THE HONEST START · PG 4 / 6</span>
+        <span>FACILITATOR GUIDE · v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 5 — 04 AUTOPSY + 05 STACK + 06 CLOSER ============ -->
+    <article class="page">
+      <p class="crumb">PAGE 5 · DELIVERABLES + CLOSE</p>
+
+      <!-- 04 AUTOPSY -->
+      <div class="section-row">
+        <div class="num">§ 09</div>
+        <div class="ttl">04 · Procrastination Autopsy — deliverable #1</div>
+        <div class="meta">25 MIN · 00:37 — 01:02 · SLIDE 08 · 40 PTS</div>
+      </div>
+
+      <div class="runblock">
+        <div class="timestrip">
+          <span class="badge">QUIET WORK</span> 0:37 — 1:02 &nbsp;·&nbsp; WALK THE ROOM
+        </div>
+
+        <div class="twocol">
+          <div>
+            <h4>SETUP (FIRST 3 MIN)</h4>
+            <ul class="doit">
+              <li>Read the brief aloud — emphasize "specific moment, not general pattern."</li>
+              <li>Confirm: <em>"Saves to your browser as you go. You will not lose your work."</em></li>
+              <li>Show the trigger picker — they'll need section 02's framework.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>WHILE THEY WORK (22 MIN)</h4>
+            <ul class="doit">
+              <li>Walk a slow loop. Stay quiet. This is hard work.</li>
+              <li>If a student looks teary — a real autopsy can sting. Whisper "this is the right work; take a breath."</li>
+              <li>If a student finishes early, prompt: <em>"What's the second moment? Run another."</em></li>
+              <li>At 0:55 — call the 7-minute warning.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="watchfor">
+          <h4>COMMON STUCK POINTS</h4>
+          <p style="margin: 0;"><strong>"All four triggers apply."</strong> → Pick the biggest. The others will surface later. <strong>"My tiny step still feels too big."</strong> → Halve it. Then halve it again. <em>"Open the document"</em> is a complete tiny step.</p>
+        </div>
+      </div>
+
+      <!-- 05 STACK -->
+      <div class="section-row">
+        <div class="num">§ 10</div>
+        <div class="ttl">05 · Motivation Stack — deliverable #2</div>
+        <div class="meta">20 MIN · 01:02 — 01:22 · SLIDE 09 · 40 PTS</div>
+      </div>
+
+      <div class="runblock">
+        <div class="timestrip">
+          <span class="badge">QUIET WORK</span> 1:02 — 1:22 &nbsp;·&nbsp; STILL WALKING
+        </div>
+        <ul class="doit">
+          <li>Read aloud: autonomy, mastery, purpose. Use the example seeds on each card.</li>
+          <li>First 8 min: students fill in their own three levers per category (9 total).</li>
+          <li>Next 10 min: design ONE 25-min ritual. When/where/what + how it hits each lever.</li>
+          <li>Last 2 min: ask 2–3 students to read their ritual aloud. Don't critique — celebrate concreteness.</li>
+        </ul>
+
+        <div class="watchfor">
+          <h4>THE LEVER STUDENTS DODGE</h4>
+          <p style="margin: 0;"><strong>PURPOSE</strong> is the axis students half-ass. Push it: <em>"'Because it's on the syllabus' doesn't count. Why does this matter to a person — present-you, future-you, someone you love?"</em> If a student can't articulate purpose, the ritual won't survive a bad week.</p>
+        </div>
+      </div>
+
+      <!-- 06 CLOSER -->
+      <div class="section-row">
+        <div class="num">§ 11</div>
+        <div class="ttl">06 · Pair-up + take-home + closer</div>
+        <div class="meta">8 MIN · 01:22 — 01:30 · SLIDES 10–13</div>
+      </div>
+
+      <div class="runblock">
+        <div class="timestrip">
+          <span class="badge">CLOSE</span> 1:22 — 1:30
+        </div>
+        <ul class="doit">
+          <li>Hand out the Pair-Up sheet (page 6). Have students pair — preferably across majors.</li>
+          <li>Each shares <em>only</em> their tiny step due tonight + their phone number.</li>
+          <li>Show the Start Log template. Confirm it's pinned in Canvas.</li>
+          <li>Closer slide. Read it aloud. <strong>Don't soften it.</strong></li>
+          <li>Q&amp;A — 2–3 minutes. Stay open.</li>
+        </ul>
+
+        <p class="script">Feeling better isn't the goal. Doing the thing is. You don't have to feel motivated tonight — you have to text "DONE" to your partner. That's the whole assignment.</p>
+
+        <h4>COMMON Q&amp;A — BE READY</h4>
+        <table class="trouble">
+          <thead><tr><th>Question</th><th>Honest answer</th></tr></thead>
+          <tbody>
+            <tr><td>"What if my partner ghosts me?"</td><td>Then you ping <em>them</em>. The protocol works in either direction. Email me if it dies.</td></tr>
+            <tr><td>"What if I can't pick a single trigger?"</td><td>Pick the biggest. The others will show up in your Start Log within 3 days.</td></tr>
+            <tr><td>"Is this just CBT?"</td><td>It borrows from CBT, behavioral activation, and self-determination theory. None of which are magic. All of which beat 'just try harder.'</td></tr>
+            <tr><td>"What if my ritual doesn't work?"</td><td>Good — that's data too. The Start Log will tell you which lever was missing. Redesign on Sunday.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>THE HONEST START · PG 5 / 6</span>
+        <span>FACILITATOR GUIDE · v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 6 — PAIR-UP HANDOUT ============ -->
+    <article class="page" aria-labelledby="handout-h">
+      <p class="crumb">PAGE 6 · STUDENT HANDOUT — PRINT 1 PER STUDENT</p>
+
+      <h1 id="handout-h" style="font-size: 48px; margin-bottom: 6px;">Pair-Up. <em>7 days.</em></h1>
+      <p style="font-size: 14px; color: var(--ink-700); margin-bottom: 18px;">Find one person — preferably <em>not</em> in your major. Trade phone numbers. Run the protocol below for one week. Bring your Start Log to next class.</p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+        <div>
+          <h4 style="margin-top: 0;">YOUR NAME</h4>
+          <div style="border-bottom: 1.5px solid var(--ink-900); height: 28px;"></div>
+        </div>
+        <div>
+          <h4 style="margin-top: 0;">PARTNER'S NAME</h4>
+          <div style="border-bottom: 1.5px solid var(--ink-900); height: 28px;"></div>
+        </div>
+        <div>
+          <h4 style="margin-top: 0;">PARTNER'S PHONE</h4>
+          <div style="border-bottom: 1.5px solid var(--ink-900); height: 28px;"></div>
+        </div>
+        <div>
+          <h4 style="margin-top: 0;">PARTNER'S MAJOR</h4>
+          <div style="border-bottom: 1.5px solid var(--ink-900); height: 28px;"></div>
+        </div>
+      </div>
+
+      <h4 style="margin-top: 18px;">YOUR TINY STEP, DUE TONIGHT</h4>
+      <div style="border: 1.5px solid var(--ink-900); height: 50px; margin-bottom: 14px; padding: 8px; font-family: var(--font-display); font-style: italic; color: var(--ink-500);">e.g. "By 10pm tonight: open the Y395 doc and write 3 bad sentences."</div>
+
+      <h4>YOUR PARTNER'S TINY STEP</h4>
+      <div style="border: 1.5px solid var(--ink-900); height: 50px; margin-bottom: 18px; padding: 8px;"></div>
+
+      <div class="handout-grid">
+        <div class="axis-card" style="border-color: var(--signal-amber-text);">
+          <div class="axis-name" style="color: var(--signal-amber-text);">AMBIGUITY</div>
+          <div class="axis-q">"I don't know what 'done' looks like."</div>
+          <div class="lever-fix"><strong>FIX:</strong> Make it tiny &amp; concrete. Define done for the next 25 min only. Worst-possible first paragraph.</div>
+        </div>
+
+        <div class="axis-card" style="border-color: var(--signal-red-text);">
+          <div class="axis-name" style="color: var(--signal-red-text);">FEAR</div>
+          <div class="axis-q">"Starting will confirm something I'm scared of."</div>
+          <div class="lever-fix"><strong>FIX:</strong> Lower the stakes of step one. Open the doc; don't write. Read the rubric; don't draft. Talk to one human.</div>
+        </div>
+
+        <div class="axis-card" style="border-color: var(--signal-blue-text);">
+          <div class="axis-name" style="color: var(--signal-blue-text);">BOREDOM</div>
+          <div class="axis-q">"My brain refuses to engage with this."</div>
+          <div class="lever-fix"><strong>FIX:</strong> Add structure or stakes. Pomodoro. Body-double with a friend. Connect to something you actually care about.</div>
+        </div>
+
+        <div class="axis-card" style="border-color: var(--signal-green-text);">
+          <div class="axis-name" style="color: var(--signal-green-text);">EXHAUSTION</div>
+          <div class="axis-q">"I'm running on fumes and pretending I'm not."</div>
+          <div class="lever-fix"><strong>FIX:</strong> Stop. Eat, hydrate, walk, nap. <em>Then</em> one tiny start. The fix that feels least productive is the most.</div>
+        </div>
+      </div>
+
+      <h4>THE PROTOCOL · ONE WEEK</h4>
+      <ol style="font-size: 13px; line-height: 1.7; padding-left: 22px; margin: 6px 0 14px;">
+        <li>Tonight: text your partner "DONE" when you complete your tiny step. No essay. No excuse.</li>
+        <li>Don't text by tomorrow noon? Your partner pings <em>you</em>.</li>
+        <li>Each day: log one Start Moment in your Start Log (template in Canvas).</li>
+        <li>Sunday: text your partner ONE thing you noticed about your patterns this week.</li>
+        <li>Bring the log to next class. We'll read patterns together.</li>
+      </ol>
+
+      <p style="font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--ink-700); border-top: 2px solid var(--ink-900); padding-top: 12px; margin-top: 8px;">The pair-up is the strategy. Your motivation is what shows up <em>because</em> someone is waiting on a text — not before.</p>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>THE HONEST START · PG 6 / 6 · STUDENT HANDOUT</span>
+        <span>FACILITATOR GUIDE · v2.0 · 2026</span>
+      </footer>
+    </article>
+
+  </main>
+</body>
+</html>

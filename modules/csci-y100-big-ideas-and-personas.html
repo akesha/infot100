@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSCI-Y100 · Big Ideas + Personas · Course Redesign</title>
+  <meta name="description" content="CSCI-Y100 course redesign: big ideas, personas, learning outcomes, and how the redesigned weeks tie back to first-year student needs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600;1,9..144,700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    @page { size: letter portrait; margin: 0.55in 0.6in; }
+
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+      --signal-purple-text: #6b3a8c;
+
+      --persona-asp:  #2f7a4a;  /* aspirational = green */
+      --persona-med:  #2f5aa1;  /* median       = blue  */
+      --persona-risk: #a02e1e;  /* at-risk D/F/W = red  */
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    html { font-size: 13.5px; }
+    body { margin: 0; background: var(--paper-200); color: var(--ink-900); font-family: var(--font-body); font-size: 13.5px; line-height: 1.5; }
+
+    /* Force browsers to print background colors + accents instead of stripping them */
+    *, *::before, *::after {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
+    .toolbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink-900); color: var(--paper-50);
+      padding: 12px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em;
+    }
+    .toolbar .label { color: var(--signal-amber); }
+    .toolbar button {
+      background: var(--signal-amber); color: var(--ink-900);
+      border: 0; padding: 8px 18px;
+      font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.1em;
+      cursor: pointer; border-radius: 4px;
+    }
+    .toolbar button:hover { background: #f7c46a; }
+    .skip-link { position: absolute; left: -9999px; }
+    .skip-link:focus { left: 12px; top: 12px; z-index: 999; background: var(--ink-900); color: #fff; padding: 8px 14px; }
+
+    .page {
+      background: var(--paper-50);
+      width: 8.5in; min-height: 11in;
+      box-sizing: border-box; padding: 0.6in 0.7in;
+      margin: 24px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      page-break-after: always; position: relative;
+    }
+    .page:last-of-type { page-break-after: auto; }
+
+    @media print {
+      body { background: #fff; }
+      .page {
+        margin: 0; box-shadow: none; width: auto; min-height: auto;
+        /* keep page padding so content doesn't run to the sheet edge */
+        padding: 0.55in 0.6in 0.55in;
+      }
+      .no-print { display: none !important; }
+      /* Stop the footer from overlapping content: take it out of absolute flow,
+         render it inline at the natural end of each page with its own spacing. */
+      .footer-strip {
+        position: static !important;
+        margin-top: 24px;
+        left: auto; right: auto; bottom: auto;
+      }
+    }
+
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
+    h1 { font-size: 56px; line-height: 0.95; letter-spacing: -0.02em; margin: 0 0 8px; font-style: italic; }
+    h1 em { color: var(--crimson); }
+    h2 {
+      font-size: 24px; line-height: 1.05; margin: 22px 0 10px;
+      font-style: italic; letter-spacing: -0.01em;
+      padding-bottom: 6px; border-bottom: 2px solid var(--ink-900);
+    }
+    h3 { font-size: 16px; margin: 12px 0 6px; font-style: italic; }
+    p { margin: 0 0 8px; }
+
+    .crumb { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; color: var(--ink-500); }
+
+    .footer-strip {
+      position: absolute; bottom: 0.32in; left: 0.7in; right: 0.7in;
+      display: flex; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 9.5px;
+      letter-spacing: 0.12em; color: var(--ink-300);
+      padding-top: 6px; border-top: 1px solid var(--paper-200);
+    }
+
+    /* ============ COVER ============ */
+    .cover { background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0); background-size: 22px 22px; }
+    .cover-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+    .cover-crest {
+      width: 48px; height: 48px; background: var(--crimson); color: #fff;
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 24px;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .cover h1 { font-size: 78px; }
+    .cover .lede { font-size: 17px; line-height: 1.45; max-width: 600px; color: var(--ink-700); margin-top: 6px; font-family: var(--font-display); font-style: italic; }
+    .cover-stamp {
+      display: inline-block; border: 2.5px solid var(--crimson);
+      color: var(--crimson); font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      padding: 7px 13px; transform: rotate(-3deg); margin-bottom: 12px;
+    }
+
+    /* ============ BIG IDEAS ============ */
+    .promise {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.15em; color: var(--crimson);
+      font-weight: 700; margin: 18px 0 4px;
+    }
+    .promise-text {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 22px; line-height: 1.25; margin: 0 0 16px;
+      max-width: 700px;
+    }
+
+    .ideas { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 8px; }
+    .idea {
+      display: grid; grid-template-columns: 56px 1fr;
+      border: 1.5px solid var(--ink-900);
+      background: var(--paper-50);
+      page-break-inside: avoid;
+    }
+    .idea .num {
+      background: var(--ink-900); color: #fff;
+      font-family: var(--font-display); font-style: italic;
+      font-size: 38px; font-weight: 700; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .idea .body { padding: 12px 14px; }
+    .idea .ttl {
+      font-family: var(--font-display); font-style: italic;
+      font-weight: 600; font-size: 19px; line-height: 1.05;
+      margin: 0 0 6px;
+    }
+    .idea .stmt {
+      font-size: 12.5px; line-height: 1.45;
+    }
+    .idea .stmt .lead {
+      font-family: var(--font-mono); font-size: 9.5px;
+      font-weight: 700; letter-spacing: 0.1em;
+      color: var(--crimson); display: inline; margin-right: 6px;
+    }
+    .idea .examples {
+      margin-top: 8px; padding-top: 8px;
+      border-top: 1px dashed var(--paper-300);
+      font-size: 11px; line-height: 1.45;
+    }
+    .idea .examples strong {
+      font-family: var(--font-mono); font-size: 9px;
+      font-weight: 700; letter-spacing: 0.1em;
+      color: var(--ink-500); display: block; margin-bottom: 2px;
+    }
+
+    .test {
+      margin-top: 16px;
+      background: var(--paper-100);
+      border-top: 3px solid var(--ink-900);
+      padding: 12px 14px;
+    }
+    .test h3 { margin: 0 0 6px; font-size: 14px; }
+    .test p { font-size: 11.5px; margin: 0; }
+
+    /* ============ PERSONAS ============ */
+    .persona-head {
+      display: grid; grid-template-columns: 1fr auto; gap: 16px;
+      align-items: baseline;
+      padding-bottom: 10px; border-bottom: 3px solid var(--ink-900);
+      margin-bottom: 16px;
+    }
+    .persona-head h1 { font-size: 44px; line-height: 0.95; }
+    .persona-head .meta {
+      text-align: right; font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.12em; color: var(--ink-500);
+    }
+    .persona-head .meta .kind {
+      display: block; font-family: var(--font-display);
+      font-style: italic; font-weight: 700; font-size: 18px;
+      letter-spacing: -0.01em;
+      line-height: 1; margin-bottom: 4px;
+    }
+    .persona-head.asp .kind  { color: var(--persona-asp); }
+    .persona-head.med .kind  { color: var(--persona-med); }
+    .persona-head.risk .kind { color: var(--persona-risk); }
+
+    /* Persona top: avatar + ID + quote */
+    .persona-id {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 16px; align-items: start;
+      margin-bottom: 14px;
+    }
+    .avatar {
+      width: 92px; height: 92px;
+      border: 2.5px solid var(--ink-900);
+      background: var(--paper-100);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 38px; line-height: 1;
+      position: relative;
+    }
+    .avatar.asp  { background: rgba(47,122,74,0.14); color: var(--persona-asp); }
+    .avatar.med  { background: rgba(47,90,161,0.14); color: var(--persona-med); }
+    .avatar.risk { background: rgba(160,46,30,0.12); color: var(--persona-risk); }
+    .avatar .stamp {
+      position: absolute; bottom: -10px; right: -10px;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--ink-900); color: #fff;
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      letter-spacing: 0.05em;
+    }
+
+    .id-block {
+      display: grid; grid-template-columns: 1fr; gap: 4px;
+    }
+    .id-block .name {
+      font-family: var(--font-display); font-style: italic;
+      font-weight: 700; font-size: 30px; line-height: 1;
+      margin: 0;
+    }
+    .id-block .rank {
+      font-family: var(--font-mono); font-size: 10px;
+      font-weight: 700; letter-spacing: 0.12em;
+      color: var(--ink-500); margin-top: 2px;
+    }
+    .id-block .ed {
+      font-size: 11.5px; line-height: 1.4; color: var(--ink-700);
+      margin-top: 4px;
+    }
+    .id-block .ed strong {
+      font-family: var(--font-mono); font-size: 9.5px;
+      letter-spacing: 0.1em; color: var(--ink-900);
+    }
+
+    .quote {
+      border-left: 5px solid;
+      padding: 12px 14px;
+      background: var(--paper-100);
+      font-family: var(--font-display); font-style: italic;
+      font-size: 16px; line-height: 1.35;
+      margin: 12px 0 16px;
+    }
+    .quote.asp  { border-color: var(--persona-asp); }
+    .quote.med  { border-color: var(--persona-med); }
+    .quote.risk { border-color: var(--persona-risk); }
+    .quote .summary {
+      display: block;
+      font-family: var(--font-body); font-style: normal;
+      font-size: 12.5px; line-height: 1.5; color: var(--ink-700);
+      margin-bottom: 8px;
+    }
+    .quote .said::before { content: "\201C"; font-size: 28px; line-height: 0; vertical-align: -10px; margin-right: 2px; color: var(--crimson); }
+    .quote .said::after { content: "\201D"; font-size: 28px; line-height: 0; vertical-align: -10px; margin-left: 2px; color: var(--crimson); }
+
+    /* 3-column grid: content / motivation / engagement */
+    .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .col {
+      border-top: 3px solid;
+      padding: 8px 0 0;
+    }
+    .col.asp  { border-color: var(--persona-asp); }
+    .col.med  { border-color: var(--persona-med); }
+    .col.risk { border-color: var(--persona-risk); }
+    .col h4 {
+      margin: 0 0 6px; font-family: var(--font-mono);
+      font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em;
+      color: var(--ink-900);
+    }
+    .col ul { margin: 0; padding-left: 16px; font-size: 11.5px; line-height: 1.45; }
+    .col li { margin-bottom: 5px; }
+
+    /* Bottom strip: implications */
+    .implications {
+      margin-top: 16px;
+      border-top: 2px solid var(--ink-900);
+      padding-top: 10px;
+    }
+    .implications h4 {
+      margin: 0 0 6px; font-family: var(--font-mono);
+      font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em;
+      color: var(--crimson);
+    }
+    .implications .grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px;
+      font-size: 11.5px; line-height: 1.45;
+    }
+    .implications .item strong {
+      font-family: var(--font-mono); font-size: 9.5px;
+      font-weight: 700; letter-spacing: 0.08em;
+      color: var(--ink-500); display: block; margin-bottom: 2px;
+    }
+
+    .source {
+      font-family: var(--font-mono); font-size: 9.5px;
+      letter-spacing: 0.08em; color: var(--ink-500);
+      margin-top: 6px;
+    }
+    .source.risk { color: var(--persona-risk); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="toolbar no-print" role="toolbar" aria-label="Document actions">
+    <span><span class="label">REDESIGN ARTIFACT</span> &nbsp;·&nbsp; CSCI-Y100 · Big Ideas + 3 Personas</span>
+    <button type="button" onclick="window.print()" aria-label="Print this document">PRINT / SAVE PDF</button>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ PAGE 1 — COVER + BIG IDEAS ============ -->
+    <article class="page cover" aria-labelledby="cover-title">
+      <header class="cover-head">
+        <div class="cover-crest" aria-label="Indiana University">IU</div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · COURSE REDESIGN · v2.0</div>
+      </header>
+
+      <div class="cover-stamp">FIVE BIG IDEAS — DOMAIN-LEVEL ANCHORS</div>
+      <h1 id="cover-title">What we want them<br />to <em>still believe</em><br />in five years.</h1>
+
+      <p class="promise">PER THE BIG-IDEAS PROTOCOL · "I WANT MY STUDENTS TO UNDERSTAND THAT…"</p>
+      <p class="promise-text">Each idea is enduring (not detail), generalizes across &gt;2 examples, and could anchor an entire course on its own. We commit to teaching <em>five</em> — fewer means lower cognitive load and higher retention.</p>
+
+      <div class="ideas" aria-label="Five big ideas for CSCI-Y100">
+
+        <div class="idea">
+          <div class="num">01</div>
+          <div class="body">
+            <h3 class="ttl">Making is iteration, not inspiration.</h3>
+            <p class="stmt"><span class="lead">I WANT STUDENTS TO UNDERSTAND THAT</span>any made thing — software, hardware, prose, art — is the residue of many small loops of <em>try → notice → adjust</em>, not the output of a singular flash of insight. The first version is supposed to be wrong.</p>
+            <div class="examples">
+              <strong>EXAMPLES THIS GENERALIZES TO</strong>
+              Cardboard prototypes · git commits · debugging sessions · README revisions · the writing process · scientific method · design crits.
+            </div>
+          </div>
+        </div>
+
+        <div class="idea">
+          <div class="num">02</div>
+          <div class="body">
+            <h3 class="ttl">Verbs over tools — capabilities precede equipment.</h3>
+            <p class="stmt"><span class="lead">I WANT STUDENTS TO UNDERSTAND THAT</span>tools change every five years; the underlying capability (cut, print, capture, version, query, visualize) is durable. Good practitioners think in verbs first and pick tools second — which lets them adapt as the toolchain shifts.</p>
+            <div class="examples">
+              <strong>EXAMPLES THIS GENERALIZES TO</strong>
+              Makerspace 8-verb map · choosing a programming language for a task · picking the right ML library · job-skill descriptions · resume framing · LLM tool-use.
+            </div>
+          </div>
+        </div>
+
+        <div class="idea">
+          <div class="num">03</div>
+          <div class="body">
+            <h3 class="ttl">Time is a system you instrument, not a virtue you possess.</h3>
+            <p class="stmt"><span class="lead">I WANT STUDENTS TO UNDERSTAND THAT</span>"good time management" is not a personality trait. It's an observable system — a budget, a calendar, a tracked backlog — that anyone can build and tune. Procrastination is a debugging problem, not a moral failure.</p>
+            <div class="examples">
+              <strong>EXAMPLES THIS GENERALIZES TO</strong>
+              168-hr time audit · sprint planning · CPU scheduling metaphor · study blocks · OS process model · personal kanban · burnout prevention.
+            </div>
+          </div>
+        </div>
+
+        <div class="idea">
+          <div class="num">04</div>
+          <div class="body">
+            <h3 class="ttl">Knowledge worth keeping must be externalized.</h3>
+            <p class="stmt"><span class="lead">I WANT STUDENTS TO UNDERSTAND THAT</span>what lives only in your head is fragile. Durable practitioners build a "second brain" — notes, repos, READMEs, version control, peer channels — so that what they learn compounds across semesters instead of evaporating between finals and August.</p>
+            <div class="examples">
+              <strong>EXAMPLES THIS GENERALIZES TO</strong>
+              Git history as memory · README as user manual · Obsidian vault · lab notebook · code comments · data documentation · scientific reproducibility.
+            </div>
+          </div>
+        </div>
+
+        <div class="idea">
+          <div class="num">05</div>
+          <div class="body">
+            <h3 class="ttl">Tools — including AI — are collaborators to interrogate, not oracles to obey.</h3>
+            <p class="stmt"><span class="lead">I WANT STUDENTS TO UNDERSTAND THAT</span>every tool has a worldview baked into it: a textbook, a tutorial, a Stack Overflow answer, an LLM completion. Skilled use means knowing the tool's bias, naming what it can't see, and keeping ownership of the judgment call.</p>
+            <div class="examples">
+              <strong>EXAMPLES THIS GENERALIZES TO</strong>
+              Co-Pilot Camp lesson · README rhetoric · peer critique · evaluating sources · using AI without using yourself up · ethics in CS · tool selection.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="test">
+        <h3>How each statement passes the protocol's test</h3>
+        <p>Every Big Idea above (a) completes "I want students to understand that…", (b) names &gt;2 generalizable examples, (c) is an enduring concept rather than a fact a student could simply look up. None of them name a specific tool, week, or assignment — that's by design.</p>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>BIG IDEAS + PERSONAS · PG 1 / 4</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 2 — PERSONA 1: ASPIRATIONAL ============ -->
+    <article class="page" aria-labelledby="p1-h">
+      <header class="persona-head asp">
+        <h1 id="p1-h">Persona 01. <em>Aspirational.</em></h1>
+        <div class="meta">
+          <span class="kind">THE IDEAL STUDENT</span>
+          THE LEARNER WE'RE DESIGNING <em>FOR</em>
+        </div>
+      </header>
+
+      <div class="persona-id">
+        <div class="avatar asp" aria-hidden="true">MN<span class="stamp">ASP</span></div>
+        <div class="id-block">
+          <h2 class="name">Maya Nakamura</h2>
+          <div class="rank">FIRST-YEAR · UNDECIDED → INFORMATICS · 18 YRS</div>
+          <div class="ed">
+            <strong>EDUCATIONAL OVERVIEW</strong>
+            Public-school student from Indianapolis. Took AP CSP (3) and ran a 3D-printing club junior year. Rebuilt the family's WiFi setup over the summer "for fun." Has never written production software but has shipped a half-dozen small things her friends actually use.
+          </div>
+        </div>
+      </div>
+
+      <div class="quote asp">
+        <span class="summary">Maya already identifies as a maker. She's here to translate that hobbyist instinct into a degree path — and to find a cohort that takes her seriously even though she didn't go to a feeder magnet school. She'll over-commit if you let her, and she'll keep showing up even when it's hard.</span>
+        <span class="said">When I'm building something for my dorm or a friend, I lose three hours easy. I want this class to feel like that — not like a syllabus quiz.</span>
+      </div>
+
+      <div class="three">
+        <div class="col asp">
+          <h4>CONTENT KNOWLEDGE</h4>
+          <ul>
+            <li>AP CSP (3) — comfortable with Python basics, lists, conditionals</li>
+            <li>Tinkercad + a desktop 3D printer at home; ran 50+ prints</li>
+            <li>Reads documentation when she has to; not afraid of the terminal</li>
+            <li>Has <em>never</em> used git, branches, or a code review</li>
+          </ul>
+        </div>
+        <div class="col asp">
+          <h4>MOTIVATION FOR TAKING COURSE</h4>
+          <ul>
+            <li>Wants to confirm CS / Informatics is the right major</li>
+            <li>Wants a v0.1 of something real on her resume by November</li>
+            <li>Hopes to find a cohort and 1–2 collaborators</li>
+            <li>Curious about AI — wants to use it without losing her own thinking</li>
+          </ul>
+        </div>
+        <div class="col asp">
+          <h4>ENGAGEMENT STRATEGIES</h4>
+          <ul>
+            <li>Will attend every studio + most office hours</li>
+            <li>Posts in the cohort channel within 48 hrs of joining</li>
+            <li>Treats the syllabus as a contract; reads ahead</li>
+            <li>Will iterate on a project past the due date if she's hooked</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="implications">
+        <h4>WHAT THIS PERSONA ASKS OF THE COURSE</h4>
+        <div class="grid">
+          <div class="item"><strong>RAISE THE CEILING</strong>Optional "stretch" deliverables on every assignment so she's never bored.</div>
+          <div class="item"><strong>NAME THE DEEP STRUCTURE</strong>Big Ideas 01 + 02 ("iteration," "verbs over tools") give language to instincts she already has.</div>
+          <div class="item"><strong>PROVIDE A PEER NETWORK</strong>The cohort channel + Week-4 peer critique are her real reason for showing up to a brick-and-mortar class.</div>
+          <div class="item"><strong>DON'T PATRONIZE HER PRIOR WORK</strong>The Maker Wall surfaces her existing work in Week 1 minute 5 — she leaves the first session feeling seen.</div>
+        </div>
+        <p class="source">SOURCE · ASPIRATIONAL — THE STUDENT THE REDESIGN OPTIMIZES FOR.</p>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>BIG IDEAS + PERSONAS · PG 2 / 4</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 3 — PERSONA 2: MEDIAN / DATA-DRIVEN MAJORITY ============ -->
+    <article class="page" aria-labelledby="p2-h">
+      <header class="persona-head med">
+        <h1 id="p2-h">Persona 02. <em>The realistic majority.</em></h1>
+        <div class="meta">
+          <span class="kind">THE MEDIAN STUDENT</span>
+          ~60% OF THE COHORT · DATA-DRIVEN
+        </div>
+      </header>
+
+      <div class="persona-id">
+        <div class="avatar med" aria-hidden="true">DR<span class="stamp">MED</span></div>
+        <div class="id-block">
+          <h2 class="name">Devon Reyes</h2>
+          <div class="rank">FIRST-YEAR · COMPUTER SCIENCE (DECLARED) · 18 YRS</div>
+          <div class="ed">
+            <strong>EDUCATIONAL OVERVIEW</strong>
+            Suburban high school, no AP CS offered. Self-taught a little Python from YouTube. Picked CS because the family thinks it's "stable" — Devon thinks it's interesting but isn't sure. Holds a 12 hr/wk on-campus job.
+          </div>
+        </div>
+      </div>
+
+      <div class="quote med">
+        <span class="summary">Devon is who actually fills the room. Curious but cautious. Will do the work if it's clear what the work is. Will quietly drift if the first assignment is a syllabus quiz. Falls behind not from inability but from never being shown how a college week is supposed to be structured.</span>
+        <span class="said">I think I want to do CS but I don't know if I'm 'a CS person.' Half the people in the lab seem to already know everything.</span>
+      </div>
+
+      <div class="three">
+        <div class="col med">
+          <h4>CONTENT KNOWLEDGE</h4>
+          <ul>
+            <li>Knows what a variable, loop, and function are; shaky on classes</li>
+            <li>Has used a text editor; has never touched a real terminal</li>
+            <li>Has never used git, READMEs, or code review</li>
+            <li>Confident with ChatGPT — sometimes too confident</li>
+          </ul>
+        </div>
+        <div class="col med">
+          <h4>MOTIVATION FOR TAKING COURSE</h4>
+          <ul>
+            <li>Required for the major</li>
+            <li>Quietly wants to belong — to feel like "a CS person"</li>
+            <li>Wants a clear weekly rhythm so they don't fall behind</li>
+            <li>Wants to know if AI will replace the career before they finish it</li>
+          </ul>
+        </div>
+        <div class="col med">
+          <h4>ENGAGEMENT STRATEGIES</h4>
+          <ul>
+            <li>Attends most classes; rarely speaks unless asked</li>
+            <li>Submits things on time — but at 11:54 PM</li>
+            <li>Will not attend office hours unsolicited (assumes they're "for dumb questions")</li>
+            <li>Will respond to a direct DM in the cohort channel</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="implications">
+        <h4>WHAT THIS PERSONA ASKS OF THE COURSE</h4>
+        <div class="grid">
+          <div class="item"><strong>MAKE THE FIRST WEEK A DELIVERABLE, NOT A LECTURE</strong>Spawn Point's three-artifact day is calibrated for this student — proof of work in 90 min.</div>
+          <div class="item"><strong>EXPLICITLY DEFINE BELONGING</strong>Maker Wall and "you already make things" framing directly counter "I'm not a CS person."</div>
+          <div class="item"><strong>GIVE THEM A VISIBLE WEEKLY RHYTHM</strong>Pacing guide is for them as much as the instructor — predictability lowers cortisol.</div>
+          <div class="item"><strong>NORMALIZE THE LOADOUT</strong>Loadout Check (Week 2) makes the hidden curriculum explicit so first-gen students aren't blocked silently.</div>
+        </div>
+        <p class="source">SOURCE · DERIVED FROM IU FIRST-YEAR CS COHORT DATA · ~60% OF ENROLLED Y100 STUDENTS · MOST LIKELY TO PERSIST WITH RIGHT SCAFFOLDING.</p>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>BIG IDEAS + PERSONAS · PG 3 / 4</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 4 — PERSONA 3: AT-RISK / D-F-W ============ -->
+    <article class="page" aria-labelledby="p3-h">
+      <header class="persona-head risk">
+        <h1 id="p3-h">Persona 03. <em>The student we're losing.</em></h1>
+        <div class="meta">
+          <span class="kind">THE D / F / W STUDENT</span>
+          ~18% OF Y100 · WITHDRAWS BY WK 6
+        </div>
+      </header>
+
+      <div class="persona-id">
+        <div class="avatar risk" aria-hidden="true">JO<span class="stamp">D/F/W</span></div>
+        <div class="id-block">
+          <h2 class="name">Jordan Okeke</h2>
+          <div class="rank">FIRST-YEAR · UNDECLARED · 19 YRS · FIRST-GENERATION</div>
+          <div class="ed">
+            <strong>EDUCATIONAL OVERVIEW</strong>
+            First in family to attend a 4-year university. Graduated from a high school that offered no CS courses. Works 25 hrs/wk at a logistics warehouse off-campus to cover rent. Took Y100 because an advisor said "you can take anything." Sat in the back of the room.
+          </div>
+        </div>
+      </div>
+
+      <div class="quote risk">
+        <span class="summary">Jordan disappears around Week 4 every semester. Not because they don't care — because by then they've had two weeks of feeling lost, the laptop has a Python install error nobody helped them fix, the cohort channel feels cliquey, and the next assignment is opaque. They withdraw silently, often with no instructor contact.</span>
+        <span class="said">I just stopped opening Canvas. By then I was so far behind I figured it was easier to take the W and try again next year.</span>
+      </div>
+
+      <div class="three">
+        <div class="col risk">
+          <h4>CONTENT KNOWLEDGE</h4>
+          <ul>
+            <li>No prior coding exposure</li>
+            <li>Strong informal making — fixes cars, builds shelving, did stage tech in HS</li>
+            <li>Owns a Chromebook; has never installed dev software</li>
+            <li>Uses ChatGPT to "translate" assignments they can't decode</li>
+          </ul>
+        </div>
+        <div class="col risk">
+          <h4>MOTIVATION FOR TAKING COURSE</h4>
+          <ul>
+            <li>Curious about CS but unsure if it's "for them"</li>
+            <li>Needs the credit — financial aid requires full-time enrollment</li>
+            <li>Wants to feel like the tuition was worth it</li>
+            <li>Quietly hopes to find one adult on campus who knows their name</li>
+          </ul>
+        </div>
+        <div class="col risk">
+          <h4>ENGAGEMENT CHALLENGES</h4>
+          <ul>
+            <li>Commute + work make synchronous extras (eve studios) impossible</li>
+            <li>Won't ask for help; assumes asking = proof of not belonging</li>
+            <li>Falls behind once → assumes they can't catch up → withdraws</li>
+            <li>Never sets foot in office hours; doesn't know what they're for</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="implications">
+        <h4>WHAT THIS PERSONA ASKS OF THE COURSE</h4>
+        <div class="grid">
+          <div class="item"><strong>SURFACE NON-CS MAKING AS LEGITIMATE</strong>The Maker Wall counts car repair and stage tech as proof. Jordan's first-week experience is "oh, I already do this" instead of "I'm behind."</div>
+          <div class="item"><strong>FIX THE LOADOUT IN CLASS, NOT AT HOME</strong>Loadout Check moves to a synchronous lab so the broken-Python failure mode never happens in isolation.</div>
+          <div class="item"><strong>PROACTIVE OUTREACH AT WK 3</strong>Any student missing two consecutive deliverables gets a personal DM, not an LMS notification. This is the single highest-leverage intervention.</div>
+          <div class="item"><strong>ASYNC PARITY FOR EVERY SYNC EVENT</strong>Every studio has a recorded + chat-replied async path so a 25 hr/wk job isn't a withdrawal sentence.</div>
+          <div class="item"><strong>"OFFICE HOURS DEMYSTIFIED" AS A FORMAL UNIT</strong>Don't assume students know what office hours are <em>for</em>. Teach the convention explicitly.</div>
+          <div class="item"><strong>TWO SAFE FAILURES BUILT INTO THE GRADE</strong>Drop-the-lowest on small deliverables so a single bad week doesn't cascade into a W.</div>
+        </div>
+        <p class="source risk">SOURCE · DERIVED FROM Y100 D/F/W RATE · INTERVENTION HERE = LARGEST IMPACT ON COHORT RETENTION AND EQUITY.</p>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>BIG IDEAS + PERSONAS · PG 4 / 4</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Final Demo + Reckoning · Slide Deck · CSCI-Y100 Week 8</title>
+  <meta name="description" content="Slide deck for the Final Demo + Reckoning module (CSCI-Y100 Week 8). Use arrow keys, Page Up/Down, or Space to navigate." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <script type="application/json" id="speaker-notes">
+  [
+    "Title slate. Welcome them. The bookend to W1. Eight weeks ago you didn't have a vault, you didn't have a v1, you didn't have a trust-dial number. Today, you do. Read the lede. Set the energy: this is a capstone, not theater.",
+
+    "Cold open. Replay (or read aloud) the W1 cold open. The Week-14 student is now them, talking to themselves from W1. One question to the room: 'What would you tell the Week-1 you, sitting in this room eight weeks ago?' Wait. Let the silence work.",
+
+    "Roll call slate. The vault is the warm-up. Open Obsidian. Count notes in each folder. Write the four numbers down. The point is not who has the most. The point is the numbers exist at all. Spot-check three students aloud.",
+
+    "Round 1 brief. 15 minutes. Pairs. 5 min each direction. Demo narrates the trajectory in three sentences: seed (W1) → v0.1 (W4) → v1 (today). TAs roam, recording 30 sec of the strongest moment. Watch for: demos that live entirely on slides — the artifact is the artifact.",
+
+    "Round 2 brief. 20 minutes. Tables of 4. Each student 3 min: 2 min demo, 1 min Q&A. Hard-stop signal. Without the signal, the round leaks 6 min per table and dies. Two observations from the table go into each student's vault.",
+
+    "Round 3 brief. 15 minutes. Open studio. Music on. Anyone can visit anyone. Strongest projects pull crowds. Quietest get focused TA attention. Both correct outcomes. Faculty observers (if invited) are this round only — brief them: questions welcome, judgment delivered out loud not welcome.",
+
+    "Reckoning slate. Hard pivot. Stand at the front. The line that matters: this is not a Yelp review. The 5 Big Ideas are the spine of the course; the reckoning is where you find what stuck. Hand the room over.",
+
+    "5 Big Ideas reference slide. Read each one aloud. Pause for 5 sec between. Students write one line per idea in Reflections/W08-reckoning.md. Each line MUST reference a note in their vault by name (e.g., '[[Bugs/W05-bug-report]]').",
+
+    "Trust dial. Inside the AI Big Idea line, students re-rate the W6 trust dial. The number probably moved. Why? One sentence. This is the longitudinal data we promised in W6. Save it.",
+
+    "Trajectory brief. 10 minutes. One paragraph. What's the next thing you're going to ship, and what habit from this course will get you there? Save to Reflections/. Optional: post to cohort Discord — public commitment.",
+
+    "Final export. Click 'Export your work .txt' in any built lesson page (your vault is one surface, the .txt is another). Drop into Canvas as the closing artifact. The .txt is the entire course's record of you, externalized.",
+
+    "Closer. Read as written. The line that matters: you started with a seed, you leave with a vault and a v1. Two artifacts. Both yours. Both outlast the course. The Week-1 cold open from next year's cohort might be a clip from this room — the loop closes itself.",
+
+    "End slate. Send them off. Door's open. Office hours run normally next week. The class is over but the vault is just getting started."
+  ]
+  </script>
+
+  <style>
+    html, body { margin: 0; padding: 0; background: #000; color: var(--ink-900); font-family: var(--font-body); overflow: hidden; }
+    deck-stage { display: block; width: 100vw; height: 100vh; }
+    :root { --signal-amber-text: #8a6920; --signal-green-text: #2f7a4a; --signal-red-text: #a02e1e; --signal-blue-text: #2f5aa1; --signal-purple-text: #5C418F; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    section { width: 1920px; height: 1080px; background: var(--paper-50); position: relative; overflow: hidden; font-family: var(--font-body); color: var(--ink-900); }
+    .slide-pad { padding: 96px 120px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; }
+    .crumb { font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.2em; color: var(--crimson); margin-bottom: 32px; }
+    .slide-num { position: absolute; bottom: 40px; right: 60px; font-family: var(--font-mono); font-size: 16px; color: var(--ink-300); letter-spacing: 0.12em; }
+    .slide-foot { position: absolute; bottom: 40px; left: 120px; font-family: var(--font-mono); font-size: 14px; color: var(--ink-300); letter-spacing: 0.12em; }
+    h1.title { font-family: var(--font-display); font-weight: 600; font-style: italic; font-size: 132px; line-height: 0.95; letter-spacing: -0.03em; margin: 0; }
+    h1.title em { font-style: italic; color: var(--crimson); }
+    h2.section-h { font-family: var(--font-display); font-weight: 600; font-style: italic; font-size: 96px; line-height: 1; letter-spacing: -0.025em; margin: 0 0 28px; }
+    h2.section-h em { color: var(--crimson); }
+    .lede { font-size: 30px; line-height: 1.45; color: var(--ink-700); max-width: 1500px; }
+
+    .title-slide { background: var(--paper-50); background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0); background-size: 28px 28px; }
+    .title-slide .crest { width: 84px; height: 84px; background: var(--crimson); color: #fff; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 42px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 32px; }
+    .title-slide .meta { margin-top: 56px; display: grid; grid-template-columns: repeat(4, auto); gap: 56px; justify-content: start; }
+    .title-slide .meta dt { font-family: var(--font-mono); font-size: 14px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 6px; }
+    .title-slide .meta dd { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 28px; font-weight: 600; color: var(--ink-900); }
+
+    .section-slate { background: var(--ink-900); color: var(--paper-50); }
+    .section-slate .slide-pad { justify-content: center; }
+    .section-slate .crumb { color: var(--signal-amber); }
+    .section-slate h2.section-h { color: var(--paper-50); font-size: 120px; line-height: 0.95; }
+    .section-slate h2.section-h em { color: var(--signal-amber); }
+    .section-slate .lede { color: var(--paper-300); }
+    .section-slate .slide-foot { color: var(--paper-300); }
+
+    .brief { background: var(--paper-50); }
+    .brief .crumb { color: var(--signal-blue-text); }
+    .brief h2.section-h { font-size: 88px; }
+    .brief .grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; margin-top: 32px; flex: 1; }
+    .brief .col h4 { font-family: var(--font-mono); font-size: 16px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--crimson); margin: 0 0 12px; }
+    .brief .col ul { list-style: none; padding: 0; margin: 0; }
+    .brief .col li { font-size: 24px; line-height: 1.45; padding: 10px 0; border-bottom: 1px dashed var(--paper-300); display: grid; grid-template-columns: 28px 1fr; gap: 14px; }
+    .brief .col li::before { content: '\2713'; color: var(--signal-green-text); font-family: var(--font-mono); font-weight: 700; font-size: 22px; }
+    .brief .verify-card { background: var(--ink-900); color: var(--paper-50); padding: 28px 32px; }
+    .brief .verify-card h4 { color: var(--signal-amber); font-family: var(--font-mono); font-size: 16px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin: 0 0 12px; }
+    .brief .verify-card code { font-family: var(--font-mono); font-size: 26px; line-height: 1.6; color: var(--paper-50); display: block; }
+
+    .ideas-slide .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 36px; flex: 1; align-items: stretch; }
+    .ideas-slide .card { background: var(--paper-100); border-top: 6px solid var(--signal-purple); padding: 24px 22px; display: flex; flex-direction: column; }
+    .ideas-slide .card .num { font-family: var(--font-mono); font-weight: 700; font-size: 18px; color: var(--signal-purple-text); letter-spacing: 0.1em; margin-bottom: 10px; }
+    .ideas-slide .card .stmt { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 22px; line-height: 1.2; }
+
+    .closer { background: var(--paper-50); display: flex; align-items: center; justify-content: center; }
+    .closer .slide-pad { justify-content: center; align-items: flex-start; }
+    .closer h2 { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 100px; line-height: 1; letter-spacing: -0.025em; margin: 0; max-width: 1700px; }
+    .closer h2 em { color: var(--crimson); }
+    .closer .sub { margin-top: 32px; font-size: 28px; color: var(--ink-700); max-width: 1400px; line-height: 1.4; font-style: italic; }
+
+    .end-slate { background: var(--terminal-900); color: var(--paper-50); display: grid; place-items: center; }
+    .end-slate .frame { text-align: center; }
+    .end-slate .ascii { font-family: var(--font-mono); font-size: 24px; color: var(--signal-green); white-space: pre; margin-bottom: 36px; }
+    .end-slate h2 { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 88px; margin: 0; }
+    .end-slate h2 em { color: var(--signal-amber); }
+  </style>
+</head>
+<body>
+  <deck-stage>
+
+    <section class="title-slide" data-screen-label="Title — Final Demo">
+      <div class="slide-pad">
+        <div class="crest" aria-hidden="true">IU</div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 08</div>
+        <h1 class="title">Final<br /><em>Demo</em> + Reckoning.</h1>
+        <p class="lede" style="margin-top:36px;">Bookend to W1. Eight weeks ago you arrived. Today you ship. Three demo rounds, a reckoning against the 5 Big Ideas, a trajectory for what comes after.</p>
+        <dl class="meta">
+          <div><dt>WEEK</dt><dd>08 of 08</dd></div>
+          <div><dt>DURATION</dt><dd>90 minutes</dd></div>
+          <div><dt>POSTURE</dt><dd>Capstone · students lead</dd></div>
+          <div><dt>DELIVERABLES</dt><dd>4 — demo · reckoning · trajectory · export</dd></div>
+        </dl>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">01 / 13</div>
+      </div>
+    </section>
+
+    <section class="section-slate" data-screen-label="Cold open — the loop closes">
+      <div class="slide-pad">
+        <div class="crumb">⓪ COLD OPEN · 5 MIN · CLOSE THE LOOP</div>
+        <h2 class="section-h">The Week-1 student<br />is now <em>you.</em></h2>
+        <p class="lede" style="margin-top:36px;">Eight weeks ago you sat in this room with no vault, no v1, no trust-dial number. What would you tell that student today?</p>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">02 / 13</div>
+      </div>
+    </section>
+
+    <section class="section-slate" data-screen-label="Roll call — what's in your vault">
+      <div class="slide-pad">
+        <div class="crumb">⓪ ROLL CALL · 10 MIN · COUNT</div>
+        <h2 class="section-h">Open <em>Obsidian.</em><br /><em>Count.</em></h2>
+        <p class="lede" style="margin-top:36px;">Notes in Weeks/. Bug logs. Sources. Reflections. Whatever the numbers are, those are real artifacts you produced. The vault IS the warm-up.</p>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">03 / 13</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Demo round 1 — pairs">
+      <div class="slide-pad">
+        <div class="crumb">② ROUND 1 · 15 MIN · LOWEST STAKES</div>
+        <h2 class="section-h">Round 1 — <em>pairs.</em></h2>
+        <div class="grid">
+          <div class="col">
+            <h4>You will</h4>
+            <ul>
+              <li>Pair up. 5 min each direction.</li>
+              <li>Narrate the trajectory: seed (W1) → v0.1 (W4) → v1 (today).</li>
+              <li>Partner asks ONE question, gives ONE observation.</li>
+              <li>Show the artifact, not the slide deck.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>The artifact rule</h4>
+              <code style="font-family:var(--font-display);font-style:italic;font-size:24px;line-height:1.5;">Open the actual code, the actual prototype, the actual document. Even if it's broken. The broken state is still the artifact.</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">04 / 13</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Demo round 2 — table">
+      <div class="slide-pad">
+        <div class="crumb">③ ROUND 2 · 20 MIN · TABLE OF 4</div>
+        <h2 class="section-h">Round 2 — <em>table.</em></h2>
+        <div class="grid">
+          <div class="col">
+            <h4>You will</h4>
+            <ul>
+              <li>Form tables of 4.</li>
+              <li>3 min each: 2 min demo, 1 min Q&amp;A.</li>
+              <li>Hard-stop signal at 3 min. The signal is the boundary.</li>
+              <li>Two observations from the table go into your Bugs/.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>Why hard stops</h4>
+              <code style="font-family:var(--font-display);font-style:italic;font-size:24px;line-height:1.5;">Without the signal, every round leaks. Six minutes per table × five tables = round dies. The signal IS the round.</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">05 / 13</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Demo round 3 — open studio">
+      <div class="slide-pad">
+        <div class="crumb">④ ROUND 3 · 15 MIN · OPEN STUDIO</div>
+        <h2 class="section-h">Round 3 — <em>open studio.</em></h2>
+        <div class="grid">
+          <div class="col">
+            <h4>You will</h4>
+            <ul>
+              <li>Stand or sit at your station.</li>
+              <li>Anyone can visit anyone. Music on.</li>
+              <li>The strongest projects pull crowds. Walk around.</li>
+              <li>Standing alone for 5 min? A TA will bring people over. That's normal.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>Faculty observers</h4>
+              <code style="font-family:var(--font-display);font-style:italic;font-size:24px;line-height:1.5;">Questions welcome. Judgment delivered out loud, not welcome. Round 3 only — earlier rounds need cohort intimacy.</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">06 / 13</div>
+      </div>
+    </section>
+
+    <section class="section-slate" data-screen-label="Reckoning slate">
+      <div class="slide-pad">
+        <div class="crumb">⑤ RECKONING · 15 MIN · TO VAULT</div>
+        <h2 class="section-h">This is not<br />a <em>Yelp review.</em></h2>
+        <p class="lede" style="margin-top:36px;">Five lines, one per Big Idea. Each one references a note in your vault by name. The 5 Big Ideas are the spine of the course; the reckoning is where you find what stuck.</p>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">07 / 13</div>
+      </div>
+    </section>
+
+    <section class="ideas-slide" data-screen-label="The 5 Big Ideas">
+      <div class="slide-pad">
+        <div class="crumb">⑤ RECKONING · THE FIVE</div>
+        <h2 class="section-h" style="font-size:80px;">Five lines.<br />One per <em>idea.</em></h2>
+        <div class="grid">
+          <div class="card"><span class="num">#1</span><div class="stmt">Making is iteration, not inspiration.</div></div>
+          <div class="card"><span class="num">#2</span><div class="stmt">Verbs over tools — capabilities precede equipment.</div></div>
+          <div class="card"><span class="num">#3</span><div class="stmt">Time is a system you instrument, not a virtue.</div></div>
+          <div class="card"><span class="num">#4</span><div class="stmt">Knowledge worth keeping must be externalized.</div></div>
+          <div class="card"><span class="num">#5</span><div class="stmt">Tools — including AI — are collaborators to interrogate.</div></div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">08 / 13</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Trust dial · re-rate">
+      <div class="slide-pad">
+        <div class="crumb">⑤ RECKONING · TRUST DIAL · RE-RATE</div>
+        <h2 class="section-h">Did your <em>trust dial</em> move?</h2>
+        <div class="grid">
+          <div class="col">
+            <h4>Inside Big Idea #5</h4>
+            <ul>
+              <li>W6 score (0–10): ___</li>
+              <li>W8 score (0–10): ___</li>
+              <li>The number probably moved. Why?</li>
+              <li>One sentence inside the AI line of your reckoning.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>The longitudinal data</h4>
+              <code style="font-family:var(--font-display);font-style:italic;font-size:24px;line-height:1.5;">Movement IS the data. Whether it went up or down matters less than knowing it moved on purpose.</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">09 / 13</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Trajectory">
+      <div class="slide-pad">
+        <div class="crumb">⑥ TRAJECTORY · 10 MIN · ONE PARAGRAPH</div>
+        <h2 class="section-h"><em>What's next</em>, in your words.</h2>
+        <div class="grid">
+          <div class="col">
+            <h4>One paragraph</h4>
+            <ul>
+              <li>The next thing I'm going to ship is ___.</li>
+              <li>The habit from this course that gets me there is ___.</li>
+              <li>Save to Reflections/W08-trajectory.md.</li>
+              <li>Optional: post to cohort Discord. The trajectory is a public commitment when shared.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>Why this matters</h4>
+              <code style="font-family:var(--font-display);font-style:italic;font-size:24px;line-height:1.5;">The course ends. The vault doesn't. The trajectory is what makes the externalization habit outlast the syllabus.</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">10 / 13</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Final export">
+      <div class="slide-pad">
+        <div class="crumb">⑥ FINAL EXPORT · 5 MIN · TO CANVAS</div>
+        <h2 class="section-h">Drop the <em>.txt</em> into Canvas.</h2>
+        <div class="grid">
+          <div class="col">
+            <h4>Do</h4>
+            <ul>
+              <li>Open any built lesson page (or the W7 capture).</li>
+              <li>Click "Export your work (.txt)" on the reflection journal.</li>
+              <li>Drop the file into Canvas as the closing artifact.</li>
+              <li>The .txt is the entire course's record of you, externalized.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>Two artifacts</h4>
+              <code style="font-family:var(--font-display);font-style:italic;font-size:24px;line-height:1.5;">The vault stays with you. The .txt goes to Canvas. Same content, two surfaces.</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">11 / 13</div>
+      </div>
+    </section>
+
+    <section class="closer" data-screen-label="Closer">
+      <div class="slide-pad">
+        <div class="crumb">CLOSER</div>
+        <h2>You started with a <em>seed.</em><br />You leave with a <em>vault</em><br />and a <em>v1.</em></h2>
+        <p class="sub">Two artifacts. Both yours. Both outlast the course. Next year's Week-1 cold open might be a clip from this room — the loop closes itself.</p>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">12 / 13</div>
+      </div>
+    </section>
+
+    <section class="end-slate" data-screen-label="End">
+      <div class="frame">
+        <div class="ascii" aria-hidden="true">+--------------------------------------------+
+|  W08  ·  shipped + externalized  ·  loop closed  |
++--------------------------------------------+</div>
+        <h2>The class is <em>over.</em><br />The vault is <em>just getting started.</em></h2>
+      </div>
+      <div class="slide-foot" style="color:var(--paper-300);">CSCI-Y100 · v2.0 · 2026</div>
+      <div class="slide-num" style="color:var(--paper-300);">13 / 13</div>
+    </section>
+
+  </deck-stage>
+
+  <script src="deck-stage.js"></script>
+</body>
+</html>

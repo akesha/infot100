@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Honest Start · TILT Rubric · CSCI-Y100</title>
+  <meta name="description" content="Transparent (TILT) rubric for The Honest Start module's procrastination autopsy + start-stack deliverables." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600;1,9..144,700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    @page { size: letter; margin: 0.55in 0.65in; }
+
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    html { font-size: 13.5px; }
+    body { margin: 0; background: var(--paper-200); color: var(--ink-900); font-family: var(--font-body); font-size: 13.5px; line-height: 1.5; }
+
+    .toolbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink-900); color: var(--paper-50);
+      padding: 12px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em;
+    }
+    .toolbar .label { color: var(--signal-amber); }
+    .toolbar button {
+      background: var(--signal-amber); color: var(--ink-900);
+      border: 0; padding: 8px 18px;
+      font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.1em;
+      cursor: pointer; border-radius: 4px;
+    }
+    .toolbar button:hover { background: #f7c46a; }
+    .toolbar button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .skip-link { position: absolute; left: -9999px; top: 0; background: var(--ink-900); color: #fff; padding: 8px 14px; }
+    .skip-link:focus { left: 12px; top: 12px; z-index: 999; }
+
+    .page {
+      background: var(--paper-50);
+      width: 8.5in; min-height: 11in;
+      box-sizing: border-box; padding: 0.6in 0.7in;
+      margin: 24px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      page-break-after: always; position: relative;
+    }
+    .page:last-of-type { page-break-after: auto; }
+
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; padding: 0; box-shadow: none; width: auto; min-height: auto; }
+      .no-print { display: none !important; }
+    }
+
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
+    h1 { font-size: 56px; line-height: 0.95; letter-spacing: -0.02em; margin: 0 0 8px; font-style: italic; }
+    h1 em { color: var(--crimson); }
+    h2 {
+      font-size: 24px; line-height: 1.05; margin: 22px 0 10px;
+      font-style: italic; letter-spacing: -0.01em;
+      padding-bottom: 6px; border-bottom: 2px solid var(--ink-900);
+    }
+    h3 { font-size: 16px; margin: 14px 0 6px; font-style: italic; }
+    p { margin: 0 0 8px; }
+
+    .crumb { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; color: var(--ink-500); }
+    .crumb-strong { color: var(--crimson); font-weight: 700; }
+
+    .footer-strip {
+      position: absolute; bottom: 0.35in; left: 0.7in; right: 0.7in;
+      display: flex; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 9.5px;
+      letter-spacing: 0.12em; color: var(--ink-300);
+      padding-top: 6px; border-top: 1px solid var(--paper-200);
+    }
+
+    .cover { background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0); background-size: 22px 22px; }
+    .cover-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 36px; }
+    .cover-crest {
+      width: 48px; height: 48px; background: var(--crimson); color: #fff;
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 24px;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .cover h1 { font-size: 84px; }
+    .cover .lede { font-size: 18px; line-height: 1.45; max-width: 580px; color: var(--ink-700); margin-top: 8px; font-family: var(--font-display); font-style: italic; }
+    .cover-stamp {
+      display: inline-block; border: 2.5px solid var(--crimson);
+      color: var(--crimson); font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      padding: 7px 13px; transform: rotate(-3deg); margin-bottom: 14px;
+    }
+
+    .tilt-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 12px 0; }
+    .tilt-card { border: 1.5px solid var(--ink-900); padding: 12px 14px; position: relative; background: var(--paper-50); page-break-inside: avoid; }
+    .tilt-card .tag {
+      display: inline-block; color: #fff;
+      padding: 4px 10px; font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+    .tilt-card .tag.purpose { background: var(--signal-blue); }
+    .tilt-card .tag.task { background: var(--signal-amber); color: var(--ink-900); }
+    .tilt-card .tag.criteria { background: var(--signal-green); }
+    .tilt-card h3 { margin: 0 0 6px; font-size: 18px; }
+    .tilt-card .body { font-size: 12.5px; line-height: 1.5; }
+    .tilt-card .body ul { margin: 6px 0 0; padding-left: 18px; }
+    .tilt-card .body li { margin-bottom: 3px; }
+
+    .rubric { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 6px; page-break-inside: avoid; }
+    .rubric thead th {
+      background: var(--ink-900); color: var(--paper-50);
+      padding: 8px 10px; text-align: left;
+      font-family: var(--font-mono); font-size: 10px;
+      font-weight: 700; letter-spacing: 0.12em; vertical-align: middle;
+    }
+    .rubric thead .level-h { width: 22%; }
+    .rubric thead .pts-h { width: 7%; text-align: center; background: var(--crimson); }
+    .rubric thead .crit-h { background: var(--paper-100); color: var(--ink-900); width: 22%; border-right: 1px solid var(--paper-200); }
+    .rubric tbody td { padding: 10px 10px; vertical-align: top; border-bottom: 1px solid var(--paper-200); line-height: 1.4; }
+    .rubric tbody .crit {
+      background: var(--paper-100);
+      font-family: var(--font-display); font-style: italic;
+      font-weight: 600; font-size: 14px;
+      border-right: 1px solid var(--paper-200);
+    }
+    .rubric tbody .crit .crit-pts {
+      display: block;
+      font-family: var(--font-mono); font-style: normal;
+      font-weight: 700; font-size: 10px; letter-spacing: 0.1em;
+      color: var(--crimson); margin-top: 4px;
+    }
+    .rubric tbody .ex { background: var(--signal-green); color: #fff; }
+    .rubric tbody .pf { background: rgba(93,187,126,0.16); }
+    .rubric tbody .dv { background: rgba(232,169,59,0.16); }
+    .rubric tbody .ne { background: rgba(216,85,60,0.14); }
+    .rubric tbody .pts-cell {
+      text-align: center;
+      font-family: var(--font-mono); font-weight: 700;
+      background: var(--paper-100); font-size: 13px;
+    }
+    .rubric tbody td strong {
+      display: block; font-family: var(--font-mono);
+      font-size: 9.5px; letter-spacing: 0.1em;
+      margin-bottom: 4px; text-transform: uppercase;
+    }
+    .rubric tbody .ex strong { color: rgba(255,255,255,0.85); }
+    .rubric tbody .pf strong { color: var(--terminal-700); }
+    .rubric tbody .dv strong { color: #8a6920; }
+    .rubric tbody .ne strong { color: #a02e1e; }
+
+    .runhead {
+      display: grid; grid-template-columns: 1fr auto; gap: 16px;
+      align-items: baseline;
+      padding-bottom: 10px; border-bottom: 3px solid var(--ink-900);
+      margin-bottom: 16px;
+    }
+    .runhead h1 { font-size: 48px; line-height: 0.95; }
+    .runhead .meta { text-align: right; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--ink-500); }
+    .runhead .meta .total {
+      display: block; font-family: var(--font-display);
+      font-style: italic; font-weight: 700; font-size: 30px;
+      color: var(--crimson); line-height: 1;
+    }
+
+    .self-score {
+      page-break-inside: avoid;
+      background: var(--paper-100);
+      border-top: 3px solid var(--ink-900);
+      padding: 14px 16px; margin-top: 14px;
+    }
+    .self-score h3 { margin: 0 0 8px; }
+    .self-score .grid { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; font-size: 12.5px; }
+    .self-score .pts-box { width: 60px; height: 28px; border: 1.5px solid var(--ink-900); background: #fff; }
+    .self-score .total-box { width: 80px; height: 36px; border: 2px solid var(--ink-900); background: #fff; }
+    .self-score .total-row {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 18px; font-weight: 700;
+      padding-top: 8px; border-top: 1.5px solid var(--ink-900); margin-top: 4px;
+    }
+
+    .cover-meta {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px 28px;
+      padding: 22px 0; border-top: 2px solid var(--ink-900);
+      border-bottom: 2px solid var(--ink-900); margin: 24px 0;
+    }
+    .cover-meta dt { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 4px; }
+    .cover-meta dd { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 19px; font-weight: 600; }
+
+    .pillar-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 8px; }
+    .pillar { border-top: 4px solid; padding: 14px 16px; background: var(--paper-100); }
+    .pillar .label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; margin-bottom: 6px; }
+    .pillar .one { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 22px; line-height: 1.15; }
+
+    .pull {
+      border-top: 2px solid var(--ink-900); border-bottom: 2px solid var(--ink-900);
+      padding: 12px 0; margin: 16px 0;
+      font-family: var(--font-display); font-style: italic;
+      font-size: 17px; line-height: 1.4;
+    }
+    .pull strong {
+      font-style: normal; font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.15em;
+      display: block; color: var(--crimson); margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to TILT rubric</a>
+
+  <div class="toolbar no-print" role="toolbar" aria-label="Document actions">
+    <span><span class="label">TILT RUBRIC</span> &nbsp;·&nbsp; The Honest Start · 130 pts total</span>
+    <button type="button" onclick="window.print()" aria-label="Print this rubric">PRINT / SAVE PDF</button>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ PAGE 1 — COVER ============ -->
+    <article class="page cover" aria-labelledby="cover-title">
+      <header class="cover-head">
+        <div class="cover-crest" aria-label="Indiana University">IU</div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 07 · v2.0</div>
+      </header>
+
+      <div class="cover-stamp">TILT RUBRIC — TRANSPARENT ASSIGNMENT FRAMEWORK</div>
+      <h1 id="cover-title">How you'll be<br /><em>graded.</em></h1>
+      <p class="lede">Three artifacts. Three rubrics. No mystery. We grade the work you can <em>show</em> — diagnosis, design, reps — not whether you "feel motivated."</p>
+
+      <dl class="cover-meta">
+        <div><dt>ARTIFACT 01</dt><dd>Procrastination Autopsy</dd></div>
+        <div><dt>POINTS</dt><dd>40 pts</dd></div>
+        <div><dt>DUE</dt><dd>End of class</dd></div>
+        <div><dt>ARTIFACT 02</dt><dd>Motivation Stack</dd></div>
+        <div><dt>POINTS</dt><dd>40 pts</dd></div>
+        <div><dt>DUE</dt><dd>End of class</dd></div>
+        <div><dt>ARTIFACT 03</dt><dd>Start Log (take-home)</dd></div>
+        <div><dt>POINTS</dt><dd>50 pts</dd></div>
+        <div><dt>DUE</dt><dd>Next class · 11:59pm before</dd></div>
+      </dl>
+
+      <h2 style="margin-top: 8px;">The TILT framework</h2>
+      <p style="font-size: 13.5px; max-width: 720px;">Every assignment in this module follows the same three-part structure — <strong>Purpose</strong>, <strong>Task</strong>, <strong>Criteria</strong>. Lost on what we want? Find one of these three sections.</p>
+
+      <div class="pillar-strip" aria-label="The three TILT pillars">
+        <div class="pillar" style="border-top-color: var(--signal-blue);">
+          <div class="label" style="color: var(--signal-blue-text);">① PURPOSE</div>
+          <div class="one">Why we're asking. The skill it builds.</div>
+        </div>
+        <div class="pillar" style="border-top-color: var(--signal-amber);">
+          <div class="label" style="color: var(--signal-amber-text);">② TASK</div>
+          <div class="one">What you'll actually do, step by step.</div>
+        </div>
+        <div class="pillar" style="border-top-color: var(--signal-green);">
+          <div class="label" style="color: var(--signal-green-text);">③ CRITERIA</div>
+          <div class="one">What "good" looks like — at four levels.</div>
+        </div>
+      </div>
+
+      <div class="pull" style="margin-top: 22px;">
+        <strong>HOUSE POLICY · REVISE &amp; RESUBMIT</strong>
+        Anyone scoring below the "Proficient" line on any artifact gets <em>one free revision week, no penalty.</em> The point is to learn the move, not to weed people out. Use the revision.
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>THE HONEST START · TILT RUBRIC · PG 1 / 4</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 2 — AUTOPSY ============ -->
+    <article class="page" aria-labelledby="autopsy-h">
+      <header class="runhead">
+        <h1 id="autopsy-h">Procrastination Autopsy. <em>40 pts.</em></h1>
+        <div class="meta">
+          IN-CLASS · 25 MIN
+          <span class="total">40</span>
+        </div>
+      </header>
+
+      <p class="crumb"><span class="crumb-strong">PG 2/4</span> &nbsp;·&nbsp; DIAGNOSE ONE MOMENT — NOT A LIFETIME</p>
+
+      <div class="tilt-band" role="list" aria-label="TILT framework for the Autopsy">
+        <article class="tilt-card" role="listitem">
+          <span class="tag purpose">① PURPOSE</span>
+          <h3>The skill we're building.</h3>
+          <div class="body">
+            <p>"I procrastinate" is too big to fix. <em>"Tuesday at 9:47pm I avoided the Y211 lab because I didn't know what 'done' looked like"</em> is fixable.</p>
+            <p>The Autopsy gives you reps on the move that converts a lifetime narrative into a single, addressable moment. The four triggers tell you which fix to reach for.</p>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag task">② TASK</span>
+          <h3>What you'll do.</h3>
+          <div class="body">
+            <ul>
+              <li>Pick <strong>one specific moment</strong> from the last 7 days.</li>
+              <li>Answer <strong>seven forensic questions</strong> — when, where, what was due, what you did instead, the trigger, what's underneath, the tiny step.</li>
+              <li>Match the moment to <strong>one of the four triggers</strong> (ambiguity / fear / boredom / exhaustion).</li>
+              <li>Prescribe a <strong>tiny step due tonight</strong>. Halve it. Halve it again.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag criteria">③ CRITERIA</span>
+          <h3>What "got it" looks like.</h3>
+          <div class="body">
+            <p>See the rubric below. Four criteria, four levels, 40 points total.</p>
+            <p><strong>Pass line:</strong> 26 pts. Below 26 → free revision week, no penalty. We grade the diagnosis, not whether your night went well.</p>
+          </div>
+        </article>
+      </div>
+
+      <h2>Rubric — four criteria · four levels</h2>
+
+      <table class="rubric" role="table" aria-label="Autopsy rubric — 4 criteria scored on 4 levels">
+        <thead>
+          <tr>
+            <th class="crit-h" scope="col">Criterion</th>
+            <th class="level-h" scope="col">Exemplary</th>
+            <th class="level-h" scope="col">Proficient</th>
+            <th class="level-h" scope="col">Developing</th>
+            <th class="level-h" scope="col">Not yet</th>
+            <th class="pts-h" scope="col">Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">Specificity of the moment <span class="crit-pts">10 PTS</span></td>
+            <td class="ex"><strong>9–10</strong>Names a real day, time, place, exact thing avoided, exact thing done instead. Reads like a scene.</td>
+            <td class="pf"><strong>7–8</strong>Day + general time + clear avoidance. Some scene detail.</td>
+            <td class="dv"><strong>4–6</strong>"Last week sometime, the lab" — vague but a real moment.</td>
+            <td class="ne"><strong>0–3</strong>"I always procrastinate." Pattern, not moment.</td>
+            <td class="pts-cell">/10</td>
+          </tr>
+          <tr>
+            <td class="crit">Trigger diagnosis <span class="crit-pts">10 PTS</span></td>
+            <td class="ex"><strong>9–10</strong>One primary trigger named, with a one-sentence justification tied to the scene.</td>
+            <td class="pf"><strong>7–8</strong>Primary trigger named. Justification thinner.</td>
+            <td class="dv"><strong>4–6</strong>"All four apply" without ranking. Or wrong trigger for the scene.</td>
+            <td class="ne"><strong>0–3</strong>Skipped. Or "I'm just lazy."</td>
+            <td class="pts-cell">/10</td>
+          </tr>
+          <tr>
+            <td class="crit">What's underneath <span class="crit-pts">10 PTS</span></td>
+            <td class="ex"><strong>9–10</strong>One honest sentence naming what the avoidance protected. Risks something to write.</td>
+            <td class="pf"><strong>7–8</strong>Honest but generic ("scared of failing").</td>
+            <td class="dv"><strong>4–6</strong>Mostly logistics ("I was busy"). No psychology.</td>
+            <td class="ne"><strong>0–3</strong>Empty or reads like a cover letter.</td>
+            <td class="pts-cell">/10</td>
+          </tr>
+          <tr>
+            <td class="crit">Tiny step is tiny <span class="crit-pts">10 PTS</span></td>
+            <td class="ex"><strong>9–10</strong>Step is &lt; 25 minutes, concrete, and matches the trigger's prescribed fix.</td>
+            <td class="pf"><strong>7–8</strong>Concrete and small, but slightly too big or fix-mismatched.</td>
+            <td class="dv"><strong>4–6</strong>"Work on the paper." Not tiny. Not concrete.</td>
+            <td class="ne"><strong>0–3</strong>Missing or "finish the paper."</td>
+            <td class="pts-cell">/10</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score" aria-label="Self-score worksheet">
+        <h3>Self-score before you submit.</h3>
+        <div class="grid">
+          <span>Specificity of the moment</span><span class="pts-box" aria-label="self score box, specificity, out of 10"></span>
+          <span>Trigger diagnosis</span><span class="pts-box" aria-label="self score box, trigger, out of 10"></span>
+          <span>What's underneath</span><span class="pts-box" aria-label="self score box, underneath, out of 10"></span>
+          <span>Tiny step is tiny</span><span class="pts-box" aria-label="self score box, tiny step, out of 10"></span>
+          <span class="total-row">TOTAL · pass line is 26</span><span class="total-box" aria-label="total score box, out of 40"></span>
+        </div>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>THE HONEST START · TILT RUBRIC · PG 2 / 4</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 3 — STACK ============ -->
+    <article class="page" aria-labelledby="stack-h">
+      <header class="runhead">
+        <h1 id="stack-h">Motivation Stack. <em>40 pts.</em></h1>
+        <div class="meta">
+          IN-CLASS · 20 MIN
+          <span class="total">40</span>
+        </div>
+      </header>
+
+      <p class="crumb"><span class="crumb-strong">PG 3/4</span> &nbsp;·&nbsp; AUTONOMY · MASTERY · PURPOSE</p>
+
+      <div class="tilt-band" role="list" aria-label="TILT framework for the Stack">
+        <article class="tilt-card" role="listitem">
+          <span class="tag purpose">① PURPOSE</span>
+          <h3>The skill we're building.</h3>
+          <div class="body">
+            <p>Self-Determination Theory says intrinsic motivation needs three nutrients: autonomy (choice), mastery (visible progress), and purpose (something that matters).</p>
+            <p>Most rituals fail because they only feed one. Yours will feed all three — by design, on paper, before a bad week tests it.</p>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag task">② TASK</span>
+          <h3>What you'll do.</h3>
+          <div class="body">
+            <ul>
+              <li>Name <strong>three autonomy levers</strong> — where can YOU choose? Time, place, music, order.</li>
+              <li>Name <strong>three mastery levers</strong> — what does progress concretely look like?</li>
+              <li>Name <strong>three purpose levers</strong> — why does this matter to a human you love?</li>
+              <li>Design <strong>one 25-min ritual</strong>: when/where/what, plus which of your 9 levers it pulls.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag criteria">③ CRITERIA</span>
+          <h3>What "got it" looks like.</h3>
+          <div class="body">
+            <p>See the rubric below. Four criteria, four levels, 40 points total.</p>
+            <p><strong>Pass line:</strong> 26 pts. Below 26 → free revision week, no penalty. The ritual will be revised again on Sunday — that's the point.</p>
+          </div>
+        </article>
+      </div>
+
+      <h2>Rubric — four criteria · four levels</h2>
+
+      <table class="rubric" role="table" aria-label="Stack rubric — 4 criteria scored on 4 levels">
+        <thead>
+          <tr>
+            <th class="crit-h" scope="col">Criterion</th>
+            <th class="level-h" scope="col">Exemplary</th>
+            <th class="level-h" scope="col">Proficient</th>
+            <th class="level-h" scope="col">Developing</th>
+            <th class="level-h" scope="col">Not yet</th>
+            <th class="pts-h" scope="col">Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">Autonomy levers <span class="crit-pts">8 PTS</span></td>
+            <td class="ex"><strong>7–8</strong>Three levers, all genuine choices YOU control. Specific to your life.</td>
+            <td class="pf"><strong>5–6</strong>Three levers; one is generic ("morning").</td>
+            <td class="dv"><strong>3–4</strong>Two levers, or all generic.</td>
+            <td class="ne"><strong>0–2</strong>One or none.</td>
+            <td class="pts-cell">/8</td>
+          </tr>
+          <tr>
+            <td class="crit">Mastery levers <span class="crit-pts">8 PTS</span></td>
+            <td class="ex"><strong>7–8</strong>Three concrete signals of progress — countable, visible, not vibes.</td>
+            <td class="pf"><strong>5–6</strong>Three levers; one is fuzzy ("feel productive").</td>
+            <td class="dv"><strong>3–4</strong>Two levers, or all fuzzy.</td>
+            <td class="ne"><strong>0–2</strong>One or none.</td>
+            <td class="pts-cell">/8</td>
+          </tr>
+          <tr>
+            <td class="crit">Purpose levers <span class="crit-pts">12 PTS</span></td>
+            <td class="ex"><strong>11–12</strong>Three reasons that name a human (you, future-you, someone you love). Risks something honest.</td>
+            <td class="pf"><strong>8–10</strong>Three reasons; one is "syllabus" but two land.</td>
+            <td class="dv"><strong>5–7</strong>Two reasons or all "because grade."</td>
+            <td class="ne"><strong>0–4</strong>One or none. Or all extrinsic.</td>
+            <td class="pts-cell">/12</td>
+          </tr>
+          <tr>
+            <td class="crit">Ritual hits all three <span class="crit-pts">12 PTS</span></td>
+            <td class="ex"><strong>11–12</strong>One specific 25-min ritual with when/where/what + each of the three nutrients explicitly named.</td>
+            <td class="pf"><strong>8–10</strong>Specific ritual; two of three nutrients clearly cited.</td>
+            <td class="dv"><strong>5–7</strong>Generic ritual ("study every night"). One nutrient.</td>
+            <td class="ne"><strong>0–4</strong>Missing or vague.</td>
+            <td class="pts-cell">/12</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score" aria-label="Self-score worksheet">
+        <h3>Self-score before you submit.</h3>
+        <div class="grid">
+          <span>Autonomy levers</span><span class="pts-box" aria-label="self score box, autonomy, out of 8"></span>
+          <span>Mastery levers</span><span class="pts-box" aria-label="self score box, mastery, out of 8"></span>
+          <span>Purpose levers</span><span class="pts-box" aria-label="self score box, purpose, out of 12"></span>
+          <span>Ritual hits all three</span><span class="pts-box" aria-label="self score box, ritual, out of 12"></span>
+          <span class="total-row">TOTAL · pass line is 26</span><span class="total-box" aria-label="total score box, out of 40"></span>
+        </div>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>THE HONEST START · TILT RUBRIC · PG 3 / 4</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 4 — START LOG ============ -->
+    <article class="page" aria-labelledby="log-h">
+      <header class="runhead">
+        <h1 id="log-h">Start Log. <em>50 pts.</em></h1>
+        <div class="meta">
+          TAKE-HOME · 7 DAYS
+          <span class="total">50</span>
+        </div>
+      </header>
+
+      <p class="crumb"><span class="crumb-strong">PG 4/4</span> &nbsp;·&nbsp; HONEST ENGAGEMENT BEATS POLISH</p>
+
+      <div class="tilt-band" role="list" aria-label="TILT framework for the Start Log">
+        <article class="tilt-card" role="listitem">
+          <span class="tag purpose">① PURPOSE</span>
+          <h3>The skill we're building.</h3>
+          <div class="body">
+            <p>One Start Moment is a coin flip. Seven days of moments is a <em>pattern</em> — and the pattern is where the real diagnosis lives.</p>
+            <p>The log trades polish for honesty. We want your real Wednesday-morning row, not a curated one. The reflection is where the learning lives.</p>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag task">② TASK</span>
+          <h3>What you'll do.</h3>
+          <div class="body">
+            <ul>
+              <li>Pair with one classmate. Trade phone numbers. Different major if possible.</li>
+              <li>Tonight: text "DONE" when your tiny step is done. Not before.</li>
+              <li>Each day for <strong>7 days</strong>, log one Start Moment row: when · trigger · tiny step · started? · one-line surprise.</li>
+              <li>Sunday: write a <strong>4-sentence reflection</strong> — pattern, surprise, breakdown, next move.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag criteria">③ CRITERIA</span>
+          <h3>What "got it" looks like.</h3>
+          <div class="body">
+            <p>See the rubric below. Four criteria, four levels, 50 points total.</p>
+            <p><strong>Pass line:</strong> 33 pts. Below 33 → free revision week, no penalty. <em>A messy log with real patterns beats a sparkling one with no learning.</em></p>
+          </div>
+        </article>
+      </div>
+
+      <h2>Rubric — four criteria · four levels</h2>
+
+      <table class="rubric" role="table" aria-label="Start Log rubric — 4 criteria scored on 4 levels">
+        <thead>
+          <tr>
+            <th class="crit-h" scope="col">Criterion</th>
+            <th class="level-h" scope="col">Exemplary</th>
+            <th class="level-h" scope="col">Proficient</th>
+            <th class="level-h" scope="col">Developing</th>
+            <th class="level-h" scope="col">Not yet</th>
+            <th class="pts-h" scope="col">Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">Coverage <span class="crit-pts">15 PTS</span></td>
+            <td class="ex"><strong>13–15</strong>7 days logged. ≥ 7 rows. Real distribution — not all entered Sunday night.</td>
+            <td class="pf"><strong>10–12</strong>6–7 days. 5–7 rows. Mostly real-time.</td>
+            <td class="dv"><strong>6–9</strong>4–5 days. Or 7 days but very thin.</td>
+            <td class="ne"><strong>0–5</strong>Three days or fewer. Or invented retroactively.</td>
+            <td class="pts-cell">/15</td>
+          </tr>
+          <tr>
+            <td class="crit">Trigger tagging <span class="crit-pts">10 PTS</span></td>
+            <td class="ex"><strong>9–10</strong>Each row tagged with primary trigger. Mix is plausible — not all four every time.</td>
+            <td class="pf"><strong>7–8</strong>Most rows tagged; 1–2 missing. Mix plausible.</td>
+            <td class="dv"><strong>4–6</strong>Some rows tagged. Many marked uniformly.</td>
+            <td class="ne"><strong>0–3</strong>Tags absent or all blank.</td>
+            <td class="pts-cell">/10</td>
+          </tr>
+          <tr>
+            <td class="crit">Honesty signal <span class="crit-pts">10 PTS</span></td>
+            <td class="ex"><strong>9–10</strong>"Started?" column shows real variety (yes / no / kinda). Surprises name something specific — wins <em>and</em> failures.</td>
+            <td class="pf"><strong>7–8</strong>Some variety. Surprises mostly substantive.</td>
+            <td class="dv"><strong>4–6</strong>Almost all "yes." Surprises generic ("learned a lot").</td>
+            <td class="ne"><strong>0–3</strong>Reads like fan-fiction. Suspiciously clean.</td>
+            <td class="pts-cell">/10</td>
+          </tr>
+          <tr>
+            <td class="crit">Reflection <span class="crit-pts">15 PTS</span></td>
+            <td class="ex"><strong>13–15</strong>4 sentences. <em>Pattern</em> is specific, <em>surprise</em> is honest, <em>breakdown</em> names a real ritual failure, <em>next move</em> is one concrete behavior change.</td>
+            <td class="pf"><strong>10–12</strong>4 sentences. 3 of 4 land; one is generic.</td>
+            <td class="dv"><strong>6–9</strong>Reflection present but mostly summary. Next move vague.</td>
+            <td class="ne"><strong>0–5</strong>Missing or under 2 sentences.</td>
+            <td class="pts-cell">/15</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score" aria-label="Self-score worksheet">
+        <h3>Self-score before you submit.</h3>
+        <div class="grid">
+          <span>Coverage — 7 days, real distribution</span><span class="pts-box" aria-label="self score box, coverage, out of 15"></span>
+          <span>Trigger tagging — primary on each row</span><span class="pts-box" aria-label="self score box, tagging, out of 10"></span>
+          <span>Honesty signal — Started? + Surprises</span><span class="pts-box" aria-label="self score box, honesty, out of 10"></span>
+          <span>Reflection — pattern · surprise · breakdown · next move</span><span class="pts-box" aria-label="self score box, reflection, out of 15"></span>
+          <span class="total-row">TOTAL · pass line is 33</span><span class="total-box" aria-label="total score box, out of 50"></span>
+        </div>
+      </div>
+
+      <div class="pull" style="margin-top: 18px;">
+        <strong>WHY THIS RUBRIC LOOKS THIS WAY</strong>
+        Notice no axis rewards "feeling motivated" or "having a good week." We can't grade those — and shouldn't try. We grade the work you can <em>show</em>: the rows, the tags, the honest reflection. The skill comes from the volume of honest reps.
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>THE HONEST START · TILT RUBRIC · PG 4 / 4</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+  </main>
+</body>
+</html>

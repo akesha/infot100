@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Setup Quest · Facilitator Guide · CSCI-Y100 Week 3</title>
+  <meta name="description" content="Facilitator guide for the 90-minute Setup Quest (Second Brain) module: install dev environment + Obsidian vault + IU library bookmarks. Run-of-show for Week 3." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    @page { size: letter; margin: 0.6in 0.7in; }
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+      --signal-purple-text: #5C418F;
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    html { font-size: 14px; }
+    body { margin: 0; background: var(--paper-200); color: var(--ink-900); font-family: var(--font-body); font-size: 14px; line-height: 1.55; }
+    .page { background: var(--paper-50); width: 8.5in; min-height: 11in; box-sizing: border-box; padding: 0.7in 0.75in; margin: 24px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.12); page-break-after: always; position: relative; }
+    .page:last-of-type { page-break-after: auto; }
+    @media print { body { background: #fff; } .page { margin: 0; padding: 0; box-shadow: none; width: auto; min-height: auto; } .no-print { display: none !important; } }
+    .toolbar { position: sticky; top: 0; z-index: 100; background: var(--ink-900); color: var(--paper-50); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em; }
+    .toolbar .label { color: var(--signal-amber); }
+    .toolbar button { background: var(--signal-amber); color: var(--ink-900); border: 0; padding: 8px 18px; font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.1em; cursor: pointer; border-radius: 4px; }
+    .toolbar button:hover { background: #f7c46a; }
+    .toolbar button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .skip-link { position: absolute; left: -9999px; top: 0; background: var(--ink-900); color: #fff; padding: 8px 14px; }
+    .skip-link:focus { left: 12px; top: 12px; z-index: 999; }
+
+    h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; }
+    h1 { font-size: 64px; line-height: 0.95; letter-spacing: -0.025em; margin: 0 0 18px; font-style: italic; }
+    h1 em { color: var(--crimson); }
+    h2 { font-size: 28px; line-height: 1.1; margin: 28px 0 12px; letter-spacing: -0.015em; font-style: italic; padding-bottom: 8px; border-bottom: 2px solid var(--ink-900); }
+    h2 .num { font-family: var(--font-mono); font-style: normal; font-size: 16px; color: var(--crimson); margin-right: 14px; letter-spacing: 0.1em; vertical-align: 5px; }
+    h3 { font-size: 18px; margin: 22px 0 8px; font-style: italic; }
+    h4 { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-500); margin: 18px 0 6px; }
+    p { margin: 0 0 10px; }
+    .crumb { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--ink-500); }
+    .footer-strip { position: absolute; bottom: 0.4in; left: 0.75in; right: 0.75in; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--ink-300); padding-top: 8px; border-top: 1px solid var(--paper-200); }
+
+    .cover { background: var(--paper-50); background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0); background-size: 22px 22px; display: flex; flex-direction: column; justify-content: space-between; }
+    .cover-head { display: flex; justify-content: space-between; align-items: flex-start; }
+    .cover-crest { width: 56px; height: 56px; background: var(--crimson); color: #fff; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 28px; display: inline-flex; align-items: center; justify-content: center; }
+    .cover h1 { font-size: 88px; }
+    .cover .lede { font-size: 22px; line-height: 1.4; max-width: 640px; color: var(--ink-700); margin-top: 12px; font-family: var(--font-display); font-style: italic; }
+    .cover-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 36px; padding-top: 36px; border-top: 2px solid var(--ink-900); max-width: 700px; }
+    .cover-meta dt { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 4px; }
+    .cover-meta dd { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 22px; font-weight: 600; }
+    .cover-stamp { display: inline-block; border: 2.5px solid var(--crimson); color: var(--crimson); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.18em; padding: 8px 14px; transform: rotate(-3deg); margin-bottom: 16px; }
+    .tape-strip { position: absolute; top: 0.4in; right: 0.7in; transform: rotate(2deg); background: var(--signal-amber); padding: 4px 14px; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; }
+
+    .agenda { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .agenda li { display: grid; grid-template-columns: 64px 100px 1fr 60px; gap: 14px; align-items: baseline; padding: 10px 14px; background: var(--paper-100); border-left: 4px solid var(--ink-900); }
+    .agenda .step { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; color: var(--crimson); }
+    .agenda .clock { font-family: var(--font-mono); font-size: 12px; color: var(--ink-500); }
+    .agenda .title-cell { font-family: var(--font-display); font-style: italic; font-size: 18px; font-weight: 600; }
+    .agenda .dur { font-family: var(--font-mono); font-size: 12px; font-weight: 700; text-align: right; }
+
+    .section-row { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: baseline; margin: 26px 0 10px; }
+    .section-row .num { font-family: var(--font-mono); font-weight: 700; font-size: 14px; letter-spacing: 0.1em; color: var(--crimson); }
+    .section-row .ttl { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 26px; padding-bottom: 6px; border-bottom: 2px solid var(--ink-900); }
+    .section-row .meta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-500); letter-spacing: 0.1em; }
+
+    .runblock { page-break-inside: avoid; background: var(--paper-50); border: 1px solid var(--paper-200); padding: 16px 20px; margin: 16px 0; position: relative; }
+    .timestrip { display: flex; gap: 12px; align-items: center; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; color: var(--ink-500); margin-bottom: 4px; }
+    .timestrip .badge { background: var(--ink-900); color: var(--paper-50); padding: 3px 8px; border-radius: 3px; font-weight: 700; }
+    .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
+    .twocol h4 { margin-top: 0; }
+    .script { background: #fff; border-left: 3px solid var(--crimson); padding: 10px 14px; font-family: var(--font-display); font-style: italic; font-size: 14px; line-height: 1.5; color: var(--ink-900); margin: 6px 0; }
+    .script::before { content: '\201C'; font-size: 28px; line-height: 0; color: var(--crimson); margin-right: 4px; vertical-align: -8px; }
+    .doit { padding: 0; margin: 6px 0; list-style: none; }
+    .doit li { display: flex; align-items: baseline; gap: 10px; padding: 4px 0; border-bottom: 1px dashed var(--paper-200); }
+    .doit li:last-child { border-bottom: 0; }
+    .doit li::before { content: '\2610'; flex-shrink: 0; width: 22px; color: var(--ink-500); font-size: 18px; line-height: 1; }
+    .watchfor { background: var(--paper-100); border-top: 3px solid var(--signal-amber); padding: 10px 14px; margin-top: 10px; font-size: 13px; }
+    .watchfor h4 { margin-top: 0; color: var(--signal-amber-text); }
+    .materials { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 24px; margin: 10px 0; padding: 0; }
+    .materials li { list-style: none; padding-left: 22px; position: relative; font-size: 13px; }
+    .materials li::before { content: '\2713'; position: absolute; left: 0; top: 0; font-family: var(--font-mono); font-weight: 700; color: var(--signal-green-text); }
+    .trouble { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+    .trouble th, .trouble td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--paper-200); vertical-align: top; }
+    .trouble th { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; background: var(--paper-100); color: var(--ink-700); }
+    .trouble td:first-child { font-family: var(--font-display); font-style: italic; font-weight: 600; width: 38%; }
+    .rationale { border-top: 2px solid var(--ink-900); border-bottom: 2px solid var(--ink-900); padding: 14px 0; margin: 16px 0; font-family: var(--font-display); font-style: italic; font-size: 18px; line-height: 1.4; }
+    .rationale strong { font-style: normal; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; display: block; color: var(--crimson); margin-bottom: 6px; }
+    .checklist { padding: 0; list-style: none; margin: 8px 0; }
+    .checklist li { display: flex; align-items: baseline; gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--paper-200); font-size: 13.5px; }
+    .checklist li::before { content: '\2610'; color: var(--ink-500); font-size: 18px; line-height: 1; }
+    .pillbox { display: inline-block; background: var(--paper-100); border: 1px solid var(--paper-200); padding: 2px 8px; border-radius: 12px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--ink-700); margin-right: 4px; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to facilitator guide</a>
+  <div class="toolbar no-print" role="toolbar" aria-label="Document actions">
+    <span><span class="label">FACILITATOR GUIDE</span> &nbsp;·&nbsp; Setup Quest · 90 min · WEEK 03</span>
+    <button type="button" onclick="window.print()" aria-label="Print this facilitator guide">PRINT / SAVE PDF</button>
+  </div>
+
+  <main id="main">
+
+    <article class="page cover" aria-labelledby="cover-title">
+      <div class="tape-strip" aria-hidden="true">FACILITATOR · KEEP HANDY</div>
+      <header class="cover-head">
+        <div><div class="cover-crest" aria-label="Indiana University">IU</div></div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 03 · v2.0</div>
+      </header>
+      <div>
+        <div class="cover-stamp">FACILITATOR GUIDE — ONE COPY PER INSTRUCTOR</div>
+        <h1 id="cover-title">Setup<br /><em>Quest.</em></h1>
+        <p class="lede">A 90-minute install lab in a computer classroom or breakout space with TAs at every table. Three install rounds — dev environment, version control, second brain — plus the first vault note and the first credible source from an IU library database. Nobody leaves with a half-broken setup.</p>
+      </div>
+      <dl class="cover-meta">
+        <div><dt>DURATION</dt><dd>90 minutes</dd></div>
+        <div><dt>STUDENTS</dt><dd>15–25 first-year, any major</dd></div>
+        <div><dt>LOCATION</dt><dd>Computer classroom or breakout (power + Wi-Fi at every seat)</dd></div>
+        <div><dt>DELIVERABLES</dt><dd>4 logged in Start Log</dd></div>
+        <div><dt>POSTURE</dt><dd>Lab — TAs hands-on, instructor floats</dd></div>
+        <div><dt>PREREQUISITES</dt><dd>W1 Spawn Point + W2 Compute Time</dd></div>
+      </dl>
+      <div class="footer-strip"><span>SETUP QUEST · 01 / 06</span><span>v2.0 · 2026</span></div>
+    </article>
+
+    <article class="page">
+      <div class="crumb">CSCI-Y100 · WEEK 03 · WHY THIS LESSON</div>
+      <h1 style="font-size:48px;">Why <em>now</em>, why <em>this way</em>.</h1>
+
+      <p style="font-size:16px;line-height:1.55;">Most CS curricula assume the dev environment Just Works by Week 1. It doesn't. Students arrive with a laptop, a vague memory of a homework instruction page, and no help when their `python` command says "command not found" at 11pm on a Tuesday. The cost shows up six weeks later as a withdrawal.</p>
+
+      <p style="font-size:16px;line-height:1.55;">Setup Quest gets the install <em>done in class</em>, with TAs at every table, before the first project deliverable hits in W4. Three rounds — terminal/editor, runtime/git, Obsidian/library — each with a verified outcome. The room doesn't move on until everyone's machine runs the verification command for that round.</p>
+
+      <h2><span class="num">§ A</span> Outcomes — what every student leaves with</h2>
+      <ul class="materials" style="grid-template-columns:1fr;">
+        <li><strong>Working terminal + editor.</strong> They can open a terminal, navigate one folder up, and edit a file in VS Code without consulting a tutorial.</li>
+        <li><strong>Working runtime + git.</strong> Python (or course language) runs on their machine. They've made one commit, pushed it to a GitHub repo of their own.</li>
+        <li><strong>Working second brain.</strong> Obsidian is installed with a course vault. The vault has a folder structure (Weeks/, Project/, Bugs/, Reflections/, Sources/) and a first note in Weeks/.</li>
+        <li><strong>One credible source from an IU library database.</strong> Title + link + a one-sentence "why I trust this" line, captured in Sources/. <em>Not</em> a Google result.</li>
+      </ul>
+
+      <h2><span class="num">§ B</span> Today's run-of-show</h2>
+      <ol class="agenda">
+        <li><span class="step">§ 00</span><span class="clock">+0 → +8</span><span class="title-cell">Why a second brain</span><span class="dur">8 min</span></li>
+        <li><span class="step">§ 01</span><span class="clock">+8 → +28</span><span class="title-cell">Install round 1 — terminal + editor</span><span class="dur">20 min</span></li>
+        <li><span class="step">§ 02</span><span class="clock">+28 → +43</span><span class="title-cell">Install round 2 — runtime + git</span><span class="dur">15 min</span></li>
+        <li><span class="step">§ 03</span><span class="clock">+43 → +58</span><span class="title-cell">Install round 3 — Obsidian + IU library</span><span class="dur">15 min</span></li>
+        <li><span class="step">§ 04</span><span class="clock">+58 → +73</span><span class="title-cell">First note · first source</span><span class="dur">15 min</span></li>
+        <li><span class="step">§ 05</span><span class="clock">+73 → +85</span><span class="title-cell">Wrap-up + 1:1 troubleshoot</span><span class="dur">12 min</span></li>
+        <li><span class="step">§ 06</span><span class="clock">+85 → +90</span><span class="title-cell">Take-home</span><span class="dur">5 min</span></li>
+      </ol>
+
+      <div class="rationale">
+        <strong>Why this beats the usual setup tutorial</strong>
+        Setup tutorials get bookmarked and forgotten. A 90-minute supervised install gets every student to "verified working" in the same hour. The TA-to-student ratio (1:8 ideal) is what makes it work — without it, the lab becomes a help-desk queue.
+      </div>
+
+      <div class="footer-strip"><span>SETUP QUEST · 02 / 06</span><span>v2.0 · 2026</span></div>
+    </article>
+
+    <article class="page">
+      <div class="crumb">CSCI-Y100 · WEEK 03 · PRE-CLASS · 24 HOURS OUT</div>
+      <h1 style="font-size:48px;">Pre-class <em>checklist.</em></h1>
+
+      <p style="font-size:15px;line-height:1.55;">Setup Quest fails when these don't get done. Run the checklist 24 hours before class.</p>
+
+      <h2><span class="num">§ C</span> Room + tech</h2>
+      <ul class="checklist">
+        <li>Confirm room has power at every seat. Reserve a backup power strip.</li>
+        <li>Confirm Wi-Fi works under load (15+ simultaneous large downloads). If campus Wi-Fi is shaky, flag it now.</li>
+        <li>Test the projector. Mirror the demo terminal in a font that's readable from the back row (16pt+).</li>
+        <li>Print the OS-specific install handouts (3 versions: macOS / Windows / Linux). One per seat.</li>
+        <li>Pre-stage TA machines with the final install state. They should be the demo machines, not students debugging on the fly.</li>
+      </ul>
+
+      <h2><span class="num">§ D</span> People</h2>
+      <ul class="checklist">
+        <li>Confirm TA-to-student ratio. 1:8 ideal, 1:12 hard floor. Below that, install round 1 leaks past 50 minutes.</li>
+        <li>Coordinate with Wells Library liaison librarian: drop-in (15 min) during § 03 OR a 5-min recorded walkthrough of the database list playing in the background.</li>
+        <li>Share the run-of-show with TAs. They should know which round verifies which outcome and which trouble-shoots are theirs.</li>
+      </ul>
+
+      <h2><span class="num">§ E</span> Materials</h2>
+      <ul class="materials">
+        <li>OS-specific install handouts (printed)</li>
+        <li>Slides + speaker notes (`setup-quest-slides.html`)</li>
+        <li>TILT rubric (`setup-quest-tilt-rubric.html`)</li>
+        <li>Verification commands cheat sheet (per round)</li>
+        <li>Obsidian vault starter folder structure (zipped — back-up if Internet fails)</li>
+        <li>Bookmark list: IU Libraries home, database list, librarian chat</li>
+      </ul>
+
+      <div class="footer-strip"><span>SETUP QUEST · 03 / 06</span><span>v2.0 · 2026</span></div>
+    </article>
+
+    <article class="page">
+      <div class="crumb">CSCI-Y100 · WEEK 03 · RUN OF SHOW · §§ 00–02</div>
+      <h1 style="font-size:48px;">Run of <em>show.</em> <span style="color:var(--ink-500);font-size:32px;">First half.</span></h1>
+
+      <div class="section-row">
+        <span class="num">§ 00</span>
+        <span class="ttl">Why a second brain</span>
+        <span class="meta">8 MIN · COLD OPEN · COMPUTER OFF</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+0</span><span>OPEN — laptops closed, full attention forward</span></div>
+        <div class="script">Three weeks ago we found the toolbox. Two weeks ago we found the time. This week we make the third move that 80% of CS students never make on purpose — we externalize. By end of class your laptop is going to know how to run code, and your second brain is going to know how to keep what you learned. Both matter. Skipping the second one is how juniors look up at Week 12 and realize they have no idea what they did in Week 4.</div>
+        <h4>Do</h4>
+        <ul class="doit">
+          <li>Slides 1–3: anchor question + Big Ideas (#2 verbs · #4 externalize).</li>
+          <li>One question to the room: "What did you learn in W2 that you couldn't recall right now without looking?" Wait. Don't fill the silence.</li>
+          <li>Hand to TAs: "We're going to spend the next 80 minutes making sure none of you are that student in W12."</li>
+        </ul>
+      </div>
+
+      <div class="section-row">
+        <span class="num">§ 01</span>
+        <span class="ttl">Install round 1 — terminal + editor</span>
+        <span class="meta">20 MIN · INSTALL · TAs HANDS-ON</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+8</span><span>HANDOUT — pass the OS-specific install sheets</span></div>
+        <div class="twocol">
+          <div>
+            <h4>Facilitator move</h4>
+            <ul class="doit">
+              <li>Project the demo terminal (16pt+ font). Run `echo "hi"` and `pwd`. That's the verification target.</li>
+              <li>Walk through VS Code install — show how to open the terminal pane inside it.</li>
+              <li>Set the timer. 18 minutes for installs, 2 minutes for the verification check.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>TA move</h4>
+            <ul class="doit">
+              <li>Stand. Don't sit at one student's desk for more than 2 minutes.</li>
+              <li>If a student is stuck on the same step for &gt; 5 min, escalate — call the facilitator over.</li>
+              <li>Verification: each student runs `echo "hi"` aloud at their own terminal before § 02 starts.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="watchfor">
+          <h4>Watch for</h4>
+          PATH issues on Windows. The student installs Python or VS Code, the install "succeeds," but the terminal still says command not found because PATH didn't update. Fix: close + reopen the terminal. If still broken, restart the machine. If still broken, the install didn't add to PATH — re-run installer with "Add to PATH" checked.
+        </div>
+      </div>
+
+      <div class="section-row">
+        <span class="num">§ 02</span>
+        <span class="ttl">Install round 2 — runtime + git</span>
+        <span class="meta">15 MIN · INSTALL · COMMIT IS THE GOAL</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+28</span><span>RUN — first script, first commit</span></div>
+        <div class="script">A repo with one commit is a repo. A repo with zero commits is a folder. We're making a repo today.</div>
+        <h4>Do</h4>
+        <ul class="doit">
+          <li>Demo: `python --version` (or course-language equivalent). Then a one-line `print("hi")` script. Run it. The room sees output.</li>
+          <li>Demo: `git init`, create a one-line README, `git add`, `git commit -m "first"`. That's the verification target for this round.</li>
+          <li>GitHub: students log in (or sign up — flag this on the install handout if needed). Push the local repo to a new GitHub repo. Repo can be empty besides the README.</li>
+        </ul>
+        <div class="watchfor">
+          <h4>Watch for</h4>
+          Git authentication. GitHub no longer accepts password auth for HTTPS — students need a personal access token or SSH key. Have the SSH-key path on the handout (it's faster). Plan for 5–10 minutes of GitHub-account-creation time for any student who doesn't already have one.
+        </div>
+      </div>
+
+      <div class="footer-strip"><span>SETUP QUEST · 04 / 06</span><span>v2.0 · 2026</span></div>
+    </article>
+
+    <article class="page">
+      <div class="crumb">CSCI-Y100 · WEEK 03 · RUN OF SHOW · §§ 03–06</div>
+      <h1 style="font-size:48px;">Run of <em>show.</em> <span style="color:var(--ink-500);font-size:32px;">Second half.</span></h1>
+
+      <div class="section-row">
+        <span class="num">§ 03</span>
+        <span class="ttl">Install round 3 — Obsidian + IU library</span>
+        <span class="meta">15 MIN · INSTALL · LIBRARIAN OPTIONAL</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+43</span><span>VAULT — Obsidian, folder structure, library bookmarks</span></div>
+        <h4>Do</h4>
+        <ul class="doit">
+          <li>Demo: install Obsidian. Create a vault named `csci-y100`. Set up the folder structure on screen: Weeks/, Project/, Bugs/, Reflections/, Sources/.</li>
+          <li>Demo: bookmark IU Libraries home, the database list, and the chat-with-a-librarian button.</li>
+          <li>Librarian (if scheduled): hand the room over for a 10-min walk-through of the database list. They know it better than you. Don't fight for the mic.</li>
+          <li>Verification: every student opens Obsidian and shows their TA the five folders. TAs check off Start Log entries.</li>
+        </ul>
+        <div class="watchfor">
+          <h4>Watch for</h4>
+          The "I'll do it later" face. Obsidian feels less urgent than Python. Counter the bypass directly: "If you skip this, every other lesson's capture template has nowhere to land. Five minutes now or fifteen on your own at 11pm."
+        </div>
+      </div>
+
+      <div class="section-row">
+        <span class="num">§ 04</span>
+        <span class="ttl">First note · first source</span>
+        <span class="meta">15 MIN · USE WHAT YOU INSTALLED</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+58</span><span>WRITE — first vault note + first credible source</span></div>
+        <div class="script">Installing tools is not a capability. Using them is. We're doing both today, in the same room, while help is at your elbow.</div>
+        <h4>Do</h4>
+        <ul class="doit">
+          <li>First note (Weeks/W03-setup-quest.md): one sentence on what you installed. Save.</li>
+          <li>First source (Sources/...): pull <em>one</em> credible online source — from an IU database, NOT Google — about something you're curious about. Capture title, link, one-sentence "why I trust this." Save.</li>
+          <li>Constraint: the source has to be findable in an IU database. Google Scholar is NOT acceptable here — that's the point. Flagging this is a TA job; bypassing it is a TA conversation.</li>
+        </ul>
+        <div class="watchfor">
+          <h4>Watch for</h4>
+          The student who treats this as homework and tries to leave with "I'll find a source later." The whole lesson collapses if they skip § 04. Stand at the door if you have to.
+        </div>
+      </div>
+
+      <div class="section-row">
+        <span class="num">§ 05</span>
+        <span class="ttl">Wrap-up + 1:1 troubleshoot</span>
+        <span class="meta">12 MIN · NO STUDENT LEAVES BROKEN</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+73</span><span>UNBLOCK — the most stuck student gets the facilitator</span></div>
+        <h4>Do</h4>
+        <ul class="doit">
+          <li>TAs sweep the room. Anyone whose Start Log is missing a deliverable gets help.</li>
+          <li>You (facilitator) visit the most-stuck student. Sit. Solve. The optics matter — students remember who got abandoned.</li>
+          <li>If a student's stack is genuinely broken (corrupt install, broken laptop), schedule a 1:1 office hours slot before W4. Don't pretend it's fixed.</li>
+        </ul>
+      </div>
+
+      <div class="section-row">
+        <span class="num">§ 06</span>
+        <span class="ttl">Take-home</span>
+        <span class="meta">5 MIN · LOG THE ARTIFACTS</span>
+      </div>
+      <div class="runblock">
+        <div class="timestrip"><span class="badge">+85</span><span>LOG — three lines, no story</span></div>
+        <ul class="doit">
+          <li>Confirm in your Start Log: GitHub repo URL · Obsidian vault path · first source citation.</li>
+          <li>Three lines. No prose. Facilitator spot-checks during 1:1s.</li>
+        </ul>
+      </div>
+
+      <div class="footer-strip"><span>SETUP QUEST · 05 / 06</span><span>v2.0 · 2026</span></div>
+    </article>
+
+    <article class="page">
+      <div class="crumb">CSCI-Y100 · WEEK 03 · TROUBLESHOOTING + STUDENT HANDOUT</div>
+      <h1 style="font-size:48px;">When things <em>break.</em></h1>
+
+      <table class="trouble">
+        <thead>
+          <tr><th>Symptom</th><th>Most likely fix</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>"command not found" after install</td>
+            <td>PATH not updated. Close + reopen terminal. If still broken, restart machine. If still broken, re-run installer with "Add to PATH" option (Windows-specific).</td>
+          </tr>
+          <tr>
+            <td>Git push asks for password and rejects it</td>
+            <td>GitHub HTTPS auth requires a personal access token, not a password. Switch to SSH (faster) or generate a PAT in GitHub Settings → Developer settings.</td>
+          </tr>
+          <tr>
+            <td>Python script runs but says "module not found"</td>
+            <td>Wrong Python install or missing pip package. Check `which python` (or `where python` on Windows). If it points to an unexpected install, alias it or use full path.</td>
+          </tr>
+          <tr>
+            <td>Obsidian vault folder doesn't appear in the sidebar</td>
+            <td>Open vault → "Open another vault" → point at the folder. Don't drag-and-drop into the app — that confuses Obsidian's vault detection.</td>
+          </tr>
+          <tr>
+            <td>Student can't access an IU database from off-campus</td>
+            <td>VPN required for some databases. Bookmark the IU VPN install page; this is a known recurring issue. Alternative: the library proxy URL prefix (`https://proxy.ulib.iupui.edu/login?url=...`).</td>
+          </tr>
+          <tr>
+            <td>Student's laptop is genuinely broken or borrowed-mid-install</td>
+            <td>Loaner program: IU Library has laptops to lend. This is the right call — don't try to fix a hardware problem in a 15-min install round.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2><span class="num">§ F</span> Student handout · post on Canvas</h2>
+      <p style="font-size:15px;line-height:1.55;">A 1-page reference for students after class. Suggested format below — replace bracketed bits with your section's specifics.</p>
+      <div class="runblock" style="background:var(--paper-100);">
+        <h3 style="margin-top:0;">Setup Quest · what you installed and where it lives</h3>
+        <ul class="materials" style="grid-template-columns:1fr;font-size:13.5px;">
+          <li><strong>Terminal:</strong> [path to terminal app] — verify with `echo "hi"`</li>
+          <li><strong>Editor:</strong> VS Code — open with `code .` from any folder</li>
+          <li><strong>Runtime:</strong> Python [version] — verify with `python --version`</li>
+          <li><strong>Git:</strong> verify with `git --version`. Your GitHub username: ___</li>
+          <li><strong>Obsidian vault:</strong> [path] — five folders: Weeks/, Project/, Bugs/, Reflections/, Sources/</li>
+          <li><strong>IU library bookmarks:</strong> Libraries home · database list · chat-with-a-librarian</li>
+          <li><strong>Office hours for setup repair:</strong> [day/time, room]</li>
+        </ul>
+      </div>
+
+      <p style="margin-top:20px;font-size:13px;color:var(--ink-500);"><span class="pillbox">REMEMBER</span>If anything below is broken by W4 Monday, don't hide it. Drop into office hours or the Discord. The cost of a broken setup compounds — fixing it now costs an hour; fixing it in W6 costs a week.</p>
+
+      <div class="footer-strip"><span>SETUP QUEST · 06 / 06</span><span>v2.0 · 2026</span></div>
+    </article>
+
+  </main>
+</body>
+</html>

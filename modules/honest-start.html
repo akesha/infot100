@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Week 7 · The Honest Start · CSCI-Y100</title>
+  <meta name="description" content="Week 7 of CSCI-Y100: a 90-minute Honest Start module on procrastination — triggers, start-bad runs, autopsy, and a five-step start-stack." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    html, body { margin: 0; padding: 0; background: var(--paper-50); color: var(--ink-900); font-family: var(--font-body); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
+
+    a:focus-visible, button:focus-visible, input:focus-visible,
+    textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid var(--signal-amber);
+      outline-offset: 2px;
+      border-radius: 3px;
+    }
+    .skip-link {
+      position: absolute; top: -100px; left: 12px;
+      background: var(--ink-900); color: var(--paper-50);
+      padding: 10px 14px; border-radius: 4px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 600;
+      text-decoration: none; z-index: 1000;
+    }
+    .skip-link:focus { top: 12px; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div id="root">
+    <p style="padding:32px;font:16px/1.5 system-ui,sans-serif;color:#5A523F;">Loading Week 7: The Honest Start…</p>
+  </div>
+  <noscript>
+    <div style="max-width:640px;margin:60px auto;padding:24px 28px;background:#FBF7F0;border:2px solid #16140F;font:16px/1.55 system-ui,sans-serif;">
+      <h1 style="font-family:Georgia,serif;font-style:italic;margin:0 0 10px;">JavaScript needed</h1>
+      <p>This interactive module renders with React. Please enable JavaScript, or open the static <a href="honest-start-facilitator-guide.html">facilitator guide</a> or <a href="honest-start-slides.html">slides</a> instead.</p>
+    </div>
+  </noscript>
+
+  <script type="text/babel" src="proc-sections/00-avoidancewall.jsx"></script>
+  <script type="text/babel" src="proc-sections/01-coldopen.jsx"></script>
+  <script type="text/babel" src="proc-sections/02-triggers.jsx"></script>
+  <script type="text/babel" src="proc-sections/03-startbad.jsx"></script>
+  <script type="text/babel" src="proc-sections/04-autopsy.jsx"></script>
+  <script type="text/babel" src="proc-sections/05-stack.jsx"></script>
+  <script type="text/babel" src="proc-sections/06-takehome.jsx"></script>
+  <script type="text/babel" src="async-track.jsx"></script>
+  <script type="text/babel" src="engagement.jsx"></script>
+  <script type="text/babel" src="media-slot.jsx"></script>
+  <script type="text/babel" src="course-arc.jsx"></script>
+  <script type="text/babel" src="capture-template.jsx"></script>
+
+  <script type="text/babel">
+    const sections = [
+      { id: 'avoid',   label: 'Avoidance Wall',   time: '10 min', Cmp: window.ProcSectionAvoidance },
+      { id: 'cold',    label: 'Cold open',        time: '5 min',  Cmp: window.ProcSectionColdOpen },
+      { id: 'trig',    label: 'The 4 Triggers',   time: '8 min',  Cmp: window.ProcSectionTriggers },
+      { id: 'bad',     label: 'Start Bad on Purpose', time: '12 min', Cmp: window.ProcSectionStartBad },
+      { id: 'autopsy', label: 'Procrastination Autopsy', time: '25 min', Cmp: window.ProcSectionAutopsy },
+      { id: 'stack',   label: 'Motivation Stack', time: '20 min', Cmp: window.ProcSectionStack },
+      { id: 'home',    label: 'Take-home',        time: '10 min', Cmp: window.ProcSectionTakeHome },
+    ];
+
+    const asyncTrack = [
+      { refId: 'avoid', label: 'Avoidance Wall', soloTime: '10 min',
+        activity: 'Read the Avoidance Wall page and post your top three avoidance items via the anonymous async form. The shared wall populates from everyone\'s submissions — you\'ll see the patterns immediately.',
+        deliverable: 'Canvas → Week 7 → "Avoidance Wall" anonymous form (no name attached).' },
+      { refId: 'cold', label: 'Cold open', soloTime: '4 min',
+        activity: 'Watch the recorded cold open or read the 1-page text version. Note one task you\'ve been avoiding for more than a week.',
+        deliverable: 'Private — no posting required.',
+        recording: 'Linked at top of Canvas → Week 7.' },
+      { refId: 'trig', label: 'The 4 Triggers', soloTime: '8 min',
+        activity: 'Read The 4 Triggers below (boring, frustrating, ambiguous, scary). Identify your dominant trigger this semester and add it to your Start Log.',
+        deliverable: 'Start Log entry — facilitator spot-checks during 1:1s.' },
+      { refId: 'bad', label: 'Start Bad on Purpose', soloTime: '15 min',
+        activity: 'Pick the avoided task from the cold open. Set a 10-minute timer and do the worst possible version on purpose. Screenshot the bad start.',
+        deliverable: 'Canvas → Week 7 → "Bad start" Discussion (post screenshot + 1 sentence).',
+        peerLoop: 'Reply to two classmates with one solidarity comment each by Sunday.' },
+      { refId: 'autopsy', label: 'Procrastination Autopsy', soloTime: '30 min',
+        activity: 'Run the Procrastination Autopsy as a self-guided journal. The form auto-saves to your browser; you can leave and return. When done, export or screenshot the completed autopsy.',
+        deliverable: 'Canvas → Week 7 → "Autopsy" assignment (private to facilitator).' },
+      { refId: 'stack', label: 'Motivation Stack', soloTime: '22 min',
+        activity: 'Build your Motivation Stack solo using the in-page widget. Aim for three layers: one external accountability, one environmental nudge, one tiny ritual.',
+        deliverable: 'Canvas → Week 7 → "Motivation Stack" Discussion (post your stack).',
+        peerLoop: 'Steal one layer from a classmate by Sunday and tell them which.' },
+      { refId: 'home', label: 'Take-home', soloTime: '10 min',
+        activity: 'Same as the in-class take-home: pick one autopsy item to attempt this week using your new motivation stack. Log what worked.',
+        deliverable: 'Canvas → Week 7 → "Honest Start log" entry (one paragraph by next Sunday).' },
+    ];
+
+    const engagement = {
+      selfChecks: {
+        avoid: {
+          question: 'What pattern shows up most on the wall — across everyone\'s avoidance items?',
+          hint: 'Look for the trigger underneath the surface task. "Math homework" and "writing the email" both often map to the same trigger.',
+          answer: 'Most years the wall clusters around two triggers: ambiguity (don\'t know where to start) and fear (don\'t want to find out it\'s bad). Boring and frustrating show up too, but less than students predict.'
+        },
+        cold: {
+          question: 'What task have you been avoiding for more than a week — and what would the smallest possible start look like?',
+          hint: '"Smallest start" means under 2 minutes. Open the doc. Title the email. Drop the first bullet.',
+          answer: 'Strong responses pair a real avoided task with a sub-2-minute first move. Vague responses ("just start it") usually predict more avoidance.'
+        },
+        trig: {
+          question: 'Which of the four triggers (boring, frustrating, ambiguous, scary) is your dominant one this semester — and how do you know?',
+          hint: 'Look at what you\'ve actually been avoiding. The pattern reveals the trigger.',
+          answer: 'Most CS students score highest on "ambiguous" or "scary" — they avoid tasks where they don\'t know if their work is good or where the spec isn\'t crisp. "Boring" is more common in non-major courses.'
+        },
+        bad: {
+          question: 'What did "bad on purpose" actually feel like — and what did you notice once the bar was that low?',
+          hint: 'The point isn\'t that the bad version was secretly good. The point is what happened to your brain when the bar dropped.',
+          answer: 'Most students report that once the bar drops to "bad on purpose," the resistance falls off and they accidentally produce a usable first draft. The bad version is the unblocker, not the goal.'
+        },
+        autopsy: {
+          question: 'Looking at your autopsy: was it actually about the task, or about something else?',
+          hint: 'Almost no procrastination is about the task itself. It\'s usually about identity, fear, or sleep.',
+          answer: 'Common pattern: the surface task ("write the lab report") sits on top of an identity stake ("if this is bad, maybe I don\'t belong here"). The autopsy is most useful when you can name the underneath thing.'
+        },
+        stack: {
+          question: 'Which layer of your stack will fail first — and what\'s your backup?',
+          hint: 'External accountability is usually the most fragile (the friend gets sick). Environmental nudges are the most durable.',
+          answer: 'Strong stacks have at least one durable layer (an environment change you don\'t have to remember) and at least one social layer (a person who notices). Pure willpower stacks fail fast.'
+        },
+        home: {
+          question: 'Which autopsy item are you actually going to attempt this week — and which trigger are you bracing for?',
+          hint: 'Name the task and the trigger. "Lab report (ambiguous)" beats "do my homework."',
+        },
+      },
+      reflection: {
+        title: 'Honest Start reflection',
+        intro: 'Three short prompts. Auto-saves as you type. Hit "Copy for Canvas" when you\'re done and paste into the Week 7 reflection assignment.',
+        prompts: [
+          'What\'s underneath the task you\'ve been avoiding most — what is it really about?',
+          'Of everything from this lesson, what\'s the one move you\'ll actually try this week?',
+          'When you procrastinate next, what\'s the new self-talk you want to use instead of the old one?',
+        ],
+      },
+    };
+
+    const captureTemplate = {
+      title: 'Honest Start · Obsidian capture',
+      target: 'Reflections/W07-honest-start.md',
+      intro: 'Drop this into your vault. The autopsy section is private to you — write it for yourself, not for the facilitator. The motivation stack is the artifact you reuse all semester whenever you hit avoidance.',
+      markdown: `---
+type: lesson
+week: 07
+lesson: Honest Start
+date:${' '}
+status: open
+trigger:${' '}
+---
+
+# Honest Start — Week 7
+
+## Anchor question
+What's underneath my avoidance?
+
+## Avoided task (from cold open)
+- Task:${' '}
+- Avoidance length:${' '}days
+- Story I've been telling myself about why:${' '}
+
+## Dominant trigger
+- [ ] Boring
+- [ ] Frustrating
+- [ ] Ambiguous
+- [ ] Scary
+
+## Bad-on-purpose first start
+- Date / time:${' '}
+- What I produced (the bad version):${' '}
+- What changed in my head once the bar dropped:${' '}
+
+## Procrastination autopsy
+- Surface task:${' '}
+- Underneath (identity / fear / sleep / boundary / etc.):${' '}
+- The thing I was actually protecting:${' '}
+
+## Motivation stack · for this kind of avoidance
+1. **External accountability:**${' '}
+2. **Environmental nudge:**${' '}
+3. **Tiny ritual:**${' '}
+
+## Reflection
+> What's underneath the task I've been avoiding most?
+
+> The one move from this lesson I'll actually try this week:
+
+> When I procrastinate next, my new self-talk:
+
+## Links / related autopsies
+- [[Reflections/...]]
+`,
+    };
+
+    const media = {
+      cold: {
+        type: 'placeholder',
+        label: 'cold-open clip',
+        caption: 'Cold open · the task you\'ve been avoiding',
+        src: '',
+        transcript:
+`There is a task in your life right now that you have been avoiding for more than a week. You know which one. You're already thinking about it. That's the one.
+
+The story you've been telling yourself about why you're avoiding it is: 'I just need to be more disciplined,' or 'I'll do it tomorrow when I have more energy,' or 'I'm not ready,' or 'It's not actually due yet.' Pick yours. Whatever the story is, it has the same shape — it makes the avoidance about the future, when you'll have something you don't have today (motivation, time, courage, clarity). And the future you that has those things never arrives.
+
+Procrastination is not a discipline problem. We're going to take that off the table in the first ten minutes today. Procrastination is a trigger problem — there's a specific feeling the task creates in you (boring, frustrating, ambiguous, scary), and you avoid the feeling by avoiding the task. This is unconscious. You don't decide to procrastinate. Your brain runs a 'cost vs. reward' calculation faster than you can override it, and avoidance wins.
+
+The good news: triggers are nameable. Once you know which one is dominant for the avoided task, the move is different — you don't fight harder, you change the trigger. Boring tasks need a soundtrack or a partner. Frustrating tasks need a smaller next step. Ambiguous tasks need a fake spec. Scary tasks need a bad-on-purpose first draft so the bar is below your fear.
+
+Today we're going to do the autopsy on one specific avoided task — the one you're already thinking about. Not the abstract version. The real one. By the end of the lesson you will have started it. Not finished it. Started. That's the win.`
+      },
+    };
+
+    function App() {
+      const [active, setActive] = React.useState('avoid');
+
+      React.useEffect(() => {
+        const opts = { rootMargin: '-30% 0px -55% 0px', threshold: 0 };
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+        }, opts);
+        sections.forEach(s => {
+          const el = document.getElementById(s.id);
+          if (el) obs.observe(el);
+        });
+        return () => obs.disconnect();
+      }, []);
+
+      const goto = (id) => {
+        const el = document.getElementById(id);
+        if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: 'smooth' });
+      };
+
+      return (
+        <div style={{ position: 'relative' }}>
+          <header style={topBar.bar}>
+            <div style={topBar.left}>
+              <span style={topBar.iuMark}>IU</span>
+              <span style={topBar.crumb}>CSCI-Y100 · WEEK 07</span>
+            </div>
+            <div style={topBar.center}>
+              <span style={topBar.title}>The Honest Start · Motivation & Procrastination</span>
+            </div>
+            <div style={topBar.right}>
+              <span style={topBar.chip}>⏱ 90 min</span>
+              <span style={{ ...topBar.chip, background: 'var(--signal-green)', color: '#fff', borderColor: 'var(--signal-green)' }}>2 deliverables</span>
+              <button type="button" className="lesson-print-btn" onClick={() => window.print()}>Print worksheet</button>
+            </div>
+          </header>
+
+          <nav style={rail.nav} aria-label="Module sections">
+            <div style={rail.head}>CLASS FLOW</div>
+            <div style={rail.list}>
+              {sections.map((s, i) => (
+                <button
+                  key={s.id}
+                  onClick={() => goto(s.id)}
+                  aria-current={active === s.id ? 'location' : undefined}
+                  aria-label={`Section ${i+1}: ${s.label}, ${s.time}`}
+                  style={{
+                    ...rail.item,
+                    ...(active === s.id ? rail.itemActive : {}),
+                  }}
+                >
+                  <span style={rail.idx}>{i.toString().padStart(2,'0')}</span>
+                  <span style={rail.lbl}>{s.label}</span>
+                  <span style={rail.time}>{s.time}</span>
+                </button>
+              ))}
+            </div>
+            <a href="../index.html" style={rail.back}>← Back to canvas</a>
+          </nav>
+
+          <main id="main-content" style={main.wrap}>
+            <div style={{ paddingTop: 28 }}>
+              {window.CourseArc && (
+                <window.CourseArc currentKey="honest-start" />
+              )}
+              {window.AsyncTrack && (
+                <window.AsyncTrack
+                  data={asyncTrack}
+                  lessonKey="honest-start"
+                  totalTime="~99 min"
+                  canvasHub="Canvas → Week 7 module"
+                  intro={<><strong>Heads up:</strong> async mirror of Week 7. The Avoidance Wall and Autopsy forms auto-save to your browser, so you can do this in three short sittings. The Bad Start screenshot is shared publicly; the Autopsy stays private.</>}
+                />
+              )}
+            </div>
+            {sections.map((s) => {
+              const C = s.Cmp;
+              const sc = engagement.selfChecks[s.id];
+              const m = media[s.id];
+              return (
+                <section id={s.id} key={s.id} data-screen-label={`${s.label}`} style={main.section}>
+                  {m && window.MediaSlot && (
+                    <window.MediaSlot data={m} lessonKey="honest-start" sectionId={s.id} />
+                  )}
+                  {C ? <C /> : <div style={{ padding: 80, color: 'var(--signal-red)' }}>Missing: {s.id}</div>}
+                  {sc && window.SelfCheck && (
+                    <window.SelfCheck data={sc} lessonKey="honest-start" sectionId={s.id} />
+                  )}
+                </section>
+              );
+            })}
+
+            {window.ReflectionJournal && (
+              <window.ReflectionJournal data={engagement.reflection} lessonKey="honest-start">
+                {window.ExportWork && (
+                  <window.ExportWork lessonKey="honest-start" lessonTitle="Week 7 · The Honest Start" />
+                )}
+              </window.ReflectionJournal>
+            )}
+
+            {window.CaptureTemplate && (
+              <window.CaptureTemplate data={captureTemplate} />
+            )}
+
+            <footer style={main.foot}>
+              <div style={{ color: 'var(--ink-300)', marginBottom: 18, fontFamily: 'var(--font-mono)', fontSize: 11, whiteSpace: 'pre' }} aria-hidden="true">
+{`+--------------------------------------------+
+|  END OF MODULE  ·  start before you're ready|
++--------------------------------------------+`}
+              </div>
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontStyle: 'italic', color: 'var(--ink-500)' }}>
+                Feeling better isn't the goal. <span style={{ color: 'var(--crimson)' }}>Doing the thing</span> is.
+              </div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--ink-300)', letterSpacing: '0.15em', marginTop: 28 }}>
+                CSCI-Y100 · v2.0 · 2026
+              </div>
+            </footer>
+          </main>
+        </div>
+      );
+    }
+
+    const topBar = {
+      bar: {
+        position: 'sticky', top: 0, zIndex: 50,
+        display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center',
+        padding: '12px 32px',
+        background: 'var(--ink-900)', color: 'var(--paper-100)',
+        borderBottom: '3px solid var(--crimson)',
+      },
+      left: { display: 'flex', alignItems: 'center', gap: 12, justifySelf: 'start' },
+      center: { justifySelf: 'center' },
+      right: { display: 'flex', gap: 10, justifySelf: 'end' },
+      iuMark: {
+        width: 26, height: 26, background: 'var(--crimson)', color: '#fff',
+        fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 13, fontStyle: 'italic',
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+      },
+      crumb: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--paper-300)', letterSpacing: '0.1em' },
+      title: { fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 600, fontStyle: 'italic', color: 'var(--paper-50)' },
+      chip: {
+        fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.05em',
+        border: '1px solid var(--paper-300)', color: 'var(--paper-100)',
+        padding: '4px 8px', borderRadius: 3,
+      },
+    };
+
+    const rail = {
+      nav: {
+        position: 'fixed', top: 80, left: 32, width: 220,
+        background: 'var(--paper-100)', border: '1px solid var(--paper-200)',
+        padding: '18px 14px 14px', borderRadius: 6,
+        boxShadow: 'var(--shadow-paper)',
+        zIndex: 20,
+      },
+      head: {
+        fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700,
+        color: 'var(--ink-900)', letterSpacing: '0.18em',
+        marginBottom: 14, paddingBottom: 10, borderBottom: '2px solid var(--ink-900)',
+      },
+      list: { display: 'flex', flexDirection: 'column', gap: 2 },
+      item: {
+        display: 'grid', gridTemplateColumns: '24px 1fr auto', alignItems: 'center', gap: 8,
+        background: 'transparent', border: 'none', cursor: 'pointer',
+        padding: '8px 10px', borderRadius: 3,
+        textAlign: 'left', color: 'var(--ink-700)',
+        fontFamily: 'var(--font-body)', fontSize: 12.5,
+      },
+      itemActive: {
+        background: 'var(--ink-900)', color: 'var(--paper-50)',
+      },
+      idx: { fontFamily: 'var(--font-mono)', fontSize: 10, opacity: 0.7 },
+      lbl: { fontWeight: 600 },
+      time: { fontFamily: 'var(--font-mono)', fontSize: 9.5, opacity: 0.7 },
+      back: {
+        display: 'block', marginTop: 16, paddingTop: 12, borderTop: '1px dashed var(--paper-300)',
+        fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-500)',
+        textDecoration: 'none', textAlign: 'center',
+      },
+    };
+
+    const main = {
+      wrap: { marginLeft: 280, padding: '0 56px 0 24px', maxWidth: 1100 },
+      section: { padding: '60px 0', borderBottom: '1px solid var(--paper-200)', minHeight: 'min-content' },
+      foot: { padding: '90px 0 120px', textAlign: 'center' },
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

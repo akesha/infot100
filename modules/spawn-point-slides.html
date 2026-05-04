@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spawn Point · Slide Deck · CSCI-Y100 Week 1</title>
+  <meta name="description" content="Slide deck for the Spawn Point module (CSCI-Y100 Week 1). Use arrow keys, Page Up/Down, or Space to navigate." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <script type="application/json" id="speaker-notes">
+  [
+    "Welcome to Luddy. Welcome to Y100. This is Week 1 of 14. There's a real possibility that what we do in this room over the next 14 weeks is the most concrete thing you build in your first semester at IU. The shape of today is this: we're going to remember that you've already made things. We're going to look at the toolbox you now have access to. You're going to actually use a piece of it. And before you leave, you'll have a rough seed for a real final project. We open the door. You walk in.",
+
+    "Roll Call. The Maker Wall. Read the prompt aloud. Tell them: cardboard, glue, perler beads, slime that ruined the carpet — none of it counts as 'engineering' but all of it counts. Anonymous. Click in your thing, watch the wall fill. Wait until you see at least 18 sticky notes. Then read three out loud — pick the most specific, not the most impressive. The point lands itself: you're already a maker. CS isn't where making starts; it's where the toolkit gets sharper.",
+
+    "Reframe slide. Don't soften it. The myth they walked in with is 'I'm not a maker / I don't make things / makers are people with garages.' The truth is: every person in this room made something with their hands before age 12. The toolbox we hand you today is just a sharper version of the cardboard, glue, and stubbornness you already have. Read the line on screen and pause for two beats.",
+
+    "Cold open. Three students. Same Week 1, three very different Week 14s. Click through Marcus → Priya → Jordan. For each: read what they shipped, how it landed, and the moral. End on Jordan's: knowing what NOT to use is the same skill. The line that matters: Marcus had ideas, he didn't have verbs. The toolbox isn't optional. It's the difference between Week 14 being a Figma click-through and Week 14 being something a judge asks if you'll patent.",
+
+    "Anchor concept. Don't learn the tools. Learn the verbs. Hold this slide for the full 8 minutes. Walk through all 8 verbs out loud — about 45 seconds each. For each, state the verb, name the tool, name what you'd make. Don't deep-dive any single one — that's the scavenger hunt. The job here is to install the lens: a toolbox doesn't help if you only know the names of the tools. You need to know what each verb is FOR. The 8 verbs are the spine of every project this semester.",
+
+    "Equipment Scavenger — Deliverable 1. 20 minutes. For all 8 tools, write a concrete idea for YOUR final project, then rate it must / maybe / no. Read the brief aloud. Emphasize SPECIFIC: not 'something cool' — name a real object, for a real user, solving a real problem. Confirm it auto-saves. Walk the room. If a student is stuck on a tool, prompt with the seed question on screen. At 0:40 left, call the 5-minute warning. End by asking three students to read their must-haves out loud.",
+
+    "Transition slide. They've got a capability map on screen. Now they need to use one of these things, today, with their hands, before they walk out. The next 30 minutes are about your hands touching cardboard. Not theory. Not browsing. Building.",
+
+    "Cardboard Sprint — Deliverable 2. 30 minutes, four phases: pick a problem (3 min), sketch (5), build (18), photo + reflect (4). Read the rules. Pick a SMALL problem you actually had this week. Cardboard, scissors, tape, hot glue. Optional: ChompSaw if you need curves, Cameo if you need precision. Walk the room. The single most important sentence to say out loud: 'It's OK if it doesn't work the first time. That's data.' Some students will freeze — those are the ones avoiding starting badly. Two-minute warning at 0:25.",
+
+    "Why cardboard. Don't skip this — it's the lesson behind the activity. Cardboard is the world's fastest, cheapest 3D-printer. Senior designers prototype in cardboard their entire careers because the iteration loop is 90 seconds, not 6 hours. The thing they just built is small. The skill they just used — pick a problem, commit a shape, make a thing — is the skill the whole semester is about.",
+
+    "Project Seed — Deliverable 3. 10 minutes. Five questions: who, what, what'll you make, which 2-3 capabilities combined, and the smallest version they could ship by Week 4. Read each question. Push hard on WHO — 'students' is not specific. 'Freshmen in Briscoe with a single shared bathroom' is. The seed is a hypothesis, not a contract. You'll iterate it for 14 weeks. But if it doesn't have a shape today, you don't have a project — you have a wish.",
+
+    "Take-home. Three things by Sunday night. Install Tinkercad + Silhouette Studio + Adobe via IU SSO. Book ONE 30-min equipment slot. Photograph your prototype and post the reflection. The reservation IS the deliverable — going in person is the point. The walk-out question: which capability do I need to learn first, and which one am I avoiding because it looks scary? They're often the same one.",
+
+    "Closer. Don't soften this either. Read it as written. The line that matters: you know the verbs, you've made the thing, now go build for 14 weeks. Marcus's path is the default — Figma mockup at the end, nobody touched it. Priya and Jordan's paths require Week 1 to be different. That different already happened. They're already on it.",
+
+    "Open the floor. Common questions to be ready for: what if I'm not a designer (you don't have to be — every project is design). What if I have no project ideas (the seed is meant to be ugly; we iterate it Week 4). Do I have to use 3 capabilities (no, but using 2-3 is what makes a project feel like a real product). Can I use ChatGPT (yes, we'll cover that in Week 6 — for now, your hands).",
+
+    "End slate. Send them off. Confirm three things: software installed by Sunday, one equipment slot booked, one prototype photo + reflection posted. Door's open if anyone wants to talk after. Welcome to Luddy."
+  ]
+  </script>
+
+  <style>
+    html, body { margin: 0; padding: 0; background: #000; color: var(--ink-900); font-family: var(--font-body); overflow: hidden; }
+    deck-stage { display: block; width: 100vw; height: 100vh; }
+
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+      --signal-purple-text: #5C418F;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    section {
+      width: 1920px; height: 1080px;
+      background: var(--paper-50);
+      position: relative;
+      overflow: hidden;
+      font-family: var(--font-body);
+      color: var(--ink-900);
+    }
+
+    .slide-pad { padding: 96px 120px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; }
+    .crumb {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      letter-spacing: 0.2em;
+      color: var(--crimson);
+      margin-bottom: 32px;
+    }
+    .slide-num {
+      position: absolute; bottom: 40px; right: 60px;
+      font-family: var(--font-mono); font-size: 16px; color: var(--ink-300);
+      letter-spacing: 0.12em;
+    }
+    .slide-foot {
+      position: absolute; bottom: 40px; left: 120px;
+      font-family: var(--font-mono); font-size: 14px; color: var(--ink-300);
+      letter-spacing: 0.12em;
+    }
+
+    h1.title {
+      font-family: var(--font-display); font-weight: 600; font-style: italic;
+      font-size: 144px; line-height: 0.95; letter-spacing: -0.03em;
+      margin: 0;
+    }
+    h1.title em { font-style: italic; color: var(--crimson); }
+    h2.section-h {
+      font-family: var(--font-display); font-weight: 600; font-style: italic;
+      font-size: 96px; line-height: 1; letter-spacing: -0.025em;
+      margin: 0 0 28px;
+    }
+    h2.section-h em { color: var(--crimson); }
+    .lede {
+      font-size: 30px; line-height: 1.45; color: var(--ink-700);
+      max-width: 1300px;
+    }
+
+    /* === Title slide === */
+    .title-slide {
+      background: var(--paper-50);
+      background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0);
+      background-size: 28px 28px;
+    }
+    .title-slide .crest {
+      width: 84px; height: 84px; background: var(--crimson); color: #fff;
+      font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 42px;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 32px;
+    }
+    .title-slide .meta {
+      margin-top: 56px;
+      display: grid; grid-template-columns: repeat(4, auto); gap: 56px;
+      justify-content: start;
+    }
+    .title-slide .meta dt {
+      font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+      letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 6px;
+    }
+    .title-slide .meta dd {
+      margin: 0; font-family: var(--font-display); font-style: italic;
+      font-size: 28px; font-weight: 600; color: var(--ink-900);
+    }
+
+    /* === Slate (section/transition) === */
+    .section-slate {
+      background: var(--ink-900); color: var(--paper-50);
+    }
+    .section-slate .slide-pad { justify-content: center; }
+    .section-slate .crumb { color: var(--signal-amber); }
+    .section-slate h2.section-h { color: var(--paper-50); font-size: 132px; line-height: 0.95; }
+    .section-slate h2.section-h em { color: var(--signal-amber); }
+    .section-slate .lede { color: var(--paper-300); }
+
+    /* === Maker Wall === */
+    .wall .grid {
+      margin-top: 36px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px;
+      max-width: 1680px;
+    }
+    .wall .note {
+      padding: 18px 20px;
+      font-family: var(--font-display); font-style: italic;
+      font-size: 22px; line-height: 1.3; color: #16140F;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.14);
+      border-radius: 2px;
+    }
+    .wall .count {
+      margin-top: 28px;
+      font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.15em;
+      color: var(--ink-500);
+    }
+
+    /* === Cold open: three students === */
+    .cold .grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+      margin-top: 48px;
+    }
+    .cold .student {
+      background: var(--paper-100); border: 2px solid var(--paper-200);
+      border-top: 8px solid; border-radius: 10px; padding: 36px 32px;
+    }
+    .cold .student .ava {
+      width: 64px; height: 64px; border-radius: 50%; color: #fff;
+      font-family: var(--font-display); font-weight: 700; font-size: 30px;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .cold .student .name {
+      font-family: var(--font-display); font-style: italic; font-size: 48px; font-weight: 600;
+      line-height: 1; margin-bottom: 6px;
+    }
+    .cold .student .ship {
+      font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+      letter-spacing: 0.15em; margin-bottom: 24px;
+    }
+    .cold .student .what {
+      font-family: var(--font-display); font-style: italic; font-size: 22px;
+      color: var(--ink-900); line-height: 1.4; padding-top: 18px;
+      border-top: 2px dashed var(--paper-300);
+    }
+    .cold .student .moral {
+      margin-top: 18px; font-family: var(--font-mono); font-size: 14px; line-height: 1.55; color: var(--ink-700);
+    }
+    .cold .student .moral strong { color: var(--ink-900); display: block; font-size: 11px; letter-spacing: 0.18em; margin-bottom: 4px; }
+
+    /* === Verbs grid (8 capabilities) === */
+    .verbs .grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+      margin-top: 36px;
+    }
+    .verbs .v {
+      background: var(--paper-100); border: 2px solid var(--paper-200);
+      border-left: 10px solid; border-radius: 6px; padding: 24px 26px;
+    }
+    .verbs .v .verb {
+      font-family: var(--font-display); font-weight: 700; font-style: italic;
+      font-size: 56px; line-height: 1; letter-spacing: -0.02em; margin-bottom: 6px;
+    }
+    .verbs .v .tool {
+      font-family: var(--font-mono); font-size: 14px;
+      color: var(--ink-700); margin-bottom: 12px; font-weight: 600;
+    }
+    .verbs .v .makes {
+      font-family: var(--font-display); font-style: italic; font-size: 17px;
+      line-height: 1.4; color: var(--ink-900);
+      border-top: 1px dashed var(--paper-300); padding-top: 12px;
+    }
+    .verbs-note {
+      position: absolute; bottom: 90px; left: 0; right: 0;
+      text-align: center;
+      font-family: var(--font-display); font-style: italic; font-size: 26px;
+      color: var(--ink-700);
+    }
+
+    /* === Brief slides (deliverables) === */
+    .brief .grid-2 {
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px;
+      margin-top: 40px;
+    }
+    .brief .steps {
+      list-style: none; padding: 0; margin: 0; counter-reset: step;
+    }
+    .brief .steps li {
+      counter-increment: step;
+      display: grid; grid-template-columns: 56px 1fr; gap: 22px;
+      padding: 22px 0; border-bottom: 1px dashed var(--paper-300);
+    }
+    .brief .steps li::before {
+      content: counter(step, decimal-leading-zero);
+      font-family: var(--font-mono); font-size: 22px; font-weight: 700;
+      color: var(--crimson); padding-top: 4px;
+    }
+    .brief .steps .hd {
+      font-family: var(--font-display); font-style: italic; font-size: 32px;
+      font-weight: 600; line-height: 1.1; margin-bottom: 8px;
+    }
+    .brief .steps .body {
+      font-size: 22px; color: var(--ink-700); line-height: 1.5;
+    }
+    .brief .timecard {
+      background: var(--ink-900); color: var(--paper-100);
+      padding: 36px 40px; border-radius: 10px;
+      align-self: start;
+    }
+    .brief .timecard .big {
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 120px; line-height: 1; color: var(--paper-50);
+    }
+    .brief .timecard .lbl {
+      font-family: var(--font-mono); font-size: 16px; letter-spacing: 0.15em;
+      color: var(--signal-amber); margin-top: 12px;
+    }
+    .brief .timecard dl { margin: 28px 0 0; padding-top: 22px; border-top: 1px dashed var(--paper-300); }
+    .brief .timecard dt { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; color: var(--paper-300); margin-bottom: 4px; }
+    .brief .timecard dd { font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--paper-50); margin: 0 0 14px; }
+
+    /* === Why cardboard slide === */
+    .why h2.section-h { font-size: 88px; }
+    .why .pull {
+      margin-top: 28px;
+      font-family: var(--font-display); font-style: italic; font-size: 56px;
+      line-height: 1.15; color: var(--ink-900);
+      max-width: 1500px; padding-left: 32px; border-left: 8px solid var(--crimson);
+    }
+    .why .pull em { color: var(--crimson); font-style: italic; }
+    .why .sub {
+      margin-top: 36px; font-size: 24px; color: var(--ink-700);
+      max-width: 1400px; line-height: 1.5;
+    }
+
+    /* === Take-home === */
+    .takehome .rules {
+      list-style: none; padding: 0; margin-top: 32px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+    }
+    .takehome .rules li {
+      background: var(--paper-100); border: 2px solid var(--paper-200);
+      border-top: 8px solid var(--crimson); border-radius: 8px;
+      padding: 26px 28px;
+    }
+    .takehome .rules .n {
+      font-family: var(--font-mono); font-weight: 700; font-size: 16px;
+      color: var(--crimson); letter-spacing: 0.15em; margin-bottom: 10px;
+    }
+    .takehome .rules .hd {
+      font-family: var(--font-display); font-style: italic; font-size: 32px;
+      font-weight: 700; line-height: 1.1; margin-bottom: 12px;
+    }
+    .takehome .rules .body {
+      font-size: 19px; color: var(--ink-700); line-height: 1.5;
+    }
+    .takehome .walkout {
+      margin-top: 36px; background: var(--ink-900); color: var(--paper-100);
+      padding: 28px 36px; border-radius: 8px;
+      border-left: 6px solid var(--signal-amber);
+      max-width: 1600px;
+    }
+    .takehome .walkout .lbl {
+      font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+      color: var(--signal-amber); letter-spacing: 0.18em; margin-bottom: 10px;
+    }
+    .takehome .walkout .q {
+      font-family: var(--font-display); font-style: italic; font-size: 32px;
+      line-height: 1.3; color: var(--paper-50);
+    }
+
+    /* === Closer === */
+    .closer { background: var(--ink-900); color: var(--paper-50); }
+    .closer .slide-pad { justify-content: center; align-items: flex-start; }
+    .closer .stamp {
+      display: inline-block; border: 3px solid var(--signal-amber);
+      color: var(--signal-amber); font-family: var(--font-mono);
+      font-size: 18px; font-weight: 700; letter-spacing: 0.18em;
+      padding: 10px 18px; transform: rotate(-2deg); margin-bottom: 32px;
+    }
+    .closer h1 { color: var(--paper-50); font-size: 144px; }
+    .closer h1 em { color: var(--signal-amber); }
+    .closer .sub {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 36px; color: var(--paper-300); margin-top: 24px;
+      max-width: 1500px; line-height: 1.3;
+    }
+
+    /* === Q&A === */
+    .qa { background: var(--paper-100); }
+    .qa .slide-pad { justify-content: center; }
+    .qa .big-q {
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 320px; line-height: 1; color: var(--crimson);
+      margin: 0 0 24px;
+    }
+
+    /* === End slate === */
+    .end-slate {
+      background: var(--paper-50);
+      background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0);
+      background-size: 28px 28px;
+    }
+    .end-slate .slide-pad { justify-content: center; align-items: center; text-align: center; }
+    .end-slate .ascii {
+      font-family: var(--font-mono); font-size: 24px; color: var(--ink-300);
+      letter-spacing: 0.1em; white-space: pre; line-height: 1.3; margin-bottom: 56px;
+    }
+    .end-slate .out {
+      font-family: var(--font-display); font-style: italic; font-size: 84px;
+      color: var(--ink-900); line-height: 1.1; max-width: 1500px;
+    }
+    .end-slate .out em { color: var(--crimson); }
+  </style>
+
+  <script src="deck-stage.js"></script>
+</head>
+<body>
+  <deck-stage>
+
+    <!-- ============ 01 · TITLE ============ -->
+    <section class="title-slide" data-screen-label="01 Title">
+      <div class="slide-pad">
+        <div class="crest" aria-label="Indiana University">IU</div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 01</div>
+        <h1 class="title">Spawn<br /><em>Point.</em></h1>
+        <dl class="meta">
+          <div><dt>DURATION</dt><dd>90 minutes</dd></div>
+          <div><dt>DELIVERABLES</dt><dd>3 (in class)</dd></div>
+          <div><dt>TAKE-HOME</dt><dd>Install + book + post</dd></div>
+          <div><dt>POSTURE</dt><dd>"Hands first. Theory later."</dd></div>
+        </dl>
+      </div>
+      <div class="slide-foot">v2.0 · 2026</div>
+      <div class="slide-num">01 / 14</div>
+    </section>
+
+    <!-- ============ 02 · MAKER WALL ============ -->
+    <section class="wall" data-screen-label="02 Maker Wall">
+      <div class="slide-pad">
+        <div class="crumb">⓪ ROLL CALL · 12 MIN · ANONYMOUS</div>
+        <h2 class="section-h">What did you <em>make</em><br />before age 12?</h2>
+        <div class="lede" style="max-width: 1400px;">Pick one. Click once. The wall fills up. By the time it's full, you'll realize: everyone in this room has already made something.</div>
+
+        <div class="grid" role="list" aria-label="Sample answers from a typical class">
+          <div class="note" role="listitem" style="background:#FFE9A8; transform:rotate(-3deg)">Lego star destroyer (instructions melted away)</div>
+          <div class="note" role="listitem" style="background:#FFD9B0; transform:rotate(2deg)">Slime, like 40 batches</div>
+          <div class="note" role="listitem" style="background:#FFC8C8; transform:rotate(-1deg)">Cardboard sword. Then a shield. Then a knight.</div>
+          <div class="note" role="listitem" style="background:#D8F0D8; transform:rotate(3deg)">Outfits for my dolls — then for me</div>
+          <div class="note" role="listitem" style="background:#D5E8FF; transform:rotate(-2deg)">Stop-motion movie with action figures</div>
+          <div class="note" role="listitem" style="background:#F0D8FF; transform:rotate(1deg)">Mystery chemical solutions in the sink</div>
+          <div class="note" role="listitem" style="background:#FFF0E0; transform:rotate(-3deg)">A whole book — stapled, illegible</div>
+          <div class="note" role="listitem" style="background:#FFE9A8; transform:rotate(2deg)">A volcano for the science fair</div>
+          <div class="note" role="listitem" style="background:#D8F0D8; transform:rotate(-1deg)">Sock puppets — full theater</div>
+          <div class="note" role="listitem" style="background:#D5E8FF; transform:rotate(3deg)">Friendship bracelet that fell apart</div>
+        </div>
+        <div class="count">↳ TYPICAL CLASS · 24 STUDENTS · 24 THINGS · 24 SPAWN POINTS</div>
+      </div>
+      <div class="slide-num">02 / 14</div>
+    </section>
+
+    <!-- ============ 03 · WALL REVEAL ============ -->
+    <section class="section-slate" data-screen-label="03 Reframe">
+      <div class="slide-pad">
+        <div class="crumb">↳ WHAT THE WALL TELLS US</div>
+        <h2 class="section-h">You're already<br /><em>a maker.</em></h2>
+        <div class="lede" style="margin-top: 32px;">
+          <strong style="color: var(--paper-50);">CS isn't where making starts.</strong> It's where the toolkit gets sharper. The cardboard prototype later today is the same impulse you had at age 9 — with better glue.
+        </div>
+      </div>
+      <div class="slide-num" style="color: var(--paper-300)">03 / 14</div>
+    </section>
+
+    <!-- ============ 04 · COLD OPEN ============ -->
+    <section class="cold" data-screen-label="04 Cold open · Week 14">
+      <div class="slide-pad">
+        <div class="crumb">① COLD OPEN · 6 MIN · WEEK 14, NOT WEEK 1</div>
+        <h2 class="section-h">Same Week 1.<br />Three different <em>Week 14s.</em></h2>
+
+        <div class="grid">
+          <article class="student" style="border-top-color: var(--signal-red)">
+            <div class="ava" style="background: var(--signal-red)">M</div>
+            <div class="name">Marcus</div>
+            <div class="ship" style="color: var(--signal-red-text)">↳ A FIGMA MOCKUP</div>
+            <div class="what">"It was a habit-tracker app. I clicked through it on a laptop. It was fine. Nobody touched it."</div>
+            <div class="moral"><strong>WHAT WAS MISSING</strong>Marcus had ideas. He didn't have verbs.</div>
+          </article>
+          <article class="student" style="border-top-color: var(--signal-green)">
+            <div class="ava" style="background: var(--signal-green)">P</div>
+            <div class="name">Priya</div>
+            <div class="ship" style="color: var(--signal-green-text)">↳ A REAL OBJECT</div>
+            <div class="what">"Tactile night-light for kids with low vision. Printed enclosure. Sewn diffuser. Three judges asked if I'd patent it."</div>
+            <div class="moral"><strong>WHY IT WORKED</strong>3 verbs combined: PRINT + STITCH + LAMINATE.</div>
+          </article>
+          <article class="student" style="border-top-color: var(--signal-amber)">
+            <div class="ava" style="background: var(--signal-amber); color: var(--ink-900)">J</div>
+            <div class="name">Jordan</div>
+            <div class="ship" style="color: var(--signal-amber-text)">↳ A BOARD GAME</div>
+            <div class="what">"Cameo-cut chipboard tiles. Heat-pressed tote for the components. 90-second demo video. Two students asked to play."</div>
+            <div class="moral"><strong>THE TRICK</strong>Knowing what NOT to use is the same skill.</div>
+          </article>
+        </div>
+      </div>
+      <div class="slide-num">04 / 14</div>
+    </section>
+
+    <!-- ============ 05 · ANCHOR · 8 VERBS ============ -->
+    <section class="verbs" data-screen-label="05 Anchor · 8 verbs">
+      <div class="slide-pad">
+        <div class="crumb">② CAPABILITY MAP · 8 MIN · ANCHOR CONCEPT</div>
+        <h2 class="section-h">Don't learn the tools.<br />Learn the <em>verbs.</em></h2>
+
+        <div class="grid" role="list" aria-label="The 8 capabilities of the Creator Commons">
+          <article class="v" role="listitem" style="border-color: var(--signal-red)">
+            <div class="verb" style="color: var(--signal-red-text)">CUT</div>
+            <div class="tool">Cameo 5 · ChompSaw</div>
+            <div class="makes">Stickers · stencils · cardboard scale models</div>
+          </article>
+          <article class="v" role="listitem" style="border-color: var(--signal-amber)">
+            <div class="verb" style="color: var(--signal-amber-text)">PRINT</div>
+            <div class="tool">Bambu Lab · Saturn 4</div>
+            <div class="makes">Mounts · enclosures · figurines · parts</div>
+          </article>
+          <article class="v" role="listitem" style="border-color: var(--signal-green)">
+            <div class="verb" style="color: var(--signal-green-text)">STITCH</div>
+            <div class="tool">Bernina B325 · L450 Serger</div>
+            <div class="makes">Wearables · soft prototypes · fabric enclosures</div>
+          </article>
+          <article class="v" role="listitem" style="border-color: var(--signal-blue)">
+            <div class="verb" style="color: var(--signal-blue-text)">PRESS</div>
+            <div class="tool">HTVRONT Heat Press</div>
+            <div class="makes">Branded apparel · totes · sublimated mugs</div>
+          </article>
+          <article class="v" role="listitem" style="border-color: var(--signal-purple)">
+            <div class="verb" style="color: var(--signal-purple-text)">CAST</div>
+            <div class="tool">Saturn 4 (resin) · molds</div>
+            <div class="makes">Detailed minis · jewelry · tactile models</div>
+          </article>
+          <article class="v" role="listitem" style="border-color: #3F7EA8">
+            <div class="verb" style="color: #3F7EA8">PROTECT</div>
+            <div class="tool">Laminator</div>
+            <div class="makes">Test cards · UI mockups · backpack-proof signs</div>
+          </article>
+          <article class="v" role="listitem" style="border-color: #C44C7E">
+            <div class="verb" style="color: #C44C7E">CAPTURE</div>
+            <div class="tool">~40 cameras · 3D scanner · VR</div>
+            <div class="makes">Demo videos · user-test footage · scans</div>
+          </article>
+          <article class="v" role="listitem" style="border-color: var(--ink-900)">
+            <div class="verb" style="color: var(--ink-900)">DESIGN</div>
+            <div class="tool">Tinkercad · Silhouette · Adobe</div>
+            <div class="makes">The files that drive every tool above</div>
+          </article>
+        </div>
+      </div>
+      <div class="verbs-note">Pick the verb. The tool follows. Combine 2–3 verbs → that's a project.</div>
+      <div class="slide-num">05 / 14</div>
+    </section>
+
+    <!-- ============ 06 · SCAVENGER BRIEF ============ -->
+    <section class="brief" data-screen-label="06 Scavenger brief">
+      <div class="slide-pad">
+        <div class="crumb">③ EQUIPMENT SCAVENGER · 20 MIN · DELIVERABLE 1</div>
+        <h2 class="section-h">Eight tools.<br />Eight <em>concrete</em> ideas.</h2>
+
+        <div class="grid-2">
+          <ol class="steps" aria-label="The four rules">
+            <li><div><div class="hd">For each of 8 tools</div><div class="body">Write what YOU'd make with it for your final project.</div></div></li>
+            <li><div><div class="hd">Specific — not "something cool"</div><div class="body">Real object, real user, real problem. "A phone stand for left-handed users with shaky hands" beats "a phone stand."</div></div></li>
+            <li><div><div class="hd">Rate each: must / maybe / no</div><div class="body">Would you actually use this in 14 weeks? The "must-haves" become your project's spine.</div></div></li>
+            <li><div><div class="hd">Auto-saves as you type</div><div class="body">You'll bring this to Week 4. Don't lose it.</div></div></li>
+          </ol>
+
+          <aside class="timecard">
+            <div class="big">20</div>
+            <div class="lbl">MINUTES · QUIET WORK</div>
+            <dl>
+              <div><dt>STUCK?</dt><dd>use the seed question</dd></div>
+              <div><dt>POINTS</dt><dd>30 · revise &amp; resubmit</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+      <div class="slide-num">06 / 14</div>
+    </section>
+
+    <!-- ============ 07 · TRANSITION TO BUILD ============ -->
+    <section class="section-slate" data-screen-label="07 Transition to build">
+      <div class="slide-pad">
+        <div class="crumb">↓ NOW USE YOUR HANDS</div>
+        <h2 class="section-h">No more browsing.<br /><em>Make the thing.</em></h2>
+        <div class="lede" style="margin-top: 32px;">
+          The next 30 minutes are about your hands touching cardboard. Not theory. Not a tour. A real problem you actually had this week — solved with scissors, tape, and 30 minutes.
+        </div>
+      </div>
+      <div class="slide-num" style="color: var(--paper-300)">07 / 14</div>
+    </section>
+
+    <!-- ============ 08 · PROTOTYPE BRIEF ============ -->
+    <section class="brief" data-screen-label="08 Prototype sprint brief">
+      <div class="slide-pad">
+        <div class="crumb">④ CARDBOARD SPRINT · 30 MIN · DELIVERABLE 2</div>
+        <h2 class="section-h">Build something <em>today.</em></h2>
+
+        <div class="grid-2">
+          <ol class="steps" aria-label="The four phases">
+            <li><div><div class="hd">Pick a problem · 3 min</div><div class="body">One real, small annoyance from this week. Tiny is fine. Specific is better.</div></div></li>
+            <li><div><div class="hd">Sketch · 5 min</div><div class="body">On paper, or in Tinkercad if it'll help you see it in 3D. Don't perfect it — commit a shape.</div></div></li>
+            <li><div><div class="hd">Build · 18 min</div><div class="body">Cardboard. Tape. Hot glue. ChompSaw for curves. Cameo for precision. Don't make it pretty. Make it WORK.</div></div></li>
+            <li><div><div class="hd">Photo + reflect · 4 min</div><div class="body">Photograph it. Three lines: what worked, what broke, what you'd change.</div></div></li>
+          </ol>
+
+          <aside class="timecard">
+            <div class="big">30</div>
+            <div class="lbl">MINUTES · HANDS BUSY</div>
+            <dl>
+              <div><dt>STUCK?</dt><dd>use a seed problem</dd></div>
+              <div><dt>POINTS</dt><dd>40 · photo required</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+      <div class="slide-num">08 / 14</div>
+    </section>
+
+    <!-- ============ 09 · WHY CARDBOARD ============ -->
+    <section class="why" data-screen-label="09 Why cardboard">
+      <div class="slide-pad">
+        <div class="crumb">↳ THE LESSON BEHIND THE ACTIVITY</div>
+        <h2 class="section-h">Cardboard is the<br />world's fastest <em>3D printer.</em></h2>
+        <div class="pull">
+          90 seconds per iteration — not <em>six hours</em>. Senior designers prototype in cardboard their entire careers because the loop is faster than thinking about it.
+        </div>
+        <div class="sub">
+          The thing you just built is small. The skill you just used — <em>pick a problem · commit a shape · make a thing · notice what broke</em> — is the entire course in miniature. You did it in 30 minutes. You'll do it for 14 weeks.
+        </div>
+      </div>
+      <div class="slide-num">09 / 14</div>
+    </section>
+
+    <!-- ============ 10 · PROJECT SEED BRIEF ============ -->
+    <section class="brief" data-screen-label="10 Project seed brief">
+      <div class="slide-pad">
+        <div class="crumb">⑤ PROJECT SEED · 10 MIN · DELIVERABLE 3</div>
+        <h2 class="section-h">14 weeks from now:<br /><em>what ships?</em></h2>
+
+        <div class="grid-2">
+          <ol class="steps" aria-label="The five seed questions">
+            <li><div><div class="hd">Who is it for?</div><div class="body">A specific person. "Freshmen in Briscoe" beats "students."</div></div></li>
+            <li><div><div class="hd">What's their problem?</div><div class="body">The pain — not the solution. What annoys, breaks, or wastes their time?</div></div></li>
+            <li><div><div class="hd">What will you make?</div><div class="body">A physical thing. Be concrete: a stand, a kit, a wearable, an enclosure.</div></div></li>
+            <li><div><div class="hd">Which 2–3 verbs combined?</div><div class="body">From the eight: cut · print · stitch · press · cast · protect · capture · design.</div></div></li>
+            <li><div><div class="hd">Smallest version by Week 4?</div><div class="body">Ugly v0.1 a real user could touch. Not finished — testable.</div></div></li>
+          </ol>
+
+          <aside class="timecard">
+            <div class="big">10</div>
+            <div class="lbl">MINUTES · STILL QUIET</div>
+            <dl>
+              <div><dt>POINTS</dt><dd>30 · all 5 fields required</dd></div>
+              <div><dt>NOTE</dt><dd>seed, not contract — iterates</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+      <div class="slide-num">10 / 14</div>
+    </section>
+
+    <!-- ============ 11 · TAKE-HOME ============ -->
+    <section class="takehome" data-screen-label="11 Take-home">
+      <div class="slide-pad">
+        <div class="crumb">⑥ TAKE-HOME · BEFORE WEEK 2 · 30 PTS</div>
+        <h2 class="section-h">Three things by<br /><em>Sunday night.</em></h2>
+
+        <ol class="rules">
+          <li>
+            <div class="n">01 · INSTALL</div>
+            <div class="hd">The free software stack</div>
+            <div class="body">Tinkercad · Silhouette Studio · Adobe via IU SSO. Bookmark The Noun Project. None of it costs you a cent.</div>
+          </li>
+          <li>
+            <div class="n">02 · BOOK</div>
+            <div class="hd">One equipment slot</div>
+            <div class="body">iub.libcal.com/equipment?lid=8812 · 30 minutes · ONE tool from your must-haves. The reservation IS the deliverable.</div>
+          </li>
+          <li>
+            <div class="n">03 · POST</div>
+            <div class="hd">Prototype + reflection</div>
+            <div class="body">Photo of your cardboard build + 3-line reflection (worked / broke / next). On Canvas. Tonight ideal.</div>
+          </li>
+        </ol>
+
+        <div class="walkout">
+          <div class="lbl">WALK OUT WITH THIS QUESTION</div>
+          <div class="q">"Which capability do I need to learn first — and which one am I avoiding because it looks scary?" <span style="color: var(--signal-amber)">(They're often the same one.)</span></div>
+        </div>
+      </div>
+      <div class="slide-num">11 / 14</div>
+    </section>
+
+    <!-- ============ 12 · CLOSER ============ -->
+    <section class="closer" data-screen-label="12 Closer reframe">
+      <div class="slide-pad">
+        <div class="stamp">REMEMBER THIS</div>
+        <h1 class="title">You know the verbs.<br />You've made the thing.<br />Now go build for <em>14 weeks.</em></h1>
+        <div class="sub">Marcus's path is the default — Figma click-through, nobody touches it.<br />Priya's and Jordan's require Week 1 to be different. You just made it different.</div>
+      </div>
+      <div class="slide-num" style="color: var(--paper-300)">12 / 14</div>
+    </section>
+
+    <!-- ============ 13 · Q&A ============ -->
+    <section class="qa" data-screen-label="13 Questions">
+      <div class="slide-pad">
+        <div class="crumb">↳ HONEST QUESTIONS</div>
+        <div class="big-q" aria-label="Q?">Q?</div>
+        <div class="lede" style="font-size: 36px;">"Where do I start?" is a great question. So is "I don't know yet."</div>
+      </div>
+      <div class="slide-num">13 / 14</div>
+    </section>
+
+    <!-- ============ 14 · END SLATE ============ -->
+    <section class="end-slate" data-screen-label="14 End slate">
+      <div class="slide-pad">
+        <div class="ascii" aria-hidden="true">+----------------------------------------------+
+|  SPAWNED  ·  toolbox open · prototype shipped |
++----------------------------------------------+</div>
+        <div class="out">welcome to<br /><em>Luddy.</em></div>
+        <div class="slide-foot" style="position: static; margin-top: 64px; text-align: center; left: 0; right: 0;">CSCI-Y100 · v2.0 · 2026 &nbsp;·&nbsp; Install + book + post by Sunday</div>
+      </div>
+      <div class="slide-num">14 / 14</div>
+    </section>
+
+  </deck-stage>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project Seed v0.1 · Slide Deck · CSCI-Y100 Week 4</title>
+  <meta name="description" content="Slide deck for the Project Seed v0.1 module (CSCI-Y100 Week 4). Use arrow keys, Page Up/Down, or Space to navigate." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <script type="application/json" id="speaker-notes">
+  [
+    "Title slate. Welcome them. The seed they wrote in W1 is now three weeks old. The job today is to take it from idea to thing-in-the-world in 90 minutes. Read the lede. Anchor the energy: studio mode, music allowed, build is sacred.",
+
+    "Cold open. Hold the slate. The line that matters: most students have only seen the polished side of work. Today they ship the unpolished side of theirs. Don't soften this. The unpolished version IS the lesson — it cannot be skipped to the polished version later if it never gets made now.",
+
+    "Anchor question. Hold for 5 seconds. The two halves are deliberate — ship and document. Most CS curricula teach shipping; few teach documenting. The vault we set up in W3 is the documentation surface today.",
+
+    "Big Ideas. Two of the five hit. Iteration (#1): v0.1 is on purpose. The bar is below your fear so iteration starts on Day 1, not Week 12. Externalize (#4): the seed becomes a README, the build becomes git history, the test becomes a vault note. Three different externalization moves in one class.",
+
+    "Re-read the seed brief. 10 minutes. Open Obsidian, find the W1 seed in Project/. Read your own words from three weeks ago. Mark in a new note what changed. The seed is allowed to have moved — you've done W2 + W3 since you wrote it. Watch for: the student whose seed is missing or who 'changed their mind so much it doesn't matter.' Both flags = same fix: 90 seconds with a TA, get a new seed on a sticky.",
+
+    "Carve v0.1 brief. 15 minutes. Constraint is the tool. v0.1 is not 'small for now, big later' — it's 'smallest, ugliest version that ships.' One user, one verb, testable in under 5 minutes. Walk the room. The trap is 'and also it could…' — every 'also' makes v0.1 too big. Read the WHO/WHAT/HOW boxes aloud.",
+
+    "Build slate. The single most-load-bearing slide. 35 minutes. Music on. Timer up. TAs floating. Don't lecture. Don't interrupt. The build IS the lesson. Read the line on screen as written.",
+
+    "Build watch-fors slate. Two patterns to flag. (1) Reading docs for 25 minutes without writing a thing — that's avoidance. Time-box: 5 more, then ship something even if it's wrong. (2) Scope creep — 'and then it'll also do X.' Interrupt: 'What if v0.1 just had the static page?' Almost always: yes.",
+
+    "First public test brief. 10 minutes. Pair up. Show v0.1, get one observation (yellow sticky) and one question (pink sticky). Write into Bugs/. Switch. Repeat. Two yellow + two pink in your vault. The point isn't the feedback quality. The point is that v0.1 was tested — externally — and proof exists.",
+
+    "Reckon brief. 10 minutes. Three sentences. What shipped. What didn't. What next week needs. Under 60 words. The reckoning IS the lesson — most students discover that 'shipping' looked smaller than they thought it would. Sit with that. Don't soften it.",
+
+    "Take-home. 5 minutes. Push v0.1 to GitHub. Commit message names what shipped. Three lines in Start Log. The commit history is the proof — the trajectory from v0.1 → W8 v1 starts here.",
+
+    "Closer. Read as written. The line that matters: you said you wanted to build, now you have built. Most freshmen never ship anything in their first year of CS. You just did. The next version is the next version — what was a wish in W1 is now a thing in git.",
+
+    "End slate. Send them off. The next time we're together is W5 Debugging Mindset, where bugs from THIS build become teachable. Save your screenshots. Save your stickies. Save your reckoning. They're the raw material for the rest of the course."
+  ]
+  </script>
+
+  <style>
+    html, body { margin: 0; padding: 0; background: #000; color: var(--ink-900); font-family: var(--font-body); overflow: hidden; }
+    deck-stage { display: block; width: 100vw; height: 100vh; }
+    :root { --signal-amber-text: #8a6920; --signal-green-text: #2f7a4a; --signal-red-text: #a02e1e; --signal-blue-text: #2f5aa1; --signal-purple-text: #5C418F; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    section { width: 1920px; height: 1080px; background: var(--paper-50); position: relative; overflow: hidden; font-family: var(--font-body); color: var(--ink-900); }
+    .slide-pad { padding: 96px 120px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; }
+    .crumb { font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.2em; color: var(--crimson); margin-bottom: 32px; }
+    .slide-num { position: absolute; bottom: 40px; right: 60px; font-family: var(--font-mono); font-size: 16px; color: var(--ink-300); letter-spacing: 0.12em; }
+    .slide-foot { position: absolute; bottom: 40px; left: 120px; font-family: var(--font-mono); font-size: 14px; color: var(--ink-300); letter-spacing: 0.12em; }
+    h1.title { font-family: var(--font-display); font-weight: 600; font-style: italic; font-size: 144px; line-height: 0.95; letter-spacing: -0.03em; margin: 0; }
+    h1.title em { font-style: italic; color: var(--crimson); }
+    h2.section-h { font-family: var(--font-display); font-weight: 600; font-style: italic; font-size: 96px; line-height: 1; letter-spacing: -0.025em; margin: 0 0 28px; }
+    h2.section-h em { color: var(--crimson); }
+    .lede { font-size: 30px; line-height: 1.45; color: var(--ink-700); max-width: 1500px; }
+
+    .title-slide { background: var(--paper-50); background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0); background-size: 28px 28px; }
+    .title-slide .crest { width: 84px; height: 84px; background: var(--crimson); color: #fff; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 42px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 32px; }
+    .title-slide .meta { margin-top: 56px; display: grid; grid-template-columns: repeat(4, auto); gap: 56px; justify-content: start; }
+    .title-slide .meta dt { font-family: var(--font-mono); font-size: 14px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 6px; }
+    .title-slide .meta dd { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 28px; font-weight: 600; color: var(--ink-900); }
+
+    .section-slate { background: var(--ink-900); color: var(--paper-50); }
+    .section-slate .slide-pad { justify-content: center; }
+    .section-slate .crumb { color: var(--signal-amber); }
+    .section-slate h2.section-h { color: var(--paper-50); font-size: 120px; line-height: 0.95; }
+    .section-slate h2.section-h em { color: var(--signal-amber); }
+    .section-slate .lede { color: var(--paper-300); }
+    .section-slate .slide-foot { color: var(--paper-300); }
+
+    .anchor-slide .anchor-q { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 132px; line-height: 1; letter-spacing: -0.025em; margin: 24px 0 0; max-width: 1700px; }
+    .anchor-slide .anchor-q em { color: var(--crimson); }
+
+    .ideas-slide .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px; margin-top: 32px; }
+    .ideas-slide .card { background: var(--paper-100); border: 4px solid var(--ink-900); border-left-width: 12px; padding: 32px 36px; position: relative; }
+    .ideas-slide .card .num { position: absolute; top: 16px; right: 24px; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 96px; line-height: 1; color: var(--signal-purple); opacity: 0.85; }
+    .ideas-slide .card h3 { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 40px; margin: 0 0 14px; line-height: 1.1; max-width: 80%; }
+    .ideas-slide .card p { font-size: 22px; line-height: 1.45; color: var(--ink-700); margin: 0; }
+
+    .brief { background: var(--paper-50); }
+    .brief .crumb { color: var(--signal-blue-text); }
+    .brief h2.section-h { font-size: 88px; }
+    .brief .grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; margin-top: 32px; flex: 1; }
+    .brief .col h4 { font-family: var(--font-mono); font-size: 16px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--crimson); margin: 0 0 12px; }
+    .brief .col ul { list-style: none; padding: 0; margin: 0; }
+    .brief .col li { font-size: 24px; line-height: 1.45; padding: 10px 0; border-bottom: 1px dashed var(--paper-300); display: grid; grid-template-columns: 28px 1fr; gap: 14px; }
+    .brief .col li::before { content: '\2713'; color: var(--signal-green-text); font-family: var(--font-mono); font-weight: 700; font-size: 22px; }
+    .brief .verify-card { background: var(--ink-900); color: var(--paper-50); padding: 28px 32px; }
+    .brief .verify-card h4 { color: var(--signal-amber); font-family: var(--font-mono); font-size: 16px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin: 0 0 12px; }
+    .brief .verify-card code { font-family: var(--font-mono); font-size: 26px; line-height: 1.6; color: var(--paper-50); display: block; }
+
+    .build-slate { background: var(--terminal-900); color: var(--paper-50); }
+    .build-slate .slide-pad { justify-content: center; align-items: flex-start; }
+    .build-slate .crumb { color: var(--signal-amber); }
+    .build-slate h2 { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 156px; line-height: 0.95; color: var(--paper-50); margin: 0; }
+    .build-slate h2 em { color: var(--signal-amber); }
+    .build-slate .timer { margin-top: 32px; font-family: var(--font-mono); font-size: 96px; font-weight: 700; color: var(--signal-green); }
+    .build-slate .sub { margin-top: 24px; font-size: 32px; color: var(--paper-300); font-style: italic; }
+    .build-slate .slide-foot { color: var(--paper-300); }
+
+    .closer { background: var(--paper-50); display: flex; align-items: center; justify-content: center; }
+    .closer .slide-pad { justify-content: center; align-items: flex-start; }
+    .closer h2 { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 110px; line-height: 1; letter-spacing: -0.025em; margin: 0; max-width: 1600px; }
+    .closer h2 em { color: var(--crimson); }
+    .closer .sub { margin-top: 32px; font-size: 28px; color: var(--ink-700); max-width: 1400px; line-height: 1.4; font-style: italic; }
+
+    .end-slate { background: var(--terminal-900); color: var(--paper-50); display: grid; place-items: center; }
+    .end-slate .frame { text-align: center; }
+    .end-slate .ascii { font-family: var(--font-mono); font-size: 24px; color: var(--signal-green); white-space: pre; margin-bottom: 36px; }
+    .end-slate h2 { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 88px; margin: 0; }
+    .end-slate h2 em { color: var(--signal-amber); }
+  </style>
+</head>
+<body>
+  <deck-stage>
+
+    <section class="title-slide" data-screen-label="Title — Project Seed v0.1">
+      <div class="slide-pad">
+        <div class="crest" aria-hidden="true">IU</div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 04</div>
+        <h1 class="title">Project<br /><em>Seed</em> v0.1.</h1>
+        <p class="lede" style="margin-top:36px;">90 minutes. Studio mode. Today the seed becomes a thing — bad, real, dated, in git.</p>
+        <dl class="meta">
+          <div><dt>WEEK</dt><dd>04 of 08</dd></div>
+          <div><dt>DURATION</dt><dd>90 minutes</dd></div>
+          <div><dt>POSTURE</dt><dd>Studio · TAs float</dd></div>
+          <div><dt>DELIVERABLES</dt><dd>4 — v0.1 + 2 obs + reckoning</dd></div>
+        </dl>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">01 / 13</div>
+      </div>
+    </section>
+
+    <section class="section-slate" data-screen-label="Cold open — the gap">
+      <div class="slide-pad">
+        <div class="crumb">⓪ COLD OPEN · 5 MIN · LAPTOPS CLOSED</div>
+        <h2 class="section-h">You've only seen<br />the <em>polished</em> side.</h2>
+        <p class="lede" style="margin-top:36px;">Today you ship the unpolished side of yours. The version we make today is not impressive. The fact that it exists is the lesson.</p>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">02 / 13</div>
+      </div>
+    </section>
+
+    <section class="anchor-slide" data-screen-label="Anchor question">
+      <div class="slide-pad">
+        <div class="crumb">⓪ ANCHOR · 90 MIN · TWO VERBS</div>
+        <h2 class="anchor-q">Can I <em>ship</em> —<br />and <em>document</em> —<br />a real thing?</h2>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">03 / 13</div>
+      </div>
+    </section>
+
+    <section class="ideas-slide" data-screen-label="Big Ideas">
+      <div class="slide-pad">
+        <div class="crumb">⓪ FRAMING · TWO BIG IDEAS</div>
+        <h2 class="section-h">Why <em>this</em>, why <em>now.</em></h2>
+        <div class="grid">
+          <div class="card">
+            <span class="num" aria-hidden="true">#1</span>
+            <h3>Making is iteration,<br />not inspiration.</h3>
+            <p>v0.1 is on purpose. The bar is below your fear so iteration starts on Day 1, not Week 12.</p>
+          </div>
+          <div class="card">
+            <span class="num" aria-hidden="true">#4</span>
+            <h3>Knowledge worth keeping<br />must be externalized.</h3>
+            <p>Seed → README. Build → git history. Test → vault note. Three different externalization moves, one class.</p>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">04 / 13</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Re-read the seed">
+      <div class="slide-pad">
+        <div class="crumb">① RE-READ · 10 MIN · OBSIDIAN OPEN</div>
+        <h2 class="section-h">Re-read your <em>seed.</em></h2>
+        <div class="grid">
+          <div class="col">
+            <h4>You will</h4>
+            <ul>
+              <li>Open Obsidian → Project/seed.md (your W1 note).</li>
+              <li>Read your own words from three weeks ago. Slowly.</li>
+              <li>Make a new note: Project/seed-v04-revision.md. Mark what changed.</li>
+              <li>The seed is allowed to have moved. Don't pretend you still believe W1 if you don't.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>Watch for</h4>
+              <code style="font-family:var(--font-display);font-style:italic;font-size:24px;line-height:1.5;">Missing seed = 90 sec with a TA. Get a sticky-note seed. The seed can be rough — it cannot be missing.</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">05 / 13</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Carve v0.1">
+      <div class="slide-pad">
+        <div class="crumb">② CARVE · 15 MIN · CONSTRAINT IS THE TOOL</div>
+        <h2 class="section-h">Carve <em>v0.1.</em></h2>
+        <p class="lede" style="margin-top:0;font-size:26px;max-width:1500px;">v0.1 is not "small for now, big later." v0.1 is the smallest, ugliest version that ships.</p>
+        <div class="grid">
+          <div class="col">
+            <h4>Three boxes</h4>
+            <ul>
+              <li><strong>WHO</strong> — one specific person, not "users".</li>
+              <li><strong>WHAT</strong> — one verb, one outcome.</li>
+              <li><strong>HOW SOMEONE TESTS IT</strong> — under 5 min.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>Trap to avoid</h4>
+              <code style="font-family:var(--font-display);font-style:italic;font-size:24px;line-height:1.5;">"And also it could…" — every "also" makes v0.1 too big. Cut it.</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">06 / 13</div>
+      </div>
+    </section>
+
+    <section class="build-slate" data-screen-label="Build · 35 minutes">
+      <div class="slide-pad">
+        <div class="crumb">③ BUILD · 35 MIN · STUDIO MODE</div>
+        <h2><em>Make</em><br />a thing.</h2>
+        <div class="timer">35:00</div>
+        <p class="sub">Music on. TAs floating. No lecture interruption.<br />Stuck for 4 min? Raise a hand.<br />It's OK if it doesn't work — that's data.</p>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">07 / 13</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Build watch-fors">
+      <div class="slide-pad">
+        <div class="crumb">③ BUILD · WATCH-FORS</div>
+        <h2 class="section-h">Two patterns to <em>flag.</em></h2>
+        <div class="grid" style="grid-template-columns:1fr 1fr;">
+          <div class="col">
+            <h4>Reading without shipping</h4>
+            <ul>
+              <li>25 min of docs, 0 min of building = avoidance.</li>
+              <li>Time-box: 5 more min of reading, then put something on screen.</li>
+              <li>Reading is hiding from shipping.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h4>Scope creep</h4>
+            <ul>
+              <li>"v0.1 has to log in, then save, then…"</li>
+              <li>Interrupt: "What if v0.1 just had the static page?"</li>
+              <li>Almost always: yes. The carve IS the lesson.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">08 / 13</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="First public test">
+      <div class="slide-pad">
+        <div class="crumb">④ FIRST PUBLIC TEST · 10 MIN · TWO STICKIES EACH</div>
+        <h2 class="section-h">First <em>public</em> test.</h2>
+        <div class="grid">
+          <div class="col">
+            <h4>You will</h4>
+            <ul>
+              <li>Pair up. Show your v0.1 to one classmate.</li>
+              <li>They give ONE observation (yellow sticky) + ONE question (pink sticky).</li>
+              <li>Write both into Bugs/, with the partner's name on each.</li>
+              <li>Switch. Repeat with a different partner.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>Verify</h4>
+              <code>Bugs/W04-test-1.md ✓</code>
+              <code>Bugs/W04-test-2.md ✓</code>
+              <code style="color:var(--signal-amber);font-size:18px;margin-top:12px;">// 2 yellow + 2 pink, named</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">09 / 13</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Reckon">
+      <div class="slide-pad">
+        <div class="crumb">⑤ RECKON · 10 MIN · UNDER 60 WORDS</div>
+        <h2 class="section-h">Three <em>sentences.</em></h2>
+        <p class="lede" style="font-size:28px;max-width:1500px;">In Reflections/W04-reckoning.md. Not a story — three load-bearing sentences.</p>
+        <div class="grid" style="grid-template-columns:1fr 1fr;">
+          <div class="col">
+            <h4>The three</h4>
+            <ul>
+              <li>What shipped.</li>
+              <li>What didn't.</li>
+              <li>What next week needs.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>Why this works</h4>
+              <code style="font-family:var(--font-display);font-style:italic;font-size:24px;line-height:1.5;">The reckoning IS the lesson. Most students discover that "shipping" looked smaller than they thought.</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">10 / 13</div>
+      </div>
+    </section>
+
+    <section class="brief" data-screen-label="Take-home">
+      <div class="slide-pad">
+        <div class="crumb">⑥ TAKE-HOME · 5 MIN · PUSH + LOG</div>
+        <h2 class="section-h">Push it <em>now.</em></h2>
+        <div class="grid">
+          <div class="col">
+            <h4>Do</h4>
+            <ul>
+              <li>git add · git commit · git push.</li>
+              <li>Commit message names what shipped (e.g., "v0.1 — landing page only").</li>
+              <li>Three lines in Start Log: GitHub URL · obs count · reckoning path.</li>
+            </ul>
+          </div>
+          <div class="col">
+            <div class="verify-card">
+              <h4>Trajectory</h4>
+              <code style="font-family:var(--font-display);font-style:italic;font-size:24px;line-height:1.5;">Today's commit is the start of v0.1 → v1 in W8. The history IS the proof of iteration.</code>
+            </div>
+          </div>
+        </div>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">11 / 13</div>
+      </div>
+    </section>
+
+    <section class="closer" data-screen-label="Closer">
+      <div class="slide-pad">
+        <div class="crumb">CLOSER</div>
+        <h2>You said you wanted to <em>build.</em><br />Now you have <em>built.</em></h2>
+        <p class="sub">Most freshmen never ship anything in their first year of CS. You just did. v0.1 is not v1. v0.1 is the start of a trajectory that ends at W8.</p>
+        <div class="slide-foot">CSCI-Y100 · v2.0 · 2026</div>
+        <div class="slide-num">12 / 13</div>
+      </div>
+    </section>
+
+    <section class="end-slate" data-screen-label="End">
+      <div class="frame">
+        <div class="ascii" aria-hidden="true">+--------------------------------------+
+|  W04  ·  v0.1 shipped  ·  externalized  |
++--------------------------------------+</div>
+        <h2>See you in <em>Debugging Mindset.</em></h2>
+      </div>
+      <div class="slide-foot" style="color:var(--paper-300);">CSCI-Y100 · v2.0 · 2026</div>
+      <div class="slide-num" style="color:var(--paper-300);">13 / 13</div>
+    </section>
+
+  </deck-stage>
+
+  <script src="deck-stage.js"></script>
+</body>
+</html>

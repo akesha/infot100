@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Honest Start · Slide Deck · CSCI-Y100 Week 7</title>
+  <meta name="description" content="Slide deck for The Honest Start module (CSCI-Y100 Week 7). Use arrow keys, Page Up/Down, or Space to navigate." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <script type="application/json" id="speaker-notes">
+  [
+    "Welcome to Week 7. Today we talk about the thing nobody wants to talk about — the assignment you've been avoiding for nine days. This module is not motivational. There's no playlist, no power pose. We're going to do something forensic. By the end of class you'll have two artifacts and one accountability partner. The goal isn't to feel motivated. The goal is to do the thing.",
+
+    "Avoidance Wall. Open the live tally on the projector. Read the categories aloud. Tell them: pick one, click once, watch the bars move. Nobody knows who clicked what. Don't rush — wait until you see the bars settle. Then read the top three aloud. Don't moralize. Land on: 'You're not weird. You're not lazy. You're avoiding something specific, for a specific reason. Today we name the reason — because the reason tells you the fix.'",
+
+    "Cold open. Three students. Same week, three different reasons, same outcome — zero work done. Click through Maya, Devon, Priya. Read what's underneath each one out loud. After each, ask: show of hands — who's been Maya? Devon? Priya? Hands always go up for all three. End on: same surface, different fuel.",
+
+    "Anchor concept. Hold this slide for the full 8 minutes. This is the spine of the module. Walk through each trigger — about 90 seconds each. For each, ask 'what does this sound like in your head when it's happening?' and take ONE student answer. Then read the prescribed fix. Notice it's different every time. Write the key sentence on the board: PROCRASTINATION IS DATA — THE TRIGGER TELLS YOU THE FIX.",
+
+    "Live drill. Read the four rules aloud. Linger on rule four — nobody will see this. Have everyone open the in-page tool, type a real assignment they're avoiding. Hit start together. 90 seconds. You write too — model it. When time's up, ask: how many words did you have 90 seconds ago? How many do you have now? Take 1–2 students who'll share — only the count and how it felt, not the writing itself.",
+
+    "Transition. Have them think of ONE specific moment from the last 7 days when they avoided something. Tuesday 9:47pm, paper open, instead reorganized their desk. Walk the room while they think. If anyone's stuck, prompt: what about a 5-minute thing you avoided yesterday?",
+
+    "Procrastination Autopsy — deliverable #1. 25 minutes. Seven forensic questions on ONE specific moment. Read the brief aloud — emphasize 'specific moment, not general pattern.' Confirm it auto-saves. Walk a slow loop while they work. If a student looks teary — a real autopsy can sting. Whisper 'this is the right work; take a breath.' At 0:55, call the 7-minute warning.",
+
+    "Motivation Stack — deliverable #2. 20 minutes. Self-Determination Theory made personal. Autonomy, mastery, purpose. Three levers each — nine total. Then design ONE 25-min ritual that hits all three. PURPOSE is the lever students half-ass — push it. 'Because it's on the syllabus' doesn't count. If they can't articulate purpose, the ritual won't survive a bad week.",
+
+    "Pair-up. Hand out the protocol sheet. Have them pair — preferably across majors. Trade phone numbers. Each shares ONLY their tiny step due tonight. Tonight: text DONE when complete. Don't text by tomorrow noon? Partner pings them. The protocol is the strategy — motivation is what shows up because someone is waiting on a text.",
+
+    "Take-home brief. The 7-day Start Log. One row per Start Moment. Bring the log to next class — first 10 min we group up and look for patterns. Show the Markdown template. Confirm it's pinned in Canvas.",
+
+    "Closing reframe. Don't soften this. Read it as written. The point is to land that feeling-better isn't the goal — doing the thing is. Texting DONE is the whole assignment.",
+
+    "Open the floor. Common questions to be ready for: what if my partner ghosts me (you ping them — works in either direction). What if I can't pick a single trigger (pick the biggest, others will surface in the log). Is this just CBT (it borrows from CBT, behavioral activation, and SDT — none magic, all beat 'try harder').",
+
+    "End slate. Send them off. Confirm: Start Log due next class, bring a copy. Door's open if anyone wants to talk after."
+  ]
+  </script>
+
+  <style>
+    html, body { margin: 0; padding: 0; background: #000; color: var(--ink-900); font-family: var(--font-body); overflow: hidden; }
+    deck-stage { display: block; width: 100vw; height: 100vh; }
+
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    section {
+      width: 1920px; height: 1080px;
+      background: var(--paper-50);
+      position: relative;
+      overflow: hidden;
+      font-family: var(--font-body);
+      color: var(--ink-900);
+    }
+
+    .slide-pad { padding: 96px 120px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; }
+    .crumb {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      letter-spacing: 0.2em;
+      color: var(--crimson);
+      margin-bottom: 32px;
+    }
+    .slide-num {
+      position: absolute; bottom: 40px; right: 60px;
+      font-family: var(--font-mono); font-size: 16px; color: var(--ink-300);
+      letter-spacing: 0.12em;
+    }
+    .slide-foot {
+      position: absolute; bottom: 40px; left: 120px;
+      font-family: var(--font-mono); font-size: 14px; color: var(--ink-300);
+      letter-spacing: 0.12em;
+    }
+
+    h1.title {
+      font-family: var(--font-display); font-weight: 600; font-style: italic;
+      font-size: 144px; line-height: 0.95; letter-spacing: -0.03em;
+      margin: 0;
+    }
+    h1.title em { font-style: italic; color: var(--crimson); }
+    h2.section-h {
+      font-family: var(--font-display); font-weight: 600; font-style: italic;
+      font-size: 96px; line-height: 1; letter-spacing: -0.025em;
+      margin: 0 0 28px;
+    }
+    h2.section-h em { color: var(--crimson); }
+    .lede {
+      font-size: 30px; line-height: 1.45; color: var(--ink-700);
+      max-width: 1300px;
+    }
+
+    .title-slide {
+      background: var(--paper-50);
+      background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0);
+      background-size: 28px 28px;
+    }
+    .title-slide .crest {
+      width: 84px; height: 84px; background: var(--crimson); color: #fff;
+      font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 42px;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 32px;
+    }
+    .title-slide .meta {
+      margin-top: 56px;
+      display: grid; grid-template-columns: repeat(4, auto); gap: 56px;
+      justify-content: start;
+    }
+    .title-slide .meta dt {
+      font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+      letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 6px;
+    }
+    .title-slide .meta dd {
+      margin: 0; font-family: var(--font-display); font-style: italic;
+      font-size: 28px; font-weight: 600; color: var(--ink-900);
+    }
+
+    .section-slate {
+      background: var(--ink-900); color: var(--paper-50);
+    }
+    .section-slate .slide-pad { justify-content: center; }
+    .section-slate .crumb { color: var(--signal-amber); }
+    .section-slate h2.section-h { color: var(--paper-50); font-size: 132px; line-height: 0.95; }
+    .section-slate h2.section-h em { color: var(--signal-amber); }
+    .section-slate .lede { color: var(--paper-300); }
+
+    /* === Avoidance Wall slide === */
+    .wall .bars {
+      margin-top: 48px; display: flex; flex-direction: column; gap: 14px; max-width: 1500px;
+    }
+    .wall .row { display: grid; grid-template-columns: 480px 1fr 110px; gap: 22px; align-items: center; }
+    .wall .lbl { font-family: var(--font-display); font-style: italic; font-size: 28px; font-weight: 600; }
+    .wall .track { background: var(--paper-100); height: 28px; border-radius: 4px; overflow: hidden; border: 1px solid var(--paper-200); }
+    .wall .fill { height: 100%; background: var(--crimson); }
+    .wall .pct { font-family: var(--font-mono); font-weight: 700; font-size: 22px; color: var(--ink-900); text-align: right; }
+
+    /* === Cold open === */
+    .cold .grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+      margin-top: 48px;
+    }
+    .cold .student {
+      background: var(--paper-100); border: 2px solid var(--paper-200);
+      border-top: 8px solid; border-radius: 10px; padding: 36px 32px;
+    }
+    .cold .student .ava {
+      width: 64px; height: 64px; border-radius: 50%; color: #fff;
+      font-family: var(--font-display); font-weight: 700; font-size: 30px;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .cold .student .name {
+      font-family: var(--font-display); font-style: italic; font-size: 48px; font-weight: 600;
+      line-height: 1; margin-bottom: 6px;
+    }
+    .cold .student .vibe {
+      font-family: var(--font-mono); font-size: 16px; font-weight: 700;
+      letter-spacing: 0.15em; margin-bottom: 24px;
+    }
+    .cold .student .quote {
+      font-family: var(--font-display); font-style: italic; font-size: 22px;
+      color: var(--ink-900); line-height: 1.4; padding-top: 18px;
+      border-top: 2px dashed var(--paper-300);
+    }
+    .cold .student .underneath {
+      margin-top: 16px; font-family: var(--font-mono); font-size: 15px; line-height: 1.5; color: var(--ink-700);
+    }
+    .cold .student .underneath strong { color: var(--ink-900); display: block; font-size: 11px; letter-spacing: 0.18em; margin-bottom: 4px; }
+
+    /* === Triggers === */
+    .triggers .grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+      margin-top: 40px;
+    }
+    .triggers .trig {
+      background: var(--paper-100); border: 2px solid var(--paper-200);
+      border-left: 10px solid; border-radius: 8px; padding: 28px 32px;
+    }
+    .triggers .trig .verb {
+      font-family: var(--font-display); font-weight: 700; font-style: italic;
+      font-size: 64px; line-height: 1; letter-spacing: -0.02em; margin-bottom: 8px;
+    }
+    .triggers .trig .says {
+      font-family: var(--font-display); font-style: italic; font-size: 24px;
+      color: var(--ink-900); line-height: 1.3; margin-bottom: 14px;
+    }
+    .triggers .trig .fix {
+      font-family: var(--font-mono); font-size: 16px; line-height: 1.55;
+      color: var(--ink-700); border-top: 1px dashed var(--paper-300); padding-top: 12px;
+    }
+    .triggers .trig .fix strong { color: var(--ink-900); }
+    .triggers .trig-note {
+      position: absolute; bottom: 110px; left: 0; right: 0;
+      text-align: center;
+      font-family: var(--font-display); font-style: italic; font-size: 26px;
+      color: var(--ink-700);
+    }
+
+    /* === Start Bad === */
+    .startbad h2.section-h { font-size: 88px; }
+    .startbad .rules {
+      list-style: none; padding: 0; margin-top: 32px;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;
+    }
+    .startbad .rules li {
+      display: grid; grid-template-columns: 56px 1fr; gap: 18px;
+      background: var(--paper-100); border: 2px solid var(--paper-200);
+      border-radius: 8px; padding: 22px 26px; align-items: center;
+    }
+    .startbad .rules .n {
+      font-family: var(--font-mono); font-weight: 700; font-size: 26px;
+      color: var(--crimson);
+    }
+    .startbad .rules .body { font-family: var(--font-display); font-style: italic; font-size: 26px; line-height: 1.3; }
+    .startbad .timer-card {
+      margin-top: 36px; background: var(--ink-900); color: var(--paper-50);
+      padding: 32px 40px; border-radius: 10px;
+      display: flex; gap: 40px; align-items: center;
+    }
+    .startbad .timer-card .big {
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 140px; line-height: 1; color: var(--signal-amber);
+    }
+    .startbad .timer-card .lbl { font-family: var(--font-display); font-style: italic; font-size: 36px; color: var(--paper-50); line-height: 1.2; }
+    .startbad .timer-card .lbl .small { display: block; font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.15em; color: var(--paper-300); margin-top: 8px; }
+
+    /* === Brief slides === */
+    .brief .grid-2 {
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px;
+      margin-top: 40px;
+    }
+    .brief .steps {
+      list-style: none; padding: 0; margin: 0; counter-reset: step;
+    }
+    .brief .steps li {
+      counter-increment: step;
+      display: grid; grid-template-columns: 56px 1fr; gap: 22px;
+      padding: 22px 0; border-bottom: 1px dashed var(--paper-300);
+    }
+    .brief .steps li::before {
+      content: counter(step, decimal-leading-zero);
+      font-family: var(--font-mono); font-size: 22px; font-weight: 700;
+      color: var(--crimson); padding-top: 4px;
+    }
+    .brief .steps .hd {
+      font-family: var(--font-display); font-style: italic; font-size: 32px;
+      font-weight: 600; line-height: 1.1; margin-bottom: 8px;
+    }
+    .brief .steps .body {
+      font-size: 22px; color: var(--ink-700); line-height: 1.5;
+    }
+    .brief .timecard {
+      background: var(--ink-900); color: var(--paper-100);
+      padding: 36px 40px; border-radius: 10px;
+      align-self: start;
+    }
+    .brief .timecard .big {
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 120px; line-height: 1; color: var(--paper-50);
+    }
+    .brief .timecard .lbl {
+      font-family: var(--font-mono); font-size: 16px; letter-spacing: 0.15em;
+      color: var(--signal-amber); margin-top: 12px;
+    }
+    .brief .timecard dl { margin: 28px 0 0; padding-top: 22px; border-top: 1px dashed var(--paper-300); }
+    .brief .timecard dt { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; color: var(--paper-300); margin-bottom: 4px; }
+    .brief .timecard dd { font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--paper-50); margin: 0 0 14px; }
+
+    /* === Closer === */
+    .closer { background: var(--ink-900); color: var(--paper-50); }
+    .closer .slide-pad { justify-content: center; align-items: flex-start; }
+    .closer .stamp {
+      display: inline-block; border: 3px solid var(--signal-amber);
+      color: var(--signal-amber); font-family: var(--font-mono);
+      font-size: 18px; font-weight: 700; letter-spacing: 0.18em;
+      padding: 10px 18px; transform: rotate(-2deg); margin-bottom: 32px;
+    }
+    .closer h1 { color: var(--paper-50); font-size: 144px; }
+    .closer h1 em { color: var(--signal-amber); }
+    .closer .sub {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 36px; color: var(--paper-300); margin-top: 24px;
+    }
+
+    /* === End slate === */
+    .end-slate {
+      background: var(--paper-50);
+      background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0);
+      background-size: 28px 28px;
+    }
+    .end-slate .slide-pad { justify-content: center; align-items: center; text-align: center; }
+    .end-slate .ascii {
+      font-family: var(--font-mono); font-size: 24px; color: var(--ink-300);
+      letter-spacing: 0.1em; white-space: pre; line-height: 1.3; margin-bottom: 56px;
+    }
+    .end-slate .out {
+      font-family: var(--font-display); font-style: italic; font-size: 84px;
+      color: var(--ink-900); line-height: 1.1; max-width: 1500px;
+    }
+    .end-slate .out em { color: var(--crimson); }
+
+    .qa { background: var(--paper-100); }
+    .qa .slide-pad { justify-content: center; }
+    .qa .big-q {
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 320px; line-height: 1; color: var(--crimson);
+      margin: 0 0 24px;
+    }
+  </style>
+
+  <script src="deck-stage.js"></script>
+</head>
+<body>
+  <deck-stage>
+
+    <!-- ============ 01 · TITLE ============ -->
+    <section class="title-slide" data-screen-label="01 Title">
+      <div class="slide-pad">
+        <div class="crest" aria-label="Indiana University">IU</div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 07</div>
+        <h1 class="title">The Honest<br /><em>Start.</em></h1>
+        <dl class="meta">
+          <div><dt>DURATION</dt><dd>90 minutes</dd></div>
+          <div><dt>DELIVERABLES</dt><dd>2 (in class)</dd></div>
+          <div><dt>TAKE-HOME</dt><dd>7-day log</dd></div>
+          <div><dt>POSTURE</dt><dd>"Compassion in. Action out."</dd></div>
+        </dl>
+      </div>
+      <div class="slide-foot">v2.0 · 2026</div>
+      <div class="slide-num">01 / 13</div>
+    </section>
+
+    <!-- ============ 02 · AVOIDANCE WALL ============ -->
+    <section class="wall" data-screen-label="02 Avoidance Wall">
+      <div class="slide-pad">
+        <div class="crumb">00 · AVOIDANCE WALL · 10 MIN · ANONYMOUS</div>
+        <h2 class="section-h">What are you<br /><em>avoiding right now?</em></h2>
+        <div class="lede">Pick one. Click once. The bars move. Nobody knows who clicked what.</div>
+
+        <div class="bars" role="list" aria-label="Top categories from a typical class">
+          <div class="row" role="listitem">
+            <div class="lbl">A paper I haven't started</div>
+            <div class="track"><div class="fill" style="width: 88%; background: var(--crimson);"></div></div>
+            <div class="pct">88%</div>
+          </div>
+          <div class="row" role="listitem">
+            <div class="lbl">A reading I keep skipping</div>
+            <div class="track"><div class="fill" style="width: 76%; background: var(--signal-red);"></div></div>
+            <div class="pct">76%</div>
+          </div>
+          <div class="row" role="listitem">
+            <div class="lbl">An email I'm scared to send</div>
+            <div class="track"><div class="fill" style="width: 62%; background: var(--signal-amber);"></div></div>
+            <div class="pct">62%</div>
+          </div>
+          <div class="row" role="listitem">
+            <div class="lbl">Office hours I should go to</div>
+            <div class="track"><div class="fill" style="width: 54%; background: var(--signal-amber);"></div></div>
+            <div class="pct">54%</div>
+          </div>
+          <div class="row" role="listitem">
+            <div class="lbl">A problem set I opened then closed</div>
+            <div class="track"><div class="fill" style="width: 47%; background: var(--signal-blue);"></div></div>
+            <div class="pct">47%</div>
+          </div>
+          <div class="row" role="listitem">
+            <div class="lbl">Sleep I keep postponing</div>
+            <div class="track"><div class="fill" style="width: 41%; background: var(--signal-blue);"></div></div>
+            <div class="pct">41%</div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-num">02 / 13</div>
+    </section>
+
+    <!-- ============ 03 · WALL REVEAL ============ -->
+    <section class="section-slate" data-screen-label="03 Wall reveal">
+      <div class="slide-pad">
+        <div class="crumb">↳ WHAT THE WALL TELLS US</div>
+        <h2 class="section-h">You're not lazy.<br /><em>You're avoiding.</em></h2>
+        <div class="lede" style="margin-top: 32px;">
+          <strong style="color: var(--paper-50);">There's a difference.</strong> Avoidance is specific. It has a cause. The cause has a cure. Today we name the cause — because the cause tells you the fix.
+        </div>
+      </div>
+      <div class="slide-num" style="color: var(--paper-300)">03 / 13</div>
+    </section>
+
+    <!-- ============ 04 · COLD OPEN ============ -->
+    <section class="cold" data-screen-label="04 Cold open">
+      <div class="slide-pad">
+        <div class="crumb">① COLD OPEN · 5 MIN · SAME WEEK · DIFFERENT FUEL</div>
+        <h2 class="section-h">Three students.<br /><em>Zero work done.</em></h2>
+
+        <div class="grid">
+          <article class="student" style="border-top-color: var(--signal-amber)">
+            <div class="ava" style="background: var(--signal-amber); color: var(--ink-900)">M</div>
+            <div class="name">Maya</div>
+            <div class="vibe" style="color: var(--signal-amber-text)">↳ AMBIGUITY</div>
+            <div class="quote">"I keep opening the doc. Reading the prompt. Closing it. I don't know what they want."</div>
+            <div class="underneath"><strong>UNDERNEATH</strong>"Done" has no shape. So nothing she writes ever feels like a start.</div>
+          </article>
+          <article class="student" style="border-top-color: var(--signal-red)">
+            <div class="ava" style="background: var(--signal-red)">D</div>
+            <div class="name">Devon</div>
+            <div class="vibe" style="color: var(--signal-red-text)">↳ FEAR</div>
+            <div class="quote">"If I try and it's bad, I have to know I'm bad. I'd rather not know."</div>
+            <div class="underneath"><strong>UNDERNEATH</strong>Starting threatens an identity. Not starting protects it.</div>
+          </article>
+          <article class="student" style="border-top-color: var(--signal-blue)">
+            <div class="ava" style="background: var(--signal-blue)">P</div>
+            <div class="name">Priya</div>
+            <div class="vibe" style="color: var(--signal-blue-text)">↳ EXHAUSTION</div>
+            <div class="quote">"I'm running on three hours and a Red Bull. My brain is a brick. I just can't."</div>
+            <div class="underneath"><strong>UNDERNEATH</strong>Not lazy — depleted. The fix is not 'try harder.' The fix is sleep.</div>
+          </article>
+        </div>
+      </div>
+      <div class="slide-num">04 / 13</div>
+    </section>
+
+    <!-- ============ 05 · THE 4 TRIGGERS ============ -->
+    <section class="triggers" data-screen-label="05 The 4 Triggers">
+      <div class="slide-pad">
+        <div class="crumb">② THE 4 TRIGGERS · 8 MIN · ANCHOR CONCEPT</div>
+        <h2 class="section-h">Same surface.<br /><em>Different fuel.</em></h2>
+
+        <div class="grid" role="list" aria-label="The four triggers of procrastination">
+          <article class="trig" role="listitem" style="border-color: var(--signal-amber)">
+            <div class="verb" style="color: var(--signal-amber-text)">AMBIGUITY</div>
+            <div class="says">"I don't know what 'done' looks like."</div>
+            <div class="fix"><strong>FIX:</strong> Make it tiny &amp; concrete. Define done for the next 25 min only. Worst-possible first paragraph.</div>
+          </article>
+          <article class="trig" role="listitem" style="border-color: var(--signal-red)">
+            <div class="verb" style="color: var(--signal-red-text)">FEAR</div>
+            <div class="says">"Starting will confirm something I'm scared of."</div>
+            <div class="fix"><strong>FIX:</strong> Lower the stakes of step one. Open the doc; don't write. Read the rubric; don't draft. Talk to one human.</div>
+          </article>
+          <article class="trig" role="listitem" style="border-color: var(--signal-blue)">
+            <div class="verb" style="color: var(--signal-blue-text)">BOREDOM</div>
+            <div class="says">"My brain refuses to engage with this."</div>
+            <div class="fix"><strong>FIX:</strong> Add structure or stakes. Pomodoro. Body-double with a friend. Connect it to something you actually care about.</div>
+          </article>
+          <article class="trig" role="listitem" style="border-color: var(--signal-green)">
+            <div class="verb" style="color: var(--signal-green-text)">EXHAUSTION</div>
+            <div class="says">"I'm running on fumes and pretending I'm not."</div>
+            <div class="fix"><strong>FIX:</strong> Stop. Eat, hydrate, walk, nap. <em>Then</em> one tiny start. The fix that feels least productive is the most.</div>
+          </article>
+        </div>
+      </div>
+      <div class="trig-note">Two triggers can stack. Diagnose the biggest one first — the others will surface.</div>
+      <div class="slide-num">05 / 13</div>
+    </section>
+
+    <!-- ============ 06 · START BAD ============ -->
+    <section class="startbad" data-screen-label="06 Start Bad on Purpose">
+      <div class="slide-pad">
+        <div class="crumb">③ START BAD ON PURPOSE · 12 MIN · LIVE DRILL</div>
+        <h2 class="section-h">Motivation comes <em>after</em><br />the first sentence.</h2>
+
+        <ol class="rules" aria-label="The four rules of the live drill">
+          <li><div class="n">01</div><div class="body">Pick one real assignment you're avoiding.</div></li>
+          <li><div class="n">02</div><div class="body">Write the worst possible first paragraph.</div></li>
+          <li><div class="n">03</div><div class="body">Don't fix anything. Don't backspace. Forward only.</div></li>
+          <li><div class="n">04</div><div class="body">Nobody will ever see this. Promise.</div></li>
+        </ol>
+
+        <div class="timer-card">
+          <div class="big">90</div>
+          <div class="lbl">SECONDS · ALL TOGETHER<span class="small">YOU WRITE TOO. MODEL IT.</span></div>
+        </div>
+      </div>
+      <div class="slide-num">06 / 13</div>
+    </section>
+
+    <!-- ============ 07 · TRANSITION ============ -->
+    <section class="section-slate" data-screen-label="07 Transition to Autopsy">
+      <div class="slide-pad">
+        <div class="crumb">↓ NOW SOMETHING FORENSIC</div>
+        <h2 class="section-h">Pick one moment.<br /><em>Last 7 days.</em></h2>
+        <div class="lede" style="margin-top: 32px;">
+          Not "I always procrastinate." A specific time. Tuesday, 9:47pm. Paper open. You instead reorganized your desk. <em>That</em> moment.
+        </div>
+      </div>
+      <div class="slide-num" style="color: var(--paper-300)">07 / 13</div>
+    </section>
+
+    <!-- ============ 08 · AUTOPSY BRIEF ============ -->
+    <section class="brief" data-screen-label="08 Procrastination Autopsy brief">
+      <div class="slide-pad">
+        <div class="crumb">④ PROCRASTINATION AUTOPSY · 25 MIN · DELIVERABLE #1</div>
+        <h2 class="section-h">Diagnose <em>one moment.</em></h2>
+
+        <div class="grid-2">
+          <ol class="steps">
+            <li><div><div class="hd">Locate it in time</div><div class="body">When · where · what was due · what you did instead.</div></div></li>
+            <li><div><div class="hd">Find the trigger</div><div class="body">Ambiguity? Fear? Boredom? Exhaustion? Match it to section 02.</div></div></li>
+            <li><div><div class="hd">Find what's underneath</div><div class="body">What were you protecting yourself from? One honest sentence.</div></div></li>
+            <li><div><div class="hd">Prescribe a tiny step</div><div class="body">Something small enough you'll do it tonight. Halve it. Halve it again.</div></div></li>
+          </ol>
+
+          <aside class="timecard">
+            <div class="big">25</div>
+            <div class="lbl">MINUTES · QUIET WORK</div>
+            <dl>
+              <div><dt>STUCK?</dt><dd>halve the moment</dd></div>
+              <div><dt>POINTS</dt><dd>40 · revise &amp; resubmit</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+      <div class="slide-num">08 / 13</div>
+    </section>
+
+    <!-- ============ 09 · STACK BRIEF ============ -->
+    <section class="brief" data-screen-label="09 Motivation Stack brief">
+      <div class="slide-pad">
+        <div class="crumb">⑤ MOTIVATION STACK · 20 MIN · DELIVERABLE #2</div>
+        <h2 class="section-h">Build a <em>ritual</em> that<br />survives a bad week.</h2>
+
+        <div class="grid-2">
+          <ol class="steps">
+            <li><div><div class="hd">Three autonomy levers</div><div class="body">Where can you choose? Time of day, location, music, order.</div></div></li>
+            <li><div><div class="hd">Three mastery levers</div><div class="body">What does progress look like? Concrete signal — not vibes.</div></div></li>
+            <li><div><div class="hd">Three purpose levers</div><div class="body">Why does this matter to a human you love — present-you, future-you, someone?</div></div></li>
+            <li><div><div class="hd">One 25-min ritual</div><div class="body">When/where/what + which of your nine levers it pulls. Run it tonight.</div></div></li>
+          </ol>
+
+          <aside class="timecard">
+            <div class="big">20</div>
+            <div class="lbl">MINUTES · STILL QUIET</div>
+            <dl>
+              <div><dt>POINTS</dt><dd>40 · all 9 levers required</dd></div>
+              <div><dt>SOURCE</dt><dd>Self-Determination Theory</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+      <div class="slide-num">09 / 13</div>
+    </section>
+
+    <!-- ============ 10 · TAKE-HOME BRIEF ============ -->
+    <section class="brief" data-screen-label="10 Take-home brief">
+      <div class="slide-pad">
+        <div class="crumb">⑥ TAKE-HOME · 7 DAYS · 50 PTS</div>
+        <h2 class="section-h">The <em>Start Log.</em></h2>
+
+        <div class="grid-2">
+          <ol class="steps">
+            <li><div><div class="hd">Pair with one classmate</div><div class="body">Trade phone numbers. Different major if possible.</div></div></li>
+            <li><div><div class="hd">Tonight: text "DONE"</div><div class="body">When you complete your tiny step. Not before. Not an essay.</div></div></li>
+            <li><div><div class="hd">Each day: one row</div><div class="body">When · trigger · tiny step · did you start? · one-line surprise.</div></div></li>
+            <li><div><div class="hd">Sunday: send a pattern</div><div class="body">One thing you noticed about yourself this week. To your partner.</div></div></li>
+          </ol>
+
+          <aside class="timecard">
+            <div class="big">7</div>
+            <div class="lbl">DAYS · 50 POINTS</div>
+            <dl>
+              <div><dt>DUE</dt><dd>Next class · bring a copy</dd></div>
+              <div><dt>POLICY</dt><dd>revise &amp; resubmit if &lt; 33</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+      <div class="slide-num">10 / 13</div>
+    </section>
+
+    <!-- ============ 11 · CLOSER ============ -->
+    <section class="closer" data-screen-label="11 Closer reframe">
+      <div class="slide-pad">
+        <div class="stamp">REMEMBER THIS</div>
+        <h1 class="title">Feeling better<br />isn't the goal.<br /><em>Doing the thing is.</em></h1>
+        <div class="sub">You don't have to feel motivated tonight.<br />You have to text "DONE" to your partner. That's the whole assignment.</div>
+      </div>
+      <div class="slide-num" style="color: var(--paper-300)">11 / 13</div>
+    </section>
+
+    <!-- ============ 12 · Q&A ============ -->
+    <section class="qa" data-screen-label="12 Questions">
+      <div class="slide-pad">
+        <div class="crumb">↳ HONEST QUESTIONS</div>
+        <div class="big-q" aria-label="Q?">Q?</div>
+        <div class="lede" style="font-size: 36px;">No question is a bad one. The harder, the better.</div>
+      </div>
+      <div class="slide-num">12 / 13</div>
+    </section>
+
+    <!-- ============ 13 · END SLATE ============ -->
+    <section class="end-slate" data-screen-label="13 End slate">
+      <div class="slide-pad">
+        <div class="ascii" aria-hidden="true">+--------------------------------------------+
+|  END OF MODULE  ·  text DONE tonight       |
++--------------------------------------------+</div>
+        <div class="out">go forth and<br />start <em>badly</em><br />on purpose.</div>
+        <div class="slide-foot" style="position: static; margin-top: 64px; text-align: center; left: 0; right: 0;">CSCI-Y100 · v2.0 · 2026 &nbsp;·&nbsp; Start Log due next class</div>
+      </div>
+      <div class="slide-num">13 / 13</div>
+    </section>
+
+  </deck-stage>
+</body>
+</html>

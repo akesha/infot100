@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spawn Point · TILT Rubric · CSCI-Y100 Week 1</title>
+  <meta name="description" content="Transparent (TILT) rubric for the Spawn Point module's prototype + project-seed deliverable. Purpose, task, criteria." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600;1,9..144,700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    @page { size: letter; margin: 0.55in 0.65in; }
+
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    html { font-size: 13.5px; }
+    body { margin: 0; background: var(--paper-200); color: var(--ink-900); font-family: var(--font-body); font-size: 13.5px; line-height: 1.5; }
+
+    .toolbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink-900); color: var(--paper-50);
+      padding: 12px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em;
+    }
+    .toolbar .label { color: var(--signal-amber); }
+    .toolbar button {
+      background: var(--signal-amber); color: var(--ink-900);
+      border: 0; padding: 8px 18px;
+      font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.1em;
+      cursor: pointer; border-radius: 4px;
+    }
+    .toolbar button:hover { background: #f7c46a; }
+    .toolbar button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .skip-link { position: absolute; left: -9999px; top: 0; background: var(--ink-900); color: #fff; padding: 8px 14px; }
+    .skip-link:focus { left: 12px; top: 12px; z-index: 999; }
+
+    .page {
+      background: var(--paper-50);
+      width: 8.5in; min-height: 11in;
+      box-sizing: border-box; padding: 0.6in 0.7in;
+      margin: 24px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      page-break-after: always; position: relative;
+    }
+    .page:last-of-type { page-break-after: auto; }
+
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; padding: 0; box-shadow: none; width: auto; min-height: auto; }
+      .no-print { display: none !important; }
+    }
+
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
+    h1 { font-size: 56px; line-height: 0.95; letter-spacing: -0.02em; margin: 0 0 8px; font-style: italic; }
+    h1 em { color: var(--crimson); }
+    h2 {
+      font-size: 24px; line-height: 1.05; margin: 22px 0 10px;
+      font-style: italic; letter-spacing: -0.01em;
+      padding-bottom: 6px; border-bottom: 2px solid var(--ink-900);
+    }
+    h3 { font-size: 16px; margin: 14px 0 6px; font-style: italic; }
+    p { margin: 0 0 8px; }
+
+    .crumb { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; color: var(--ink-500); }
+    .crumb-strong { color: var(--crimson); font-weight: 700; }
+
+    .footer-strip {
+      position: absolute; bottom: 0.35in; left: 0.7in; right: 0.7in;
+      display: flex; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 9.5px;
+      letter-spacing: 0.12em; color: var(--ink-300);
+      padding-top: 6px; border-top: 1px solid var(--paper-200);
+    }
+
+    .cover { background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0); background-size: 22px 22px; }
+    .cover-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 36px; }
+    .cover-crest {
+      width: 48px; height: 48px; background: var(--crimson); color: #fff;
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 24px;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .cover h1 { font-size: 84px; }
+    .cover .lede { font-size: 18px; line-height: 1.45; max-width: 580px; color: var(--ink-700); margin-top: 8px; font-family: var(--font-display); font-style: italic; }
+    .cover-stamp {
+      display: inline-block; border: 2.5px solid var(--crimson);
+      color: var(--crimson); font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      padding: 7px 13px; transform: rotate(-3deg); margin-bottom: 14px;
+    }
+
+    .tilt-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 12px 0; }
+    .tilt-card { border: 1.5px solid var(--ink-900); padding: 12px 14px; position: relative; background: var(--paper-50); page-break-inside: avoid; }
+    .tilt-card .tag {
+      display: inline-block; color: #fff;
+      padding: 4px 10px; font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+    .tilt-card .tag.purpose { background: var(--signal-blue); }
+    .tilt-card .tag.task { background: var(--signal-amber); color: var(--ink-900); }
+    .tilt-card .tag.criteria { background: var(--signal-green); }
+    .tilt-card h3 { margin: 0 0 6px; font-size: 18px; }
+    .tilt-card .body { font-size: 12.5px; line-height: 1.5; }
+    .tilt-card .body ul { margin: 6px 0 0; padding-left: 18px; }
+    .tilt-card .body li { margin-bottom: 3px; }
+
+    .rubric { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 6px; page-break-inside: avoid; }
+    .rubric thead th {
+      background: var(--ink-900); color: var(--paper-50);
+      padding: 8px 10px; text-align: left;
+      font-family: var(--font-mono); font-size: 10px;
+      font-weight: 700; letter-spacing: 0.12em; vertical-align: middle;
+    }
+    .rubric thead .level-h { width: 22%; }
+    .rubric thead .pts-h { width: 7%; text-align: center; background: var(--crimson); }
+    .rubric thead .crit-h { background: var(--paper-100); color: var(--ink-900); width: 22%; border-right: 1px solid var(--paper-200); }
+    .rubric tbody td { padding: 10px 10px; vertical-align: top; border-bottom: 1px solid var(--paper-200); line-height: 1.4; }
+    .rubric tbody .crit {
+      background: var(--paper-100);
+      font-family: var(--font-display); font-style: italic;
+      font-weight: 600; font-size: 14px;
+      border-right: 1px solid var(--paper-200);
+    }
+    .rubric tbody .crit .crit-pts {
+      display: block;
+      font-family: var(--font-mono); font-style: normal;
+      font-weight: 700; font-size: 10px; letter-spacing: 0.1em;
+      color: var(--crimson); margin-top: 4px;
+    }
+    .rubric tbody .ex { background: var(--signal-green); color: #fff; }
+    .rubric tbody .pf { background: rgba(93,187,126,0.16); }
+    .rubric tbody .dv { background: rgba(232,169,59,0.16); }
+    .rubric tbody .ne { background: rgba(216,85,60,0.14); }
+    .rubric tbody .pts-cell {
+      text-align: center;
+      font-family: var(--font-mono); font-weight: 700;
+      background: var(--paper-100); font-size: 13px;
+    }
+    .rubric tbody td strong {
+      display: block; font-family: var(--font-mono);
+      font-size: 9.5px; letter-spacing: 0.1em;
+      margin-bottom: 4px; text-transform: uppercase;
+    }
+    .rubric tbody .ex strong { color: rgba(255,255,255,0.85); }
+    .rubric tbody .pf strong { color: var(--terminal-700); }
+    .rubric tbody .dv strong { color: #8a6920; }
+    .rubric tbody .ne strong { color: #a02e1e; }
+
+    .runhead {
+      display: grid; grid-template-columns: 1fr auto; gap: 16px;
+      align-items: baseline;
+      padding-bottom: 10px; border-bottom: 3px solid var(--ink-900);
+      margin-bottom: 16px;
+    }
+    .runhead h1 { font-size: 48px; line-height: 0.95; }
+    .runhead .meta { text-align: right; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--ink-500); }
+    .runhead .meta .total {
+      display: block; font-family: var(--font-display);
+      font-style: italic; font-weight: 700; font-size: 30px;
+      color: var(--crimson); line-height: 1;
+    }
+
+    .self-score {
+      page-break-inside: avoid;
+      background: var(--paper-100);
+      border-top: 3px solid var(--ink-900);
+      padding: 14px 16px; margin-top: 14px;
+    }
+    .self-score h3 { margin: 0 0 8px; }
+    .self-score .grid { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; font-size: 12.5px; }
+    .self-score .pts-box { width: 60px; height: 28px; border: 1.5px solid var(--ink-900); background: #fff; }
+    .self-score .total-box { width: 80px; height: 36px; border: 2px solid var(--ink-900); background: #fff; }
+    .self-score .total-row {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 18px; font-weight: 700;
+      padding-top: 8px; border-top: 1.5px solid var(--ink-900); margin-top: 4px;
+    }
+
+    .cover-meta {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px 28px;
+      padding: 22px 0; border-top: 2px solid var(--ink-900);
+      border-bottom: 2px solid var(--ink-900); margin: 24px 0;
+    }
+    .cover-meta dt { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 4px; }
+    .cover-meta dd { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 19px; font-weight: 600; }
+
+    .pillar-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 8px; }
+    .pillar { border-top: 4px solid; padding: 14px 16px; background: var(--paper-100); }
+    .pillar .label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; margin-bottom: 6px; }
+    .pillar .one { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 22px; line-height: 1.15; }
+
+    .pull {
+      border-top: 2px solid var(--ink-900); border-bottom: 2px solid var(--ink-900);
+      padding: 12px 0; margin: 16px 0;
+      font-family: var(--font-display); font-style: italic;
+      font-size: 17px; line-height: 1.4;
+    }
+    .pull strong {
+      font-style: normal; font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.15em;
+      display: block; color: var(--crimson); margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to TILT rubric</a>
+
+  <div class="toolbar no-print" role="toolbar" aria-label="Document actions">
+    <span><span class="label">TILT RUBRIC</span> &nbsp;·&nbsp; Spawn Point · 100 pts total</span>
+    <button type="button" onclick="window.print()" aria-label="Print this rubric">PRINT / SAVE PDF</button>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ PAGE 1 — COVER ============ -->
+    <article class="page cover" aria-labelledby="cover-title">
+      <header class="cover-head">
+        <div class="cover-crest" aria-label="Indiana University">IU</div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 01 · v2.0</div>
+      </header>
+
+      <div class="cover-stamp">TILT RUBRIC — TRANSPARENT ASSIGNMENT FRAMEWORK</div>
+      <h1 id="cover-title">How you'll be<br /><em>graded.</em></h1>
+      <p class="lede">Three artifacts. Three rubrics. No mystery. We grade the work you can <em>show</em> — specific ideas, real prototypes, concrete project seeds — not whether you "feel like a maker."</p>
+
+      <dl class="cover-meta">
+        <div><dt>ARTIFACT 01</dt><dd>Capability Map</dd></div>
+        <div><dt>POINTS</dt><dd>30 pts</dd></div>
+        <div><dt>DUE</dt><dd>End of class</dd></div>
+        <div><dt>ARTIFACT 02</dt><dd>Cardboard Prototype</dd></div>
+        <div><dt>POINTS</dt><dd>40 pts</dd></div>
+        <div><dt>DUE</dt><dd>End of class</dd></div>
+        <div><dt>ARTIFACT 03</dt><dd>Project Seed</dd></div>
+        <div><dt>POINTS</dt><dd>30 pts</dd></div>
+        <div><dt>DUE</dt><dd>End of class</dd></div>
+      </dl>
+
+      <h2 style="margin-top: 8px;">The TILT framework</h2>
+      <p style="font-size: 13.5px; max-width: 720px;">Every assignment in this module follows the same three-part structure — <strong>Purpose</strong>, <strong>Task</strong>, <strong>Criteria</strong>. Lost on what we want? Find one of these three sections.</p>
+
+      <div class="pillar-strip" aria-label="The three TILT pillars">
+        <div class="pillar" style="border-top-color: var(--signal-blue);">
+          <div class="label" style="color: var(--signal-blue-text);">① PURPOSE</div>
+          <div class="one">Why we're asking. The skill it builds.</div>
+        </div>
+        <div class="pillar" style="border-top-color: var(--signal-amber);">
+          <div class="label" style="color: var(--signal-amber-text);">② TASK</div>
+          <div class="one">What you'll actually do, step by step.</div>
+        </div>
+        <div class="pillar" style="border-top-color: var(--signal-green);">
+          <div class="label" style="color: var(--signal-green-text);">③ CRITERIA</div>
+          <div class="one">What "good" looks like — at four levels.</div>
+        </div>
+      </div>
+
+      <div class="pull" style="margin-top: 22px;">
+        <strong>HOUSE POLICY · REVISE &amp; RESUBMIT</strong>
+        Anyone scoring below the "Proficient" line on any artifact gets <em>one free revision week, no penalty.</em> Week 1 is the spawn point, not the final boss — use the revision if your first prototype was rough.
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>SPAWN POINT · TILT RUBRIC · PG 1 / 4</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 2 — CAPABILITY MAP ============ -->
+    <article class="page" aria-labelledby="map-h">
+      <header class="runhead">
+        <h1 id="map-h">Capability Map. <em>30 pts.</em></h1>
+        <div class="meta">
+          IN-CLASS · 20 MIN
+          <span class="total">30</span>
+        </div>
+      </header>
+
+      <p class="crumb"><span class="crumb-strong">PG 2/4</span> &nbsp;·&nbsp; EIGHT TOOLS — EIGHT CONCRETE IDEAS</p>
+
+      <div class="tilt-band" role="list" aria-label="TILT framework for the Capability Map">
+        <article class="tilt-card" role="listitem">
+          <span class="tag purpose">① PURPOSE</span>
+          <h3>The skill we're building.</h3>
+          <div class="body">
+            <p>You can't combine capabilities you don't know. The Capability Map forces you to think <em>in verbs</em> — cut, print, stitch, press, cast, protect, capture, design — not in tool names.</p>
+            <p>By the end of this you have a personal map of which 2–3 capabilities are the spine of your final project. We refer back to this every week through Week 14.</p>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag task">② TASK</span>
+          <h3>What you'll do.</h3>
+          <div class="body">
+            <ul>
+              <li>For each of the <strong>8 Creator Commons tools</strong>, write a concrete idea for YOUR final project.</li>
+              <li>Each idea names a <strong>real object</strong>, a <strong>real user</strong>, and a <strong>real problem</strong>.</li>
+              <li>Rate each: <strong>must / maybe / no</strong>. "Must" means you'll actually use it in 14 weeks.</li>
+              <li>Auto-saves in the browser. You'll bring this to Week 4.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag criteria">③ CRITERIA</span>
+          <h3>What "got it" looks like.</h3>
+          <div class="body">
+            <p>See the rubric below. Four criteria, four levels, 30 points total.</p>
+            <p><strong>Pass line:</strong> 20 pts. Below 20 → free revision week, no penalty. We grade specificity — not the cleverness of your ideas.</p>
+          </div>
+        </article>
+      </div>
+
+      <h2>Rubric — four criteria · four levels</h2>
+
+      <table class="rubric" role="table" aria-label="Capability Map rubric — 4 criteria scored on 4 levels">
+        <thead>
+          <tr>
+            <th class="crit-h" scope="col">Criterion</th>
+            <th class="level-h" scope="col">Exemplary</th>
+            <th class="level-h" scope="col">Proficient</th>
+            <th class="level-h" scope="col">Developing</th>
+            <th class="level-h" scope="col">Not yet</th>
+            <th class="pts-h" scope="col">Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">Coverage <span class="crit-pts">8 PTS</span></td>
+            <td class="ex"><strong>7–8</strong>All 8 tools have an idea written. None left blank.</td>
+            <td class="pf"><strong>5–6</strong>6–7 tools covered. 1–2 blanks.</td>
+            <td class="dv"><strong>3–4</strong>4–5 tools covered. Several blanks.</td>
+            <td class="ne"><strong>0–2</strong>3 or fewer tools attempted.</td>
+            <td class="pts-cell">/8</td>
+          </tr>
+          <tr>
+            <td class="crit">Specificity of ideas <span class="crit-pts">10 PTS</span></td>
+            <td class="ex"><strong>9–10</strong>Each idea names a real object, real user, real problem. "Tactile night-light for kids with low vision" beats "a light."</td>
+            <td class="pf"><strong>7–8</strong>Most ideas concrete. 1–2 are generic ("a phone stand").</td>
+            <td class="dv"><strong>4–6</strong>Half the ideas are vague ("something cool"). Few users named.</td>
+            <td class="ne"><strong>0–3</strong>Mostly "idk" / "a thing" / blank.</td>
+            <td class="pts-cell">/10</td>
+          </tr>
+          <tr>
+            <td class="crit">Honest must/maybe/no <span class="crit-pts">6 PTS</span></td>
+            <td class="ex"><strong>5–6</strong>Each rated. Mix is plausible — not all 8 marked "must." 2–4 musts is realistic.</td>
+            <td class="pf"><strong>4</strong>Each rated, mix slightly skewed. (Few musts, or many.)</td>
+            <td class="dv"><strong>2–3</strong>Most rated. Every tool marked the same.</td>
+            <td class="ne"><strong>0–1</strong>Skipped or all blank.</td>
+            <td class="pts-cell">/6</td>
+          </tr>
+          <tr>
+            <td class="crit">Verbs combine <span class="crit-pts">6 PTS</span></td>
+            <td class="ex"><strong>5–6</strong>Your "musts" form a coherent project shape — e.g. PRINT + STITCH + LAMINATE feels like one product.</td>
+            <td class="pf"><strong>4</strong>Musts are plausibly related; the project shape is hinted.</td>
+            <td class="dv"><strong>2–3</strong>Musts feel disconnected. Three random tools.</td>
+            <td class="ne"><strong>0–1</strong>No must-haves marked, or no through-line.</td>
+            <td class="pts-cell">/6</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score" aria-label="Self-score worksheet">
+        <h3>Self-score before you submit.</h3>
+        <div class="grid">
+          <span>Coverage — all 8 tools</span><span class="pts-box" aria-label="self score box, coverage, out of 8"></span>
+          <span>Specificity — real object, real user, real problem</span><span class="pts-box" aria-label="self score box, specificity, out of 10"></span>
+          <span>Honest must/maybe/no</span><span class="pts-box" aria-label="self score box, honest, out of 6"></span>
+          <span>Verbs combine into a project shape</span><span class="pts-box" aria-label="self score box, verbs, out of 6"></span>
+          <span class="total-row">TOTAL · pass line is 20</span><span class="total-box" aria-label="total score box, out of 30"></span>
+        </div>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>SPAWN POINT · TILT RUBRIC · PG 2 / 4</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 3 — CARDBOARD PROTOTYPE ============ -->
+    <article class="page" aria-labelledby="proto-h">
+      <header class="runhead">
+        <h1 id="proto-h">Cardboard Prototype. <em>40 pts.</em></h1>
+        <div class="meta">
+          IN-CLASS · 30 MIN
+          <span class="total">40</span>
+        </div>
+      </header>
+
+      <p class="crumb"><span class="crumb-strong">PG 3/4</span> &nbsp;·&nbsp; PROBLEM · SHAPE · BUILD · NOTICE</p>
+
+      <div class="tilt-band" role="list" aria-label="TILT framework for the Prototype">
+        <article class="tilt-card" role="listitem">
+          <span class="tag purpose">① PURPOSE</span>
+          <h3>The skill we're building.</h3>
+          <div class="body">
+            <p>The whole semester is the loop <em>problem → shape → make → notice → iterate</em>. We run it in 30 minutes today, in cardboard, on a tiny problem, so your hands know the move before the stakes get high.</p>
+            <p>Most students freeze in Week 4 because Week 1 was their first time committing a shape. Not in this class.</p>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag task">② TASK</span>
+          <h3>What you'll do.</h3>
+          <div class="body">
+            <ul>
+              <li>Pick <strong>one real, small problem</strong> you had this week. Specific.</li>
+              <li>Sketch it (paper or Tinkercad). Don't perfect — commit a shape.</li>
+              <li>Build it. Cardboard, tape, hot glue. ChompSaw or Cameo if needed.</li>
+              <li>Photograph it + write 3 lines: <strong>worked / broke / next</strong>.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag criteria">③ CRITERIA</span>
+          <h3>What "got it" looks like.</h3>
+          <div class="body">
+            <p>See the rubric below. Four criteria, four levels, 40 points total.</p>
+            <p><strong>Pass line:</strong> 26 pts. Below 26 → free revision week, no penalty. <em>Polish costs you points here.</em> Pretty cardboard means you stopped iterating.</p>
+          </div>
+        </article>
+      </div>
+
+      <h2>Rubric — four criteria · four levels</h2>
+
+      <table class="rubric" role="table" aria-label="Prototype rubric — 4 criteria scored on 4 levels">
+        <thead>
+          <tr>
+            <th class="crit-h" scope="col">Criterion</th>
+            <th class="level-h" scope="col">Exemplary</th>
+            <th class="level-h" scope="col">Proficient</th>
+            <th class="level-h" scope="col">Developing</th>
+            <th class="level-h" scope="col">Not yet</th>
+            <th class="pts-h" scope="col">Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">Real problem <span class="crit-pts">8 PTS</span></td>
+            <td class="ex"><strong>7–8</strong>One specific, real annoyance from <em>this week</em>. Not invented for the assignment.</td>
+            <td class="pf"><strong>5–6</strong>Real problem but generic ("phones fall off desks"). True for many people, not just you.</td>
+            <td class="dv"><strong>3–4</strong>Borrowed from the seed list without making it personal.</td>
+            <td class="ne"><strong>0–2</strong>Missing or hypothetical. "What if there was a thing…"</td>
+            <td class="pts-cell">/8</td>
+          </tr>
+          <tr>
+            <td class="crit">Object exists <span class="crit-pts">12 PTS</span></td>
+            <td class="ex"><strong>11–12</strong>A real cardboard object exists. Photographed. Held in your hands. Solves <em>this</em> problem.</td>
+            <td class="pf"><strong>8–10</strong>Object exists but loosely fits the problem. Photo present.</td>
+            <td class="dv"><strong>5–7</strong>Object started, didn't finish. Or photo missing.</td>
+            <td class="ne"><strong>0–4</strong>No object. Sketch only. Or "I ran out of time."</td>
+            <td class="pts-cell">/12</td>
+          </tr>
+          <tr>
+            <td class="crit">Honest reflection <span class="crit-pts">12 PTS</span></td>
+            <td class="ex"><strong>11–12</strong>Three lines that name <em>real</em> things: a specific win, a specific failure, a concrete next change. "Hot glue didn't hold the right edge" beats "learned a lot."</td>
+            <td class="pf"><strong>8–10</strong>Three lines, mostly substantive. One is generic.</td>
+            <td class="dv"><strong>5–7</strong>Two of three filled, or all three vague ("it worked").</td>
+            <td class="ne"><strong>0–4</strong>Missing or "it's fine."</td>
+            <td class="pts-cell">/12</td>
+          </tr>
+          <tr>
+            <td class="crit">Iteration appetite <span class="crit-pts">8 PTS</span></td>
+            <td class="ex"><strong>7–8</strong>"Next" line names a specific second pass: a different material, a different shape, a measurement to take.</td>
+            <td class="pf"><strong>5–6</strong>Names a next move but vague ("make it stronger").</td>
+            <td class="dv"><strong>3–4</strong>"I'd just redo it." No specific change.</td>
+            <td class="ne"><strong>0–2</strong>Missing. Or "it's done."</td>
+            <td class="pts-cell">/8</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score" aria-label="Self-score worksheet">
+        <h3>Self-score before you submit.</h3>
+        <div class="grid">
+          <span>Real problem from this week</span><span class="pts-box" aria-label="self score box, problem, out of 8"></span>
+          <span>A cardboard object that exists</span><span class="pts-box" aria-label="self score box, object, out of 12"></span>
+          <span>Honest reflection — worked, broke, next</span><span class="pts-box" aria-label="self score box, reflection, out of 12"></span>
+          <span>Iteration appetite — specific next move</span><span class="pts-box" aria-label="self score box, iteration, out of 8"></span>
+          <span class="total-row">TOTAL · pass line is 26</span><span class="total-box" aria-label="total score box, out of 40"></span>
+        </div>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>SPAWN POINT · TILT RUBRIC · PG 3 / 4</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 4 — PROJECT SEED ============ -->
+    <article class="page" aria-labelledby="seed-h">
+      <header class="runhead">
+        <h1 id="seed-h">Project Seed. <em>30 pts.</em></h1>
+        <div class="meta">
+          IN-CLASS · 10 MIN
+          <span class="total">30</span>
+        </div>
+      </header>
+
+      <p class="crumb"><span class="crumb-strong">PG 4/4</span> &nbsp;·&nbsp; A HYPOTHESIS, NOT A CONTRACT</p>
+
+      <div class="tilt-band" role="list" aria-label="TILT framework for the Project Seed">
+        <article class="tilt-card" role="listitem">
+          <span class="tag purpose">① PURPOSE</span>
+          <h3>The skill we're building.</h3>
+          <div class="body">
+            <p>By Week 4 you'll have a working v0.1. By Week 14 you'll ship. None of that happens if Week 1 ends without a <em>shape</em> for the project.</p>
+            <p>The seed is a hypothesis you can argue with. We expect it to change — we just need it concrete enough to test against reality.</p>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag task">② TASK</span>
+          <h3>What you'll do.</h3>
+          <div class="body">
+            <ul>
+              <li><strong>WHO</strong> is it for? A specific person or group.</li>
+              <li><strong>WHAT</strong> is their problem? The pain, not the solution.</li>
+              <li><strong>WHAT</strong> will you make? A physical thing.</li>
+              <li><strong>WHICH</strong> 2–3 capabilities will you combine?</li>
+              <li><strong>SMALLEST</strong> version you could ship by Week 4?</li>
+            </ul>
+          </div>
+        </article>
+        <article class="tilt-card" role="listitem">
+          <span class="tag criteria">③ CRITERIA</span>
+          <h3>What "got it" looks like.</h3>
+          <div class="body">
+            <p>See the rubric below. Five criteria, four levels, 30 points total.</p>
+            <p><strong>Pass line:</strong> 20 pts. Below 20 → free revision week, no penalty. <em>An honestly rough seed beats a polished pitch deck.</em></p>
+          </div>
+        </article>
+      </div>
+
+      <h2>Rubric — five criteria · four levels</h2>
+
+      <table class="rubric" role="table" aria-label="Project Seed rubric — 5 criteria scored on 4 levels">
+        <thead>
+          <tr>
+            <th class="crit-h" scope="col">Criterion</th>
+            <th class="level-h" scope="col">Exemplary</th>
+            <th class="level-h" scope="col">Proficient</th>
+            <th class="level-h" scope="col">Developing</th>
+            <th class="level-h" scope="col">Not yet</th>
+            <th class="pts-h" scope="col">Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">WHO is specific <span class="crit-pts">6 PTS</span></td>
+            <td class="ex"><strong>5–6</strong>One specific person or sub-group. "Freshmen in Briscoe with one shared bathroom" beats "students."</td>
+            <td class="pf"><strong>4</strong>Specific group, but slightly broad ("CS freshmen").</td>
+            <td class="dv"><strong>2–3</strong>"Students." "People." "Anyone."</td>
+            <td class="ne"><strong>0–1</strong>Missing or "everyone."</td>
+            <td class="pts-cell">/6</td>
+          </tr>
+          <tr>
+            <td class="crit">Problem is real <span class="crit-pts">6 PTS</span></td>
+            <td class="ex"><strong>5–6</strong>Names a real pain point with a verb ("can't find," "keeps losing"). Not the solution — the pain.</td>
+            <td class="pf"><strong>4</strong>Real problem, slightly generic.</td>
+            <td class="dv"><strong>2–3</strong>Reads more like a feature wish than a pain.</td>
+            <td class="ne"><strong>0–1</strong>Missing, or solution disguised as problem.</td>
+            <td class="pts-cell">/6</td>
+          </tr>
+          <tr>
+            <td class="crit">Object is concrete <span class="crit-pts">6 PTS</span></td>
+            <td class="ex"><strong>5–6</strong>Names a physical object: a stand, a kit, a wearable, an enclosure. "A ___ that ___" form.</td>
+            <td class="pf"><strong>4</strong>Physical object but vague shape ("a tool").</td>
+            <td class="dv"><strong>2–3</strong>An app, a website, a service — not a physical thing.</td>
+            <td class="ne"><strong>0–1</strong>Missing or abstract ("a system").</td>
+            <td class="pts-cell">/6</td>
+          </tr>
+          <tr>
+            <td class="crit">Capability stack <span class="crit-pts">6 PTS</span></td>
+            <td class="ex"><strong>5–6</strong>2–3 verbs from the eight, named, that genuinely combine for this project (e.g. PRINT + STITCH + LAMINATE).</td>
+            <td class="pf"><strong>4</strong>2–3 verbs named; combination is plausible.</td>
+            <td class="dv"><strong>2–3</strong>One verb, or three random ones.</td>
+            <td class="ne"><strong>0–1</strong>None named, or tools (not verbs).</td>
+            <td class="pts-cell">/6</td>
+          </tr>
+          <tr>
+            <td class="crit">v0.1 is shippable <span class="crit-pts">6 PTS</span></td>
+            <td class="ex"><strong>5–6</strong>Tiny, ugly version a user could touch by Week 4. Testable, not finished.</td>
+            <td class="pf"><strong>4</strong>v0.1 named, slightly too ambitious for Week 4.</td>
+            <td class="dv"><strong>2–3</strong>v0.1 = the final project. No scope cut.</td>
+            <td class="ne"><strong>0–1</strong>Missing or "v0.1 = polished version."</td>
+            <td class="pts-cell">/6</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score" aria-label="Self-score worksheet">
+        <h3>Self-score before you submit.</h3>
+        <div class="grid">
+          <span>WHO — specific person or group</span><span class="pts-box" aria-label="self score box, who, out of 6"></span>
+          <span>Problem — a real pain, named</span><span class="pts-box" aria-label="self score box, problem, out of 6"></span>
+          <span>Object — concrete, physical</span><span class="pts-box" aria-label="self score box, object, out of 6"></span>
+          <span>Capability stack — 2–3 verbs that combine</span><span class="pts-box" aria-label="self score box, stack, out of 6"></span>
+          <span>v0.1 — ugly, testable, by Week 4</span><span class="pts-box" aria-label="self score box, v01, out of 6"></span>
+          <span class="total-row">TOTAL · pass line is 20</span><span class="total-box" aria-label="total score box, out of 30"></span>
+        </div>
+      </div>
+
+      <div class="pull" style="margin-top: 18px;">
+        <strong>WHY THIS RUBRIC LOOKS THIS WAY</strong>
+        Notice no axis rewards "good idea" or "original concept." Originality emerges from iteration — you can't grade it Week 1. We grade <em>specificity</em>: who, what, which verbs, smallest version. The seed will be wrong. The skill is having one concrete enough to argue with.
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>SPAWN POINT · TILT RUBRIC · PG 4 / 4</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+  </main>
+</body>
+</html>

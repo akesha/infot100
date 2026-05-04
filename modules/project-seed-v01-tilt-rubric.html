@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project Seed v0.1 · TILT Rubric · CSCI-Y100 Week 4</title>
+  <meta name="description" content="Transparent (TILT) rubric for the Project Seed v0.1 module's ship + reckoning deliverables. Purpose, task, criteria." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600;1,9..144,700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    @page { size: letter; margin: 0.55in 0.65in; }
+    :root { --signal-amber-text: #8a6920; --signal-green-text: #2f7a4a; --signal-red-text: #a02e1e; --signal-blue-text: #2f5aa1; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    html { font-size: 13.5px; }
+    body { margin: 0; background: var(--paper-200); color: var(--ink-900); font-family: var(--font-body); font-size: 13.5px; line-height: 1.5; }
+    .toolbar { position: sticky; top: 0; z-index: 100; background: var(--ink-900); color: var(--paper-50); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em; }
+    .toolbar .label { color: var(--signal-amber); }
+    .toolbar button { background: var(--signal-amber); color: var(--ink-900); border: 0; padding: 8px 18px; font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.1em; cursor: pointer; border-radius: 4px; }
+    .toolbar button:hover { background: #f7c46a; }
+    .toolbar button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .skip-link { position: absolute; left: -9999px; top: 0; background: var(--ink-900); color: #fff; padding: 8px 14px; }
+    .skip-link:focus { left: 12px; top: 12px; z-index: 999; }
+    .page { background: var(--paper-50); width: 8.5in; min-height: 11in; box-sizing: border-box; padding: 0.6in 0.7in; margin: 24px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.12); page-break-after: always; position: relative; }
+    .page:last-of-type { page-break-after: auto; }
+    @media print { body { background: #fff; } .page { margin: 0; padding: 0; box-shadow: none; width: auto; min-height: auto; } .no-print { display: none !important; } }
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
+    h1 { font-size: 56px; line-height: 0.95; letter-spacing: -0.02em; margin: 0 0 8px; font-style: italic; }
+    h1 em { color: var(--crimson); }
+    h2 { font-size: 24px; line-height: 1.05; margin: 22px 0 10px; font-style: italic; letter-spacing: -0.01em; padding-bottom: 6px; border-bottom: 2px solid var(--ink-900); }
+    h3 { font-size: 16px; margin: 14px 0 6px; font-style: italic; }
+    p { margin: 0 0 8px; }
+    .crumb { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; color: var(--ink-500); }
+    .crumb-strong { color: var(--crimson); font-weight: 700; }
+    .footer-strip { position: absolute; bottom: 0.35in; left: 0.7in; right: 0.7in; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.12em; color: var(--ink-300); padding-top: 6px; border-top: 1px solid var(--paper-200); }
+    .cover { background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0); background-size: 22px 22px; }
+    .cover-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 36px; }
+    .cover-crest { width: 48px; height: 48px; background: var(--crimson); color: #fff; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 24px; display: inline-flex; align-items: center; justify-content: center; }
+    .cover h1 { font-size: 84px; }
+    .cover .lede { font-size: 18px; line-height: 1.45; max-width: 580px; color: var(--ink-700); margin-top: 8px; font-family: var(--font-display); font-style: italic; }
+    .cover-stamp { display: inline-block; border: 2.5px solid var(--crimson); color: var(--crimson); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.18em; padding: 7px 13px; transform: rotate(-3deg); margin-bottom: 14px; }
+    .cover-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px 28px; padding: 22px 0; border-top: 2px solid var(--ink-900); border-bottom: 2px solid var(--ink-900); margin: 24px 0; }
+    .cover-meta dt { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 4px; }
+    .cover-meta dd { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 19px; font-weight: 600; }
+    .pillar-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 8px; }
+    .pillar { border-top: 4px solid; padding: 14px 16px; background: var(--paper-100); }
+    .pillar .label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; margin-bottom: 6px; }
+    .pillar .one { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 22px; line-height: 1.15; }
+    .pull { border-top: 2px solid var(--ink-900); border-bottom: 2px solid var(--ink-900); padding: 12px 0; margin: 16px 0; font-family: var(--font-display); font-style: italic; font-size: 17px; line-height: 1.4; }
+    .pull strong { font-style: normal; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; display: block; color: var(--crimson); margin-bottom: 6px; }
+    .tilt-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 12px 0; }
+    .tilt-card { border: 1.5px solid var(--ink-900); padding: 12px 14px; position: relative; background: var(--paper-50); page-break-inside: avoid; }
+    .tilt-card .tag { display: inline-block; color: #fff; padding: 4px 10px; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; margin-bottom: 8px; }
+    .tilt-card .tag.purpose { background: var(--signal-blue); }
+    .tilt-card .tag.task { background: var(--signal-amber); color: var(--ink-900); }
+    .tilt-card .tag.criteria { background: var(--signal-green); }
+    .tilt-card h3 { margin: 0 0 6px; font-size: 18px; }
+    .tilt-card .body { font-size: 12.5px; line-height: 1.5; }
+    .tilt-card .body ul { margin: 6px 0 0; padding-left: 18px; }
+    .tilt-card .body li { margin-bottom: 3px; }
+    .runhead { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: baseline; padding-bottom: 10px; border-bottom: 3px solid var(--ink-900); margin-bottom: 16px; }
+    .runhead h1 { font-size: 48px; line-height: 0.95; }
+    .runhead .meta { text-align: right; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--ink-500); }
+    .runhead .meta .total { display: block; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 30px; color: var(--crimson); line-height: 1; }
+    .rubric { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 6px; page-break-inside: avoid; }
+    .rubric thead th { background: var(--ink-900); color: var(--paper-50); padding: 8px 10px; text-align: left; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; vertical-align: middle; }
+    .rubric thead .level-h { width: 22%; }
+    .rubric thead .pts-h { width: 7%; text-align: center; background: var(--crimson); }
+    .rubric thead .crit-h { background: var(--paper-100); color: var(--ink-900); width: 22%; border-right: 1px solid var(--paper-200); }
+    .rubric tbody td { padding: 10px 10px; vertical-align: top; border-bottom: 1px solid var(--paper-200); line-height: 1.4; }
+    .rubric tbody .crit { background: var(--paper-100); font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 14px; border-right: 1px solid var(--paper-200); }
+    .rubric tbody .crit .crit-pts { display: block; font-family: var(--font-mono); font-style: normal; font-weight: 700; font-size: 10px; letter-spacing: 0.1em; color: var(--crimson); margin-top: 4px; }
+    .rubric tbody .ex { background: var(--signal-green); color: #fff; }
+    .rubric tbody .pf { background: rgba(93,187,126,0.16); }
+    .rubric tbody .dv { background: rgba(232,169,59,0.16); }
+    .rubric tbody .ne { background: rgba(216,85,60,0.14); }
+    .rubric tbody .pts-cell { text-align: center; font-family: var(--font-mono); font-weight: 700; background: var(--paper-100); font-size: 13px; }
+    .rubric tbody td strong { display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.1em; margin-bottom: 4px; text-transform: uppercase; }
+    .rubric tbody .ex strong { color: rgba(255,255,255,0.85); }
+    .rubric tbody .pf strong { color: var(--terminal-700); }
+    .rubric tbody .dv strong { color: #8a6920; }
+    .rubric tbody .ne strong { color: #a02e1e; }
+    .self-score { page-break-inside: avoid; background: var(--paper-100); border-top: 3px solid var(--ink-900); padding: 14px 16px; margin-top: 14px; }
+    .self-score h3 { margin: 0 0 8px; }
+    .self-score .grid { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; font-size: 12.5px; }
+    .self-score .pts-box { width: 60px; height: 28px; border: 1.5px solid var(--ink-900); background: #fff; }
+    .self-score .total-box { width: 80px; height: 36px; border: 2px solid var(--ink-900); background: #fff; }
+    .self-score .total-row { font-family: var(--font-display); font-style: italic; font-size: 18px; font-weight: 700; padding-top: 8px; border-top: 1.5px solid var(--ink-900); margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to rubric</a>
+  <div class="toolbar no-print" role="toolbar" aria-label="Document actions">
+    <span><span class="label">TILT RUBRIC</span> &nbsp;·&nbsp; Project Seed v0.1 · 100 pts</span>
+    <button type="button" onclick="window.print()" aria-label="Print this rubric">PRINT / SAVE PDF</button>
+  </div>
+
+  <main id="main">
+
+    <article class="page cover">
+      <header class="cover-head">
+        <div class="cover-crest" aria-hidden="true">IU</div>
+        <div class="crumb">CSCI-Y100 · WEEK 04 · TILT RUBRIC · v2.0</div>
+      </header>
+      <div class="cover-stamp">TILT — TRANSPARENT BY DESIGN</div>
+      <h1>Project<br /><em>Seed</em> v0.1.</h1>
+      <p class="lede">A v0.1 that exists, two classmate observations, a three-sentence reckoning. The point of this rubric is to grade <em>shipping</em>, not <em>polish</em> — v0.1 is supposed to be ugly.</p>
+
+      <dl class="cover-meta">
+        <div><dt>ARTIFACTS</dt><dd>v0.1 ship · Reckoning</dd></div>
+        <div><dt>POINTS</dt><dd>60 + 40 = 100</dd></div>
+        <div><dt>DUE</dt><dd>End of W4 (in class) · push by Sun 11:59 pm</dd></div>
+      </dl>
+
+      <h2>The TILT framework</h2>
+      <p style="margin-bottom: 14px;">Three pillars — <strong>Purpose</strong>, <strong>Task</strong>, <strong>Criteria</strong>. If a criterion below is unclear, that's a bug in this document; flag it and we'll fix it.</p>
+      <div class="pillar-strip">
+        <div class="pillar" style="border-color: var(--signal-blue);">
+          <div class="label" style="color: var(--signal-blue-text);">PURPOSE</div>
+          <div class="one">Why the assignment exists at all.</div>
+        </div>
+        <div class="pillar" style="border-color: var(--signal-amber);">
+          <div class="label" style="color: var(--signal-amber-text);">TASK</div>
+          <div class="one">What you specifically have to do.</div>
+        </div>
+        <div class="pillar" style="border-color: var(--signal-green);">
+          <div class="label" style="color: var(--signal-green-text);">CRITERIA</div>
+          <div class="one">How "good" gets measured.</div>
+        </div>
+      </div>
+
+      <div class="pull">
+        <strong>WHY UGLY IS GRADED HIGH</strong>
+        v0.1 is graded on iteration tolerance, not polish. A working 90% solution that someone else can test will score higher than a non-working 100% solution that exists only in your head. We are training the iteration loop, not the final product.
+      </div>
+
+      <div class="footer-strip"><span>v0.1 RUBRIC · 01 / 03</span><span>v2.0 · 2026</span></div>
+    </article>
+
+    <article class="page">
+      <div class="runhead">
+        <div>
+          <div class="crumb"><span class="crumb-strong">DELIVERABLE 1</span> · v0.1 SHIP</div>
+          <h1>v0.1 <em>ship.</em></h1>
+        </div>
+        <div class="meta">60 PTS<span class="total">60</span></div>
+      </div>
+
+      <div class="tilt-band">
+        <div class="tilt-card"><span class="tag purpose">PURPOSE</span><h3>Why this exists</h3><div class="body">Most freshmen never ship anything in their first year. The cost is iteration tolerance — they fear rewrites, fear ugly first drafts, fear public-facing work. v0.1 is the antidote.</div></div>
+        <div class="tilt-card"><span class="tag task">TASK</span><h3>What to do</h3><div class="body">In class: produce a v0.1 of your project. Code, prototype, document — any of these counts. Constraint: testable by another human in under 5 minutes. Push to GitHub. Capture two classmate observations in your vault.</div></div>
+        <div class="tilt-card"><span class="tag criteria">CRITERIA</span><h3>How you're scored</h3><div class="body">Four criteria, scored Exemplary / Proficient / Developing / Not yet. Total 60 pts. Working &gt; polished. Public &gt; private.</div></div>
+      </div>
+
+      <h2>Rubric — four criteria · four levels</h2>
+      <table class="rubric" aria-label="v0.1 Ship rubric">
+        <thead>
+          <tr>
+            <th class="crit-h">Criterion</th>
+            <th class="level-h">Exemplary</th>
+            <th class="level-h">Proficient</th>
+            <th class="level-h">Developing</th>
+            <th class="level-h">Not yet</th>
+            <th class="pts-h">PTS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">v0.1 exists outside your head<span class="crit-pts">15 pts</span></td>
+            <td class="ex"><strong>15 / 15</strong>An artifact someone else could touch. Code, prototype, or document. Has a name, a file path or URL, and lives somewhere durable.</td>
+            <td class="pf"><strong>12 / 15</strong>Artifact exists but partly. Maybe a working component + an in-progress one.</td>
+            <td class="dv"><strong>8 / 15</strong>An outline or partial sketch. Recognizable as a starting point but not yet testable.</td>
+            <td class="ne"><strong>0 / 15</strong>Only described, not made.</td>
+            <td class="pts-cell">/ 15</td>
+          </tr>
+          <tr>
+            <td class="crit">Testable by a human under 5 min<span class="crit-pts">15 pts</span></td>
+            <td class="ex"><strong>15 / 15</strong>You handed it to a classmate. They tested it. The test produced output (working, broken, or surprising — all count as output).</td>
+            <td class="pf"><strong>12 / 15</strong>Tested but the test was awkward — partner needed instructions to even start.</td>
+            <td class="dv"><strong>8 / 15</strong>You attempted to demo it but the test took &gt; 5 min, or the partner couldn't engage.</td>
+            <td class="ne"><strong>0 / 15</strong>Not tested by anyone besides you.</td>
+            <td class="pts-cell">/ 15</td>
+          </tr>
+          <tr>
+            <td class="crit">Two classmate observations captured<span class="crit-pts">15 pts</span></td>
+            <td class="ex"><strong>15 / 15</strong>Two distinct partners, each leaving one observation + one question. Captured in Bugs/ with names. Specific (not "looks good").</td>
+            <td class="pf"><strong>12 / 15</strong>Two observations captured but one is generic, or both come from the same partner.</td>
+            <td class="dv"><strong>8 / 15</strong>One observation captured.</td>
+            <td class="ne"><strong>0 / 15</strong>None captured.</td>
+            <td class="pts-cell">/ 15</td>
+          </tr>
+          <tr>
+            <td class="crit">Pushed to GitHub today<span class="crit-pts">15 pts</span></td>
+            <td class="ex"><strong>15 / 15</strong>At least one commit dated today. Commit message names what shipped specifically (e.g., "v0.1 — landing page only"). Repo URL logged.</td>
+            <td class="pf"><strong>12 / 15</strong>Committed today; commit message generic ("v0.1", "first commit") but repo URL logged.</td>
+            <td class="dv"><strong>8 / 15</strong>Local commit only — push failed and is unfinished.</td>
+            <td class="ne"><strong>0 / 15</strong>No commit dated this week.</td>
+            <td class="pts-cell">/ 15</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score">
+        <h3>Self-score worksheet</h3>
+        <div class="grid">
+          <div>v0.1 exists outside your head</div><div class="pts-box" aria-label="self score, 15 max"></div>
+          <div>Testable by a human under 5 min</div><div class="pts-box" aria-label="self score, 15 max"></div>
+          <div>Two classmate observations</div><div class="pts-box" aria-label="self score, 15 max"></div>
+          <div>Pushed to GitHub today</div><div class="pts-box" aria-label="self score, 15 max"></div>
+          <div class="total-row">Total · v0.1 ship</div><div class="total-box" aria-label="total self score, 60 max"></div>
+        </div>
+      </div>
+
+      <div class="footer-strip"><span>v0.1 RUBRIC · 02 / 03</span><span>v2.0 · 2026</span></div>
+    </article>
+
+    <article class="page">
+      <div class="runhead">
+        <div>
+          <div class="crumb"><span class="crumb-strong">DELIVERABLE 2</span> · RECKONING</div>
+          <h1>The <em>reckoning.</em></h1>
+        </div>
+        <div class="meta">40 PTS<span class="total">40</span></div>
+      </div>
+
+      <div class="tilt-band">
+        <div class="tilt-card"><span class="tag purpose">PURPOSE</span><h3>Why this exists</h3><div class="body">Shipping without reflecting is a one-time event. Reflecting after every ship is the habit that makes iteration cumulative — what you learned in v0.1 informs v0.2, v0.3, v1. The reckoning is where the lesson sticks.</div></div>
+        <div class="tilt-card"><span class="tag task">TASK</span><h3>What to do</h3><div class="body">In Reflections/W04-reckoning.md, write three sentences. Under 60 words total. What shipped. What didn't. What next week needs. Bullet points OK; padding not OK.</div></div>
+        <div class="tilt-card"><span class="tag criteria">CRITERIA</span><h3>How you're scored</h3><div class="body">Three criteria, scored Exemplary / Proficient / Developing / Not yet. Total 40 pts. Specificity is the load-bearing trait — vague reckonings score below specific ones, even if the project shipped well.</div></div>
+      </div>
+
+      <h2>Rubric — three criteria · four levels</h2>
+      <table class="rubric" aria-label="Reckoning rubric">
+        <thead>
+          <tr>
+            <th class="crit-h">Criterion</th>
+            <th class="level-h">Exemplary</th>
+            <th class="level-h">Proficient</th>
+            <th class="level-h">Developing</th>
+            <th class="level-h">Not yet</th>
+            <th class="pts-h">PTS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">"What shipped" is specific<span class="crit-pts">15 pts</span></td>
+            <td class="ex"><strong>15 / 15</strong>Names the actual artifact + a quality attribute. "v0.1 landing page renders in Chrome but breaks on Safari."</td>
+            <td class="pf"><strong>12 / 15</strong>Names the artifact: "v0.1 landing page works."</td>
+            <td class="dv"><strong>8 / 15</strong>Generic. "Shipped something."</td>
+            <td class="ne"><strong>0 / 15</strong>Missing or copied from the rubric.</td>
+            <td class="pts-cell">/ 15</td>
+          </tr>
+          <tr>
+            <td class="crit">"What didn't" is honest<span class="crit-pts">15 pts</span></td>
+            <td class="ex"><strong>15 / 15</strong>Names a specific gap with a real reason. "Save button doesn't persist — I didn't know how to set up local storage and I didn't push through."</td>
+            <td class="pf"><strong>12 / 15</strong>Names a gap. Reason missing or generic.</td>
+            <td class="dv"><strong>8 / 15</strong>Vague: "Some things didn't work."</td>
+            <td class="ne"><strong>0 / 15</strong>"Everything worked" or missing.</td>
+            <td class="pts-cell">/ 15</td>
+          </tr>
+          <tr>
+            <td class="crit">"What next week needs" is actionable<span class="crit-pts">10 pts</span></td>
+            <td class="ex"><strong>10 / 10</strong>One concrete next move with a target by W5. "Read 30 min of localStorage docs Wednesday."</td>
+            <td class="pf"><strong>8 / 10</strong>Concrete next move, no time/target.</td>
+            <td class="dv"><strong>5 / 10</strong>Vague ("keep going", "improve it").</td>
+            <td class="ne"><strong>0 / 10</strong>Missing.</td>
+            <td class="pts-cell">/ 10</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score">
+        <h3>Self-score worksheet</h3>
+        <div class="grid">
+          <div>"What shipped" is specific</div><div class="pts-box" aria-label="self score, 15 max"></div>
+          <div>"What didn't" is honest</div><div class="pts-box" aria-label="self score, 15 max"></div>
+          <div>"What next week needs" is actionable</div><div class="pts-box" aria-label="self score, 10 max"></div>
+          <div class="total-row">Total · Reckoning</div><div class="total-box" aria-label="total self score, 40 max"></div>
+        </div>
+        <div class="grid" style="margin-top: 14px;">
+          <div class="total-row">GRAND TOTAL — Project Seed v0.1</div><div class="total-box" aria-label="grand total, 100 max"></div>
+        </div>
+      </div>
+
+      <div class="footer-strip"><span>v0.1 RUBRIC · 03 / 03</span><span>v2.0 · 2026</span></div>
+    </article>
+
+  </main>
+</body>
+</html>

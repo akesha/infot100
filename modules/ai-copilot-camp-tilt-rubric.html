@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Co-Pilot Camp · TILT Rubric · CSCI-Y100</title>
+  <meta name="description" content="Transparent (TILT) rubric for the AI Co-Pilot Camp deliverable. Purpose, task, criteria, and self-check for students." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600;1,9..144,700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens.css" />
+
+  <style>
+    @page { size: letter; margin: 0.55in 0.65in; }
+
+    /* === A11y: text-safe variants of signal colors for body text on paper. === */
+    :root {
+      --signal-amber-text: #8a6920;
+      --signal-green-text: #2f7a4a;
+      --signal-red-text:   #a02e1e;
+      --signal-blue-text:  #2f5aa1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    html { font-size: 13.5px; }
+    body {
+      margin: 0; background: var(--paper-200);
+      color: var(--ink-900); font-family: var(--font-body);
+      font-size: 13.5px; line-height: 1.5;
+    }
+
+    .toolbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink-900); color: var(--paper-50);
+      padding: 12px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.05em;
+    }
+    .toolbar .label { color: var(--signal-amber); }
+    .toolbar button {
+      background: var(--signal-amber); color: var(--ink-900);
+      border: 0; padding: 8px 18px;
+      font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.1em;
+      cursor: pointer; border-radius: 4px;
+    }
+    .toolbar button:hover { background: #f7c46a; }
+    .toolbar button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .skip-link {
+      position: absolute; left: -9999px; top: 0;
+      background: var(--ink-900); color: #fff; padding: 8px 14px;
+    }
+    .skip-link:focus { left: 12px; top: 12px; z-index: 999; }
+
+    .page {
+      background: var(--paper-50);
+      width: 8.5in; min-height: 11in;
+      box-sizing: border-box;
+      padding: 0.6in 0.7in;
+      margin: 24px auto;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      page-break-after: always;
+      position: relative;
+    }
+    .page:last-of-type { page-break-after: auto; }
+
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; padding: 0; box-shadow: none; width: auto; min-height: auto; }
+      .no-print { display: none !important; }
+    }
+
+    /* ============ Type ============ */
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
+    h1 {
+      font-size: 56px; line-height: 0.95; letter-spacing: -0.02em;
+      margin: 0 0 8px; font-style: italic;
+    }
+    h1 em { color: var(--crimson); }
+    h2 {
+      font-size: 24px; line-height: 1.05; margin: 22px 0 10px;
+      font-style: italic; letter-spacing: -0.01em;
+      padding-bottom: 6px; border-bottom: 2px solid var(--ink-900);
+    }
+    h3 { font-size: 16px; margin: 14px 0 6px; font-style: italic; }
+    p { margin: 0 0 8px; }
+
+    .crumb {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.18em; color: var(--ink-500);
+    }
+    .crumb-strong { color: var(--crimson); font-weight: 700; }
+
+    .footer-strip {
+      position: absolute; bottom: 0.35in; left: 0.7in; right: 0.7in;
+      display: flex; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 9.5px;
+      letter-spacing: 0.12em; color: var(--ink-300);
+      padding-top: 6px; border-top: 1px solid var(--paper-200);
+    }
+
+    /* ============ Cover ============ */
+    .cover {
+      background-image: radial-gradient(circle at 1px 1px, rgba(22,20,15,0.10) 1.5px, transparent 0);
+      background-size: 22px 22px;
+    }
+    .cover-head {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 36px;
+    }
+    .cover-crest {
+      width: 48px; height: 48px; background: var(--crimson); color: #fff;
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: 24px;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .cover h1 { font-size: 84px; }
+    .cover .lede {
+      font-size: 18px; line-height: 1.45; max-width: 580px;
+      color: var(--ink-700); margin-top: 8px;
+      font-family: var(--font-display); font-style: italic;
+    }
+    .cover-stamp {
+      display: inline-block; border: 2.5px solid var(--crimson);
+      color: var(--crimson); font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      padding: 7px 13px; transform: rotate(-3deg); margin-bottom: 14px;
+    }
+
+    /* ============ TILT band ============ */
+    .tilt-band {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      margin: 12px 0;
+    }
+    .tilt-card {
+      border: 1.5px solid var(--ink-900); padding: 12px 14px;
+      position: relative;
+      background: var(--paper-50);
+      page-break-inside: avoid;
+    }
+    .tilt-card .tag {
+      display: inline-block; color: #fff;
+      padding: 4px 10px; font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+    .tilt-card .tag.purpose { background: var(--signal-blue); }
+    .tilt-card .tag.task { background: var(--signal-amber); color: var(--ink-900); }
+    .tilt-card .tag.criteria { background: var(--signal-green); }
+    .tilt-card h3 { margin: 0 0 6px; font-size: 18px; }
+    .tilt-card .body { font-size: 12.5px; line-height: 1.5; }
+    .tilt-card .body ul { margin: 6px 0 0; padding-left: 18px; }
+    .tilt-card .body li { margin-bottom: 3px; }
+    .tilt-card .pts {
+      position: absolute; top: 12px; right: 14px;
+      font-family: var(--font-mono); font-weight: 700;
+      font-size: 12px; color: var(--crimson);
+      letter-spacing: 0.08em;
+    }
+
+    /* ============ Rubric grid ============ */
+    .rubric {
+      width: 100%; border-collapse: collapse;
+      font-size: 11.5px;
+      margin-top: 6px;
+      page-break-inside: avoid;
+    }
+    .rubric thead th {
+      background: var(--ink-900); color: var(--paper-50);
+      padding: 8px 10px; text-align: left;
+      font-family: var(--font-mono); font-size: 10px;
+      font-weight: 700; letter-spacing: 0.12em;
+      vertical-align: middle;
+    }
+    .rubric thead .level-h { width: 22%; }
+    .rubric thead .pts-h {
+      width: 7%; text-align: center;
+      background: var(--crimson);
+    }
+    .rubric thead .crit-h { background: var(--paper-100); color: var(--ink-900); width: 22%; border-right: 1px solid var(--paper-200); }
+    .rubric tbody td {
+      padding: 10px 10px; vertical-align: top;
+      border-bottom: 1px solid var(--paper-200);
+      line-height: 1.4;
+    }
+    .rubric tbody .crit {
+      background: var(--paper-100);
+      font-family: var(--font-display); font-style: italic;
+      font-weight: 600; font-size: 14px;
+      border-right: 1px solid var(--paper-200);
+    }
+    .rubric tbody .crit .crit-pts {
+      display: block;
+      font-family: var(--font-mono); font-style: normal;
+      font-weight: 700; font-size: 10px; letter-spacing: 0.1em;
+      color: var(--crimson); margin-top: 4px;
+    }
+    .rubric tbody .ex {
+      background: var(--signal-green); color: #fff;
+    }
+    .rubric tbody .pf {
+      background: rgba(93,187,126,0.16);
+    }
+    .rubric tbody .dv {
+      background: rgba(232,169,59,0.16);
+    }
+    .rubric tbody .ne {
+      background: rgba(216,85,60,0.14);
+    }
+    .rubric tbody .pts-cell {
+      text-align: center;
+      font-family: var(--font-mono); font-weight: 700;
+      background: var(--paper-100);
+      font-size: 13px;
+    }
+    .rubric tbody td strong {
+      display: block; font-family: var(--font-mono);
+      font-size: 9.5px; letter-spacing: 0.1em;
+      margin-bottom: 4px; text-transform: uppercase;
+    }
+    .rubric tbody .ex strong { color: rgba(255,255,255,0.85); }
+    .rubric tbody .pf strong { color: var(--terminal-700); }
+    .rubric tbody .dv strong { color: #8a6920; }
+    .rubric tbody .ne strong { color: #a02e1e; }
+
+    /* ============ Header band on pages 2/3 ============ */
+    .runhead {
+      display: grid; grid-template-columns: 1fr auto; gap: 16px;
+      align-items: baseline;
+      padding-bottom: 10px; border-bottom: 3px solid var(--ink-900);
+      margin-bottom: 16px;
+    }
+    .runhead h1 { font-size: 48px; line-height: 0.95; }
+    .runhead .meta {
+      text-align: right;
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 0.12em; color: var(--ink-500);
+    }
+    .runhead .meta .total {
+      display: block; font-family: var(--font-display);
+      font-style: italic; font-weight: 700; font-size: 30px;
+      color: var(--crimson); line-height: 1;
+    }
+
+    /* ============ Self-score block ============ */
+    .self-score {
+      page-break-inside: avoid;
+      background: var(--paper-100);
+      border-top: 3px solid var(--ink-900);
+      padding: 14px 16px;
+      margin-top: 14px;
+    }
+    .self-score h3 { margin: 0 0 8px; }
+    .self-score .grid {
+      display: grid; grid-template-columns: 1fr auto; gap: 8px 16px;
+      align-items: center; font-size: 12.5px;
+    }
+    .self-score .pts-box {
+      width: 60px; height: 28px;
+      border: 1.5px solid var(--ink-900); background: #fff;
+    }
+    .self-score .total-box {
+      width: 80px; height: 36px;
+      border: 2px solid var(--ink-900); background: #fff;
+    }
+    .self-score .total-row {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 18px; font-weight: 700;
+      padding-top: 8px; border-top: 1.5px solid var(--ink-900);
+      margin-top: 4px;
+    }
+
+    /* ============ Cover meta ============ */
+    .cover-meta {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px 28px;
+      padding: 22px 0; border-top: 2px solid var(--ink-900);
+      border-bottom: 2px solid var(--ink-900);
+      margin: 24px 0;
+    }
+    .cover-meta dt {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.18em; color: var(--ink-500); margin-bottom: 4px;
+    }
+    .cover-meta dd {
+      margin: 0; font-family: var(--font-display); font-style: italic;
+      font-size: 19px; font-weight: 600;
+    }
+
+    .pillar-strip {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+      margin-top: 8px;
+    }
+    .pillar {
+      border-top: 4px solid;
+      padding: 14px 16px;
+      background: var(--paper-100);
+    }
+    .pillar .label {
+      font-family: var(--font-mono); font-size: 11px;
+      font-weight: 700; letter-spacing: 0.15em;
+      margin-bottom: 6px;
+    }
+    .pillar .one {
+      font-family: var(--font-display); font-style: italic;
+      font-weight: 600; font-size: 22px; line-height: 1.15;
+    }
+
+    /* Why-this-rubric pull-quote */
+    .pull {
+      border-top: 2px solid var(--ink-900);
+      border-bottom: 2px solid var(--ink-900);
+      padding: 12px 0; margin: 16px 0;
+      font-family: var(--font-display); font-style: italic;
+      font-size: 17px; line-height: 1.4;
+    }
+    .pull strong {
+      font-style: normal; font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.15em;
+      display: block; color: var(--crimson); margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to TILT rubric</a>
+
+  <div class="toolbar no-print" role="toolbar" aria-label="Document actions">
+    <span><span class="label">TILT RUBRIC</span> &nbsp;·&nbsp; AI Co-Pilot Camp · 85 pts total</span>
+    <button type="button" onclick="window.print()" aria-label="Print this rubric">PRINT / SAVE PDF</button>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ PAGE 1 — COVER ============ -->
+    <article class="page cover" aria-labelledby="cover-title">
+
+      <header class="cover-head">
+        <div class="cover-crest" aria-label="Indiana University">IU</div>
+        <div class="crumb">CSCI-Y100 · LUDDY STUDY SKILLS · WEEK 06 · v2.0</div>
+      </header>
+
+      <div class="cover-stamp">TILT RUBRIC — TRANSPARENT ASSIGNMENT FRAMEWORK</div>
+      <h1 id="cover-title">How you'll be<br /><em>graded.</em></h1>
+      <p class="lede">Two assignments. Two rubrics. No mystery. This document tells you exactly what we're asking, why we're asking it, and what counts as "got it."</p>
+
+      <dl class="cover-meta">
+        <div>
+          <dt>ASSIGNMENT 01</dt>
+          <dd>Prompt Lab (in class)</dd>
+        </div>
+        <div>
+          <dt>POINTS</dt>
+          <dd>35 pts</dd>
+        </div>
+        <div>
+          <dt>DUE</dt>
+          <dd>End of class</dd>
+        </div>
+        <div>
+          <dt>ASSIGNMENT 02</dt>
+          <dd>Prompt Journal (take-home)</dd>
+        </div>
+        <div>
+          <dt>POINTS</dt>
+          <dd>50 pts</dd>
+        </div>
+        <div>
+          <dt>DUE</dt>
+          <dd>Next class · 11:59pm before</dd>
+        </div>
+      </dl>
+
+      <h2 style="margin-top: 8px;">The TILT framework</h2>
+      <p style="font-size: 13.5px; max-width: 720px;">Every assignment in this module follows the same three-part structure — <strong>Purpose</strong>, <strong>Task</strong>, <strong>Criteria</strong>. If you ever feel lost on what we want, find one of these three sections.</p>
+
+      <div class="pillar-strip" aria-label="The three TILT pillars">
+        <div class="pillar" style="border-top-color: var(--signal-blue);">
+          <div class="label" style="color: var(--signal-blue-text);">① PURPOSE</div>
+          <div class="one">Why we're asking. The skill it builds.</div>
+        </div>
+        <div class="pillar" style="border-top-color: var(--signal-amber);">
+          <div class="label" style="color: var(--signal-amber-text);">② TASK</div>
+          <div class="one">What you'll actually do, step by step.</div>
+        </div>
+        <div class="pillar" style="border-top-color: var(--signal-green);">
+          <div class="label" style="color: var(--signal-green-text);">③ CRITERIA</div>
+          <div class="one">What "good" looks like — at four levels.</div>
+        </div>
+      </div>
+
+      <div class="pull" style="margin-top: 22px;">
+        <strong>HOUSE POLICY · REVISE &amp; RESUBMIT</strong>
+        Anyone who scores below the "Proficient" line on either assignment gets <em>one free revision week, no penalty.</em> The point is to learn the move, not to weed people out. Use the revision.
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>AI CO-PILOT CAMP · TILT RUBRIC · PG 1 / 3</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 2 — PROMPT LAB ============ -->
+    <article class="page" aria-labelledby="lab-h">
+
+      <header class="runhead">
+        <h1 id="lab-h">Prompt Lab. <em>35 pts.</em></h1>
+        <div class="meta">
+          IN-CLASS · 25 MIN
+          <span class="total">35</span>
+        </div>
+      </header>
+
+      <p class="crumb"><span class="crumb-strong">PG 2/3</span> &nbsp;·&nbsp; ENGINEER YOUR OWN CO-PILOT PROMPT</p>
+
+      <!-- TILT band -->
+      <div class="tilt-band" role="list" aria-label="TILT framework for the Prompt Lab">
+
+        <article class="tilt-card" role="listitem">
+          <span class="tag purpose">① PURPOSE</span>
+          <h3>The skill we're building.</h3>
+          <div class="body">
+            <p>You will use AI in college. Then in jobs. The question is not <em>whether</em> — it's whether you'll use it like Devon (dependent) or like Robin (co-pilot).</p>
+            <p>This lab gives you reps on the move that separates them: writing a prompt that frames the problem, scopes the ask, and stays honest about who did what.</p>
+          </div>
+        </article>
+
+        <article class="tilt-card" role="listitem">
+          <span class="tag task">② TASK</span>
+          <h3>What you'll do.</h3>
+          <div class="body">
+            <ul>
+              <li>Pick a <strong>real assignment</strong> from any class, due in the next 2 weeks.</li>
+              <li>Write <strong>three progressive prompts</strong> — V1 Vague, V2 with FRAME, V3 full Loop.</li>
+              <li>Sign the <strong>Credit Ledger</strong> — for 10 sub-tasks, mark <em>ME</em> / <em>SHARED</em> / <em>AI</em>.</li>
+              <li>Submit on Canvas before pair audit. Saves to your browser as you type.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="tilt-card" role="listitem">
+          <span class="tag criteria">③ CRITERIA</span>
+          <h3>What "got it" looks like.</h3>
+          <div class="body">
+            <p>See the rubric below. Five criteria, four levels, 35 points total.</p>
+            <p><strong>Pass line:</strong> 24 pts. Below 24 → free revision week, no penalty. We want you to land the move, not lose points on it.</p>
+          </div>
+        </article>
+      </div>
+
+      <h2>Rubric — five criteria · four levels</h2>
+
+      <table class="rubric" role="table" aria-label="Prompt Lab rubric — 5 criteria scored on 4 levels">
+        <thead>
+          <tr>
+            <th class="crit-h" scope="col">Criterion</th>
+            <th class="level-h" scope="col">Exemplary</th>
+            <th class="level-h" scope="col">Proficient</th>
+            <th class="level-h" scope="col">Developing</th>
+            <th class="level-h" scope="col">Not yet</th>
+            <th class="pts-h" scope="col">Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">V1 Vague is honestly vague <span class="crit-pts">5 PTS</span></td>
+            <td class="ex"><strong>5</strong>The kind of one-line ask a stressed student would actually send. Bare context.</td>
+            <td class="pf"><strong>4</strong>Short and unframed; might leak a small detail.</td>
+            <td class="dv"><strong>3</strong>Already FRAMEd — student secretly tried to "do well."</td>
+            <td class="ne"><strong>0–2</strong>Missing or rewrites V2. Defeats the comparison.</td>
+            <td class="pts-cell">/5</td>
+          </tr>
+          <tr>
+            <td class="crit">V2 adds FRAME <span class="crit-pts">8 PTS</span></td>
+            <td class="ex"><strong>7–8</strong>Names class, level, real constraint, and a specific goal AI couldn't guess.</td>
+            <td class="pf"><strong>5–6</strong>Adds 2 of {class, level, constraint, goal}. Clear improvement on V1.</td>
+            <td class="dv"><strong>3–4</strong>Adds 1 detail. Mostly still vague.</td>
+            <td class="ne"><strong>0–2</strong>Indistinguishable from V1.</td>
+            <td class="pts-cell">/8</td>
+          </tr>
+          <tr>
+            <td class="crit">V3 runs the full Loop <span class="crit-pts">10 PTS</span></td>
+            <td class="ex"><strong>9–10</strong>Visible FRAME + a PROBE follow-up + a VERIFY hook ("how would I check this?") + an OWN reflection.</td>
+            <td class="pf"><strong>7–8</strong>Three of the four moves clearly present.</td>
+            <td class="dv"><strong>4–6</strong>Two moves; reads like a longer V2.</td>
+            <td class="ne"><strong>0–3</strong>One or zero moves; no audible "Loop."</td>
+            <td class="pts-cell">/10</td>
+          </tr>
+          <tr>
+            <td class="crit">Credit Ledger is honest <span class="crit-pts">8 PTS</span></td>
+            <td class="ex"><strong>7–8</strong>All 10 rows answered with mixed verdicts that pass the smell test. At least one <em>SHARED</em>.</td>
+            <td class="pf"><strong>5–6</strong>All rows answered; verdicts plausible but lean uniform.</td>
+            <td class="dv"><strong>3–4</strong>Some rows skipped, or all rows marked <em>ME</em>.</td>
+            <td class="ne"><strong>0–2</strong>Mostly blank or implausibly self-flattering.</td>
+            <td class="pts-cell">/8</td>
+          </tr>
+          <tr>
+            <td class="crit">Reflective tag <span class="crit-pts">4 PTS</span></td>
+            <td class="ex"><strong>4</strong>One sentence naming what V3 caught that V1 missed — concrete, in your voice.</td>
+            <td class="pf"><strong>3</strong>One sentence; generic but on topic.</td>
+            <td class="dv"><strong>2</strong>Restates the brief.</td>
+            <td class="ne"><strong>0–1</strong>Missing.</td>
+            <td class="pts-cell">/4</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score" aria-label="Self-score worksheet">
+        <h3>Self-score before you submit.</h3>
+        <div class="grid">
+          <span>V1 Vague is honestly vague</span><span class="pts-box" aria-label="self score box, V1, out of 5"></span>
+          <span>V2 adds FRAME</span><span class="pts-box" aria-label="self score box, V2, out of 8"></span>
+          <span>V3 runs the full Loop</span><span class="pts-box" aria-label="self score box, V3, out of 10"></span>
+          <span>Credit Ledger is honest</span><span class="pts-box" aria-label="self score box, ledger, out of 8"></span>
+          <span>Reflective tag</span><span class="pts-box" aria-label="self score box, reflection, out of 4"></span>
+          <span class="total-row">TOTAL · pass line is 24</span><span class="total-box" aria-label="total score box, out of 35"></span>
+        </div>
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>AI CO-PILOT CAMP · TILT RUBRIC · PG 2 / 3</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+    <!-- ============ PAGE 3 — PROMPT JOURNAL ============ -->
+    <article class="page" aria-labelledby="journal-h">
+
+      <header class="runhead">
+        <h1 id="journal-h">Prompt Journal. <em>50 pts.</em></h1>
+        <div class="meta">
+          TAKE-HOME · 5 DAYS
+          <span class="total">50</span>
+        </div>
+      </header>
+
+      <p class="crumb"><span class="crumb-strong">PG 3/3</span> &nbsp;·&nbsp; HONEST ENGAGEMENT BEATS POLISH</p>
+
+      <!-- TILT band -->
+      <div class="tilt-band" role="list" aria-label="TILT framework for the Prompt Journal">
+
+        <article class="tilt-card" role="listitem">
+          <span class="tag purpose">① PURPOSE</span>
+          <h3>The skill we're building.</h3>
+          <div class="body">
+            <p>One prompt is a moment. Five days of prompts is a <em>pattern</em> — and patterns are where you find the parts of your AI use that need to change.</p>
+            <p>This journal trades polish for honesty. We want to see your real Tuesday-night ask, not a curated version. The reflection is where the learning lives.</p>
+          </div>
+        </article>
+
+        <article class="tilt-card" role="listitem">
+          <span class="tag task">② TASK</span>
+          <h3>What you'll do.</h3>
+          <div class="body">
+            <ul>
+              <li>For <strong>5 consecutive days</strong>, log every AI ask you make.</li>
+              <li>~30 sec per row: <em>When · Class &amp; ask · Loop hit (F/P/V/O) · Owner (ME/SHARED/AI) · Surprise.</em></li>
+              <li>On Friday, write a <strong>4-sentence reflection</strong> covering pattern, surprise, breakdown, and next move.</li>
+              <li>Submit on Canvas. Markdown template provided. Bring a copy to next class.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="tilt-card" role="listitem">
+          <span class="tag criteria">③ CRITERIA</span>
+          <h3>What "got it" looks like.</h3>
+          <div class="body">
+            <p>See the rubric below. Four criteria, four levels, 50 points total.</p>
+            <p><strong>Pass line:</strong> 33 pts. Below 33 → free revision week, no penalty. <em>Honest engagement beats polish.</em> A messy journal with real patterns beats a sparkling one with no learning.</p>
+          </div>
+        </article>
+      </div>
+
+      <h2>Rubric — four criteria · four levels</h2>
+
+      <table class="rubric" role="table" aria-label="Prompt Journal rubric — 4 criteria scored on 4 levels">
+        <thead>
+          <tr>
+            <th class="crit-h" scope="col">Criterion</th>
+            <th class="level-h" scope="col">Exemplary</th>
+            <th class="level-h" scope="col">Proficient</th>
+            <th class="level-h" scope="col">Developing</th>
+            <th class="level-h" scope="col">Not yet</th>
+            <th class="pts-h" scope="col">Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">Coverage <span class="crit-pts">15 PTS</span></td>
+            <td class="ex"><strong>13–15</strong>5 days logged. ≥ 8 rows total. Realistic distribution across classes.</td>
+            <td class="pf"><strong>10–12</strong>5 days logged. 5–7 rows. Mostly one class.</td>
+            <td class="dv"><strong>6–9</strong>3–4 days. Or 5 days but very thin.</td>
+            <td class="ne"><strong>0–5</strong>Two days or fewer. Or invented retroactively.</td>
+            <td class="pts-cell">/15</td>
+          </tr>
+          <tr>
+            <td class="crit">Loop tagging <span class="crit-pts">10 PTS</span></td>
+            <td class="ex"><strong>9–10</strong>Each row tagged with which Loop step(s) you ran. Distribution looks plausible — not all four every time.</td>
+            <td class="pf"><strong>7–8</strong>Most rows tagged; 1–2 missing. Mix is plausible.</td>
+            <td class="dv"><strong>4–6</strong>Some rows tagged. Many marked "all four" implausibly.</td>
+            <td class="ne"><strong>0–3</strong>Tags absent or all blank.</td>
+            <td class="pts-cell">/10</td>
+          </tr>
+          <tr>
+            <td class="crit">Honesty signal <span class="crit-pts">10 PTS</span></td>
+            <td class="ex"><strong>9–10</strong>Owner column shows real variety. Surprises name something you didn't expect — wins <em>and</em> failures.</td>
+            <td class="pf"><strong>7–8</strong>Some variety in Owner. Surprises mostly substantive.</td>
+            <td class="dv"><strong>4–6</strong>Owner uniform. Surprises generic ("learned a lot").</td>
+            <td class="ne"><strong>0–3</strong>Reads like fan-fiction. Suspiciously clean.</td>
+            <td class="pts-cell">/10</td>
+          </tr>
+          <tr>
+            <td class="crit">Reflection <span class="crit-pts">15 PTS</span></td>
+            <td class="ex"><strong>13–15</strong>4 sentences. <em>Pattern</em> is specific, <em>surprise</em> is honest, <em>breakdown</em> names a real Loop failure, <em>next move</em> is one concrete behavior change.</td>
+            <td class="pf"><strong>10–12</strong>4 sentences. 3 of 4 land; one is generic.</td>
+            <td class="dv"><strong>6–9</strong>Reflection present but mostly summary. Next move vague.</td>
+            <td class="ne"><strong>0–5</strong>Missing or under 2 sentences.</td>
+            <td class="pts-cell">/15</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="self-score" aria-label="Self-score worksheet">
+        <h3>Self-score before you submit.</h3>
+        <div class="grid">
+          <span>Coverage — 5 days, real distribution</span><span class="pts-box" aria-label="self score box, coverage, out of 15"></span>
+          <span>Loop tagging — F/P/V/O on each row</span><span class="pts-box" aria-label="self score box, loop tagging, out of 10"></span>
+          <span>Honesty signal — Owner + Surprises</span><span class="pts-box" aria-label="self score box, honesty, out of 10"></span>
+          <span>Reflection — pattern · surprise · breakdown · next move</span><span class="pts-box" aria-label="self score box, reflection, out of 15"></span>
+          <span class="total-row">TOTAL · pass line is 33</span><span class="total-box" aria-label="total score box, out of 50"></span>
+        </div>
+      </div>
+
+      <div class="pull" style="margin-top: 18px;">
+        <strong>WHY THIS RUBRIC LOOKS THIS WAY</strong>
+        Notice no axis rewards "good" prompts or "right" answers. We can't grade those — and shouldn't try. We grade the work you can <em>show</em>: the reps, the tags, the honest ledger. The skill comes from the volume of honest reps.
+      </div>
+
+      <footer class="footer-strip" aria-hidden="true">
+        <span>AI CO-PILOT CAMP · TILT RUBRIC · PG 3 / 3</span>
+        <span>v2.0 · 2026</span>
+      </footer>
+    </article>
+
+  </main>
+</body>
+</html>
