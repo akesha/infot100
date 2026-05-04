@@ -390,7 +390,6 @@
         const links = [];
         if (w.files.lesson) links.push(`<a href="${w.files.lesson}">Lesson page</a>`);
         if (w.files.rubric) links.push(`<a href="${w.files.rubric}">Rubric</a>`);
-        if (w.files.guide)  links.push(`<a href="${w.files.guide}">Facilitator guide</a>`);
 
         return `
           <article class="week ${isThisWeek ? 'this-week' : ''} ${isPast && allDone ? 'past' : ''}" id="week-${w.num}">
