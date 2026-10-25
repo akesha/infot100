@@ -484,7 +484,7 @@
           const uid = 'w' + w.num + 'd' + i + '@info-t-100';
           const dtstart = fmtICS(dueDate, '23:30'); // 30 min before deadline
           const dtend = fmtICS(dueDate, '23:59');
-          const summary = `[Y100 W${w.num}] ${d.name}`;
+          const summary = `[T100 W${w.num}] ${d.name}`;
           const desc = (d.detail + '\\n\\nLesson: ' + w.title + '\\nWorth: ' + d.points + ' pts').replace(/\n/g, '\\n');
           lines.push(
             'BEGIN:VEVENT',
@@ -517,7 +517,7 @@
           'DTSTAMP:' + fmtICS(new Date(), '12:00'),
           'DTSTART:' + fmtICS(classDate, '10:00'),
           'DTEND:' + fmtICS(classDate, '11:30'),
-          'SUMMARY:' + `[Y100 W${w.num}] Class · ${w.title}`,
+          'SUMMARY:' + `[T100 W${w.num}] Class · ${w.title}`,
           'DESCRIPTION:' + (w.anchor + '\\n\\nIn-class · 90 min').replace(/\n/g, '\\n'),
           'END:VEVENT',
         );
